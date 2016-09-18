@@ -18,6 +18,8 @@ namespace Twilio.IPMessaging
         }
     }
 
+
+	/*
     public class StatusListener : ConstantsStatusListener
     {
         public Action ErrorHandler { get; set; }
@@ -33,5 +35,6 @@ namespace Twilio.IPMessaging
             SuccessHandler?.Invoke ();
         }
     }
+    */
 }
 
