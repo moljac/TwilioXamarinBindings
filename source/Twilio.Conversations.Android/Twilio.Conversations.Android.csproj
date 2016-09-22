@@ -12,7 +12,9 @@
     <AndroidUseLatestPlatformSdk>True</AndroidUseLatestPlatformSdk>
     <AssemblyName>Twilio.Conversations.Android</AssemblyName>
     <TargetFrameworkVersion>v7.0</TargetFrameworkVersion>
+	<!--
 	<AndroidClassParser>class-parse</AndroidClassParser>
+	-->
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -24,7 +26,9 @@
     <WarningLevel>4</WarningLevel>
     <AndroidLinkMode>None</AndroidLinkMode>
     <ConsolePause>false</ConsolePause>
+	<!--
 	<AndroidClassParser>class-parse</AndroidClassParser>
+	-->
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>full</DebugType>
@@ -34,7 +38,9 @@
     <WarningLevel>4</WarningLevel>
     <AndroidUseSharedRuntime>false</AndroidUseSharedRuntime>
     <ConsolePause>false</ConsolePause>
+	<!--
 	<AndroidClassParser>class-parse</AndroidClassParser>
+	-->
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
