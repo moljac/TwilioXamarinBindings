@@ -5,17 +5,17 @@ using Android.Runtime;
 using System.Net.Http;
 using System;
 using System.Threading.Tasks;
-using Twilio.Common;
-using Twilio.IPMessaging;
+using System.Linq;
 using System.Collections.Generic;
 using Android.Content;
-using Twilio.IPMessaging.Impl;
-using System.Linq;
+
+using Twilio.Common;
+using Twilio.IPMessaging;
 
 namespace TwilioIPMessagingSample
 {
 	[Activity(Label = "#general", MainLauncher = true, Icon = "@mipmap/icon")]
-	public class MainActivity : Activity, IPMessagingClientListener, IChannelListener, ITwilioAccessManagerListener
+	public class MainActivity : Activity, IPMessagingClientListener, IChannelListener, IAccessManagerListener
 	{
 		internal const string TAG = "TWILIO";
 
@@ -24,8 +24,8 @@ namespace TwilioIPMessagingSample
 		ListView listView;
 		MessagesAdapter adapter;
 
-		ITwilioIPMessagingClient client;
-		IChannel generalChannel;
+		IPMessagingClient client;
+		Channel generalChannel;
 
 		protected async override void OnCreate(Bundle savedInstanceState)
 		{
@@ -168,30 +168,30 @@ namespace TwilioIPMessagingSample
 		{
 
 		}
-		public void OnChannelAdd(IChannel channel)
+		public void OnChannelAdd(Channel channel)
 		{
 
 		}
-		public void OnChannelChange(IChannel channel)
+		public void OnChannelChange(Channel channel)
 		{
 			//Android.Util.Log.Debug (TAG, "Channel Changed");
 			//adapter.UpdateMessages (channel.Messages.GetMessages ());
 		}
-		public void OnChannelDelete(IChannel channel)
+		public void OnChannelDelete(Channel channel)
 		{
 		}
-		public void OnChannelHistoryLoaded(IChannel channel)
+		public void OnChannelHistoryLoaded(Channel channel)
 		{
 			Android.Util.Log.Debug(TAG, "Channel History Loaded");
 			adapter.UpdateMessages(channel.Messages.GetMessages());
 			listView.SmoothScrollToPosition(adapter.Count - 1);
 		}
-		public void OnError(IErrorInfo errorInfo)
+		public void OnError(ErrorInfo errorInfo)
 		{
 			Console.WriteLine($"Error: {errorInfo.ErrorCode} -> {errorInfo.ErrorText}");
 		}
 
-		public void OnUserInfoChange(IUserInfo userInfo)
+		public void OnUserInfoChange(UserInfo userInfo)
 		{
 			Console.WriteLine($"UserInfoChanged: {userInfo.Identity} -> {userInfo.FriendlyName}");
 		}
@@ -200,73 +200,73 @@ namespace TwilioIPMessagingSample
 		{
 		}
 
-		public void OnMemberChange(IMember member)
+		public void OnMemberChange(Member member)
 		{
 			Android.Util.Log.Debug(TAG, $"Member Changed: {member.Sid}");
 		}
 
-		public void OnMemberDelete(IMember member)
+		public void OnMemberDelete(Member member)
 		{
 		}
 
-		public void OnMemberJoin(IMember member)
+		public void OnMemberJoin(Member member)
 		{
 			Android.Util.Log.Debug(TAG, $"Member Joined: {member.Sid}");
 		}
 
-		public void OnMessageAdd(IMessage message)
+		public void OnMessageAdd(Twilio.IPMessaging.Message message)
 		{
 			adapter.AddMessage(message);
 			listView.SmoothScrollToPosition(adapter.Count - 1);
 		}
 
-		public void OnMessageChange(IMessage message)
+		public void OnMessageChange(Twilio.IPMessaging.Message message)
 		{
 			Android.Util.Log.Debug(TAG, "Message Changed");
 		}
 
-		public void OnMessageDelete(IMessage message)
+		public void OnMessageDelete(Twilio.IPMessaging.Message message)
 		{
 			Android.Util.Log.Debug(TAG, "Message Deleted");
 		}
 
-		public void OnTypingEnded(IMember member)
+		public void OnTypingEnded(Member member)
 		{
 			Android.Util.Log.Debug(TAG, $"Typing Ended for {member.Sid}");
 		}
 
-		public void OnTypingStarted(IMember member)
+		public void OnTypingStarted(Member member)
 		{
 			Android.Util.Log.Debug(TAG, $"Typing Started for {member.Sid}");
 		}
 
-		public void OnError(ITwilioAccessManager p0, string p1)
+		public void OnError(AccessManager p0, string p1)
 		{
 			Console.WriteLine("error in access manager");
 		}
 
-		public void OnTokenExpired(ITwilioAccessManager p0)
+		public void OnTokenExpired(AccessManager p0)
 		{
 			Console.WriteLine("token expired");
 		}
 
-		public void OnTokenUpdated(ITwilioAccessManager p0)
+		public void OnTokenUpdated(AccessManager p0)
 		{
 			Console.WriteLine("token updated");
 		}
 	}
 
-	class MessagesAdapter : BaseAdapter<IMessage>
+	class MessagesAdapter : BaseAdapter<Twilio.IPMessaging.Message>
 	{
 		public MessagesAdapter(Activity parentActivity)
 		{
 			activity = parentActivity;
 		}
 
-		List<IMessage> messages = new List<IMessage>();
+		List<IMessage> messages = new List<Twilio.IPMessaging.Message>();
 		Activity activity;
 
-		public void UpdateMessages(IEnumerable<IMessage> msgs)
+		public void UpdateMessages(IEnumerable<Twilio.IPMessaging.Message> msgs)
 		{
 			lock (messages)
 			{
@@ -278,7 +278,7 @@ namespace TwilioIPMessagingSample
 			   NotifyDataSetChanged());
 		}
 
-		public void AddMessage(IMessage msg)
+		public void AddMessage(Twilio.IPMessaging.Message msg)
 		{
 			lock (messages)
 			{
@@ -306,20 +306,20 @@ namespace TwilioIPMessagingSample
 		}
 
 		public override int Count { get { return messages.Count; } }
-		public override IMessage this[int index] { get { return messages[index]; } }
+		public override Twilio.IPMessaging.Message this[int index] { get { return messages[index]; } }
 	}
 
 	public class CreateChannelListener : ConstantsCreateChannelListener
 	{
-		public Action<IChannel> OnCreatedHandler { get; set; }
+		public Action<Channel> OnCreatedHandler { get; set; }
 		public Action OnErrorHandler { get; set; }
 
-		public override void OnCreated(IChannel channel)
+		public override void OnCreated(Channel channel)
 		{
 			OnCreatedHandler?.Invoke(channel);
 		}
 
-		public override void OnError(IErrorInfo errorInfo)
+		public override void OnError(ErrorInfo errorInfo)
 		{
 			base.OnError(errorInfo);
 		}

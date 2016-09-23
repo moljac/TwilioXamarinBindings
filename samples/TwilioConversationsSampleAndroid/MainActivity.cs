@@ -46,17 +46,17 @@ namespace TwilioConversationsSampleAndroid
        /*
         * Twilio Conversations Client allows a client to create or participate in a conversation.
         */
-        IConversationsClient conversationsClient;
+        TwilioConversationsClient conversationsClient;
 
        /*
         * A Conversation represents communication between the client and one or more participants.
         */
-        IConversation conversation;
+        Conversation conversation;
 
        /*
         * An OutgoingInvite represents an invitation to start or join a conversation with one or more participants
         */
-        IOutgoingInvite outgoingInvite;
+        OutgoingInvite outgoingInvite;
 
        /*
         * A VideoViewRenderer receives frames from a local or remote video track and renders the frames to a provided view
@@ -71,8 +71,8 @@ namespace TwilioConversationsSampleAndroid
         ViewGroup localContainer;
         ViewGroup participantContainer;
         TextView conversationStatusTextView;
-        ITwilioAccessManager accessManager;
-        ICameraCapturer cameraCapturer;
+        AccessManager accessManager;
+        CameraCapturer cameraCapturer;
         FloatingActionButton callActionFab;
         FloatingActionButton switchCameraActionFab;
         FloatingActionButton localVideoActionFab;
@@ -296,7 +296,7 @@ namespace TwilioConversationsSampleAndroid
        /*
         * Creates an incoming conversation UI dialog
         */
-        void showInviteDialog(IIncomingInvite incomingInvite)
+        void showInviteDialog(IncomingInvite incomingInvite)
         {
             alertDialog = Dialog.CreateInviteDialog (incomingInvite.Invitee, 
                 new EventHandler<DialogClickEventArgs> ((s, e) => {
@@ -540,7 +540,7 @@ namespace TwilioConversationsSampleAndroid
 
 
 
-        ILocalMedia setupLocalMedia ()
+        LocalMedia setupLocalMedia ()
         {
             var localMedia = LocalMediaFactory.CreateLocalMedia (localMediaListener ());
             var localVideoTrack = LocalVideoTrackFactory.CreateLocalVideoTrack (cameraCapturer);
