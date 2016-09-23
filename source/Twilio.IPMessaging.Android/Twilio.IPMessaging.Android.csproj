@@ -79,4 +79,10 @@
     <Compile Include="obj\%27%24%28Configuration%29%27\generated\src\*.cs" />
 	-->
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Twilio.Common.Android\Twilio.Common.Android.csproj">
+      <Project>{F78E29B1-08F2-479B-88F0-2A9AEF0F79A4}</Project>
+      <Name>Twilio.Common.Android</Name>
+    </ProjectReference>
+  </ItemGroup>
 </Project>

@@ -10,6 +10,7 @@
 	<attr path="/api/package[@name='com.twilio.ipmessaging']/class[@name='TwilioIPMessagingClientService']/method[@name='onStartCommand' and count(parameter)=3 and parameter[1][@type='android.content.Intent'] and parameter[2][@type='int'] and parameter[3][@type='int']]/parameter[2]" name="managedName">flags</attr>
 	<attr path="/api/package[@name='com.twilio.ipmessaging']/class[@name='TwilioIPMessagingClientService']/method[@name='onStartCommand' and count(parameter)=3 and parameter[1][@type='android.content.Intent'] and parameter[2][@type='int'] and parameter[3][@type='int']]/parameter[3]" name="managedName">startId</attr>
 	-->
+	<!--
 	<attr path="/api/package[@name='com.twilio.ipmessaging']/class[@name='TwilioIPMessagingSDK']/method[@name='createIPMessagingClientWithAccessManager' and count(parameter)=2 and parameter[1][@type='com.twilio.common.TwilioAccessManager'] and parameter[2][@type='com.twilio.ipmessaging.IPMessagingClientListener']]/parameter[1]" name="managedName">accessManager</attr>
 	<attr path="/api/package[@name='com.twilio.ipmessaging']/class[@name='TwilioIPMessagingSDK']/method[@name='createIPMessagingClientWithAccessManager' and count(parameter)=2 and parameter[1][@type='com.twilio.common.TwilioAccessManager'] and parameter[2][@type='com.twilio.ipmessaging.IPMessagingClientListener']]/parameter[2]" name="managedName">listener</attr>
 	<attr path="/api/package[@name='com.twilio.ipmessaging']/class[@name='TwilioIPMessagingSDK']/method[@name='createIPMessagingClientWithToken' and count(parameter)=2 and parameter[1][@type='java.lang.String'] and parameter[2][@type='com.twilio.ipmessaging.IPMessagingClientListener']]/parameter[1]" name="managedName">token</attr>
@@ -197,4 +198,5 @@
 	<attr path="/api/package[@name='com.twilio.ipmessaging.impl']/class[@name='UserInfoImpl']/method[@name='setFriendlyName' and count(parameter)=2 and parameter[1][@type='java.lang.String'] and parameter[2][@type='com.twilio.ipmessaging.Constants.StatusListener']]/parameter[2]" name="managedName">listener</attr>
 	<attr path="/api/package[@name='com.twilio.ipmessaging.impl']/class[@name='Utils']/method[@name='toList' and count(parameter)=1 and parameter[1][@type='org.json.JSONArray']]/parameter[1]" name="managedName">array</attr>
 	<attr path="/api/package[@name='com.twilio.ipmessaging.impl']/class[@name='Utils']/method[@name='toMap' and count(parameter)=1 and parameter[1][@type='org.json.JSONObject']]/parameter[1]" name="managedName">objectValue</attr>
+	-->
 </metadata>

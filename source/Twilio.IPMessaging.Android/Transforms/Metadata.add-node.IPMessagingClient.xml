@@ -21,7 +21,7 @@
 				type-generic-aware="java.util.Map&lt;java.lang.String, com.twilio.ipmessaging.Channel &gt;" 
 				name="channelMap"
 				deprecated="not deprecated" final="false" transient="false" volatile="false"
-					>
+				>
 			</field>
 			<!--
 			protected java.lang.String endpointPlatform;
@@ -87,13 +87,19 @@
 					name="acess_manager" 
 					>
 				</parameter>
-				<parameter 
+				<!--
 					type="com.twilio.ipmessaging.IPMessagingClient$Properties"
+				-->
+				<parameter 
+					type="java.lang.Object"
 					name="properties" 
 					>
 				</parameter>
-				<parameter 
+				<!--
 					type="com.twilio.ipmessaging.Constants$CallbackListener&lt;com.twilio.ipmessaging.IPMessagingClient&gt;"
+				-->
+				<parameter 
+					type="java.lang.Object"
 					name="listener" 
 					>
 				</parameter>
@@ -139,8 +145,11 @@
 					name="s" 
 					>
 				</parameter>
-				<parameter 
+				<!--
 					type="com.twilio.ipmessaging.Constants$StatusListener"
+				-->
+				<parameter 
+					type="java.lang.Object"
 					name="listener" 
 					>
 				</parameter>
@@ -178,8 +187,11 @@
 					name="token" 
 					>
 				</parameter>
-				<parameter 
+				<!--
 					type="com.twilio.ipmessaging.Constants$StatusListener"
+				-->
+				<parameter 
+					type="java.lang.Object"
 					name="listener" 
 					>
 				</parameter>
@@ -196,8 +208,11 @@
 					name="token" 
 					>
 				</parameter>
-				<parameter 
+				<!--
 					type="com.twilio.ipmessaging.Constants$StatusListener"
+				-->
+				<parameter 
+					type="java.lang.Object"
 					name="listener" 
 					>
 				</parameter>
@@ -219,7 +234,7 @@
 			public com.twilio.ipmessaging.IPMessagingClient$Properties getProperties();
 			-->
 			<method 
-				visibility="public" abstract="false" static="false" return="com.twilio.ipmessaging.IPMessagingClient$Properties" name="getProperties"
+				visibility="public" abstract="false" static="false" return="java.lang.Object" name="getProperties"
 				deprecated="not deprecated" final="false" native="false" synchronized="false" 
 				>
 			</method>
@@ -369,9 +384,9 @@
 			</method>
 			<!--
 			static com.twilio.ipmessaging.Constants$StatusListener access$000(com.twilio.ipmessaging.IPMessagingClient);
-			-->
+			
 			<method 
-				visibility="private" abstract="false" static="true" return="com.twilio.ipmessaging.Constants$StatusListener" name="access$000"
+				visibility="private" abstract="false" static="true" return="java.lang.Object" name="access$000"
 				deprecated="not deprecated" final="false" native="false" synchronized="false" 
 				>
 				<parameter 
@@ -380,6 +395,7 @@
 					>
 				</parameter>
 			</method>
+			-->
 			<!--
 			static {};
 			-->
