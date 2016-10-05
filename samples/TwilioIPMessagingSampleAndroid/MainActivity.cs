@@ -45,6 +45,11 @@ namespace TwilioIPMessagingSample
 
 			TwilioIPMessagingSDK.SetLogLevel((int)Android.Util.LogPriority.Debug);
 
+			//-------------------------------------------------------------------------
+			// mc++ tests
+			IPMessagingClient.Create(this, null, null, null);
+			//-------------------------------------------------------------------------
+
 			if (!TwilioIPMessagingSDK.IsInitialized)
 			{
 				Console.WriteLine("Initialize");
