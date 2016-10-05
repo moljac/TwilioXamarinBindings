@@ -1,59 +1,62 @@
-﻿using System;
-
-using UIKit;
 using Foundation;
 using ObjCRuntime;
-using CoreGraphics;
 
 namespace Twilio.Common
 {
-    [BaseType (typeof (NSObject))]
-    interface TwilioAccessManager
-    {
-        // @property (nonatomic, weak) id<TwilioAccessManagerDelegate> delegate;
-        [NullAllowed]
-        [Export ("delegate", ArgumentSemantic.Weak)]
-        ITwilioAccessManagerDelegate Delegate { get; set; }
+	// @interface TwilioAccessManager : NSObject
+	[BaseType (typeof(NSObject))]
+	interface TwilioAccessManager
+	{
+		[Wrap ("WeakDelegate")]
+		TwilioAccessManagerDelegate Delegate { get; set; }
 
-        // + (instancetype)accessManagerWithToken:(NSString *)token delegate:(id<TwilioAccessManagerDelegate>)delegate;
-        [Static]
-        [Export ("accessManagerWithToken:delegate:")]
-        TwilioAccessManager Create (string token, ITwilioAccessManagerDelegate accessManagerDelegate);
+		// @property (nonatomic, weak) id<TwilioAccessManagerDelegate> delegate;
+		[NullAllowed, Export ("delegate", ArgumentSemantic.Weak)]
+		NSObject WeakDelegate { get; set; }
 
-        // - (void)updateToken:(NSString *)token;
-        [Export ("updateToken:")]
-        void UpdateToken (string token);
+		// +(instancetype)accessManagerWithToken:(NSString *)token delegate:(id<TwilioAccessManagerDelegate>)delegate;
+		[Static]
+		[Export ("accessManagerWithToken:delegate:")]
+		TwilioAccessManager AccessManagerWithToken (string token, TwilioAccessManagerDelegate @delegate);
 
-        // - (NSString *)token;
-        [Export ("token")]
-        string Token { get; }
+		// -(void)updateToken:(NSString *)token;
+		[Export ("updateToken:")]
+		void UpdateToken (string token);
 
-        // - (NSString *)identity;
-        [Export ("identity")]
-        string Identity { get; }
+		// -(NSString *)token;
+		[Export ("token")]
+		//mc++ [Verify (MethodToProperty)]
+		string Token { get; }
 
-        // - (BOOL)isExpired;
-        [Export ("isExpired")]
-        bool IsExpired { get; }
+		// -(NSString *)identity;
+		[Export ("identity")]
+		//mc++ [Verify (MethodToProperty)]
+		string Identity { get; }
 
-        // - (NSDate *)expirationDate;
-        [Export ("expirationDate")]
-        NSDate ExpirationDate { get; }
-    }
+		// -(BOOL)isExpired;
+		[Export ("isExpired")]
+		//mc++ [Verify (MethodToProperty)]
+		bool IsExpired { get; }
 
-    interface ITwilioAccessManagerDelegate { }
+		// -(NSDate *)expirationDate;
+		[Export ("expirationDate")]
+		//mc++ [Verify (MethodToProperty)]
+		NSDate ExpirationDate { get; }
+	}
 
-    [Protocol, Model]
-    [BaseType (typeof (NSObject))]
-    interface TwilioAccessManagerDelegate 
-    {
-        // - (void)accessManagerTokenExpired:(TwilioAccessManager *)accessManager;
-        [Export ("accessManagerTokenExpired:")]
-        void TokenExpired (TwilioAccessManager accessManager);
+	// @protocol TwilioAccessManagerDelegate <NSObject>
+	[Protocol, Model]
+	[BaseType (typeof(NSObject))]
+	interface TwilioAccessManagerDelegate
+	{
+		// @required -(void)accessManagerTokenExpired:(TwilioAccessManager *)accessManager;
+		[Abstract]
+		[Export ("accessManagerTokenExpired:")]
+		void AccessManagerTokenExpired (TwilioAccessManager accessManager);
 
-        // - (void)accessManager:(TwilioAccessManager *)accessManager error:(NSError *)error;
-        [Export ("accessManager:error:")]
-        void Error (TwilioAccessManager accessManager, NSError error);
-    }
+		// @required -(void)accessManager:(TwilioAccessManager *)accessManager error:(NSError *)error;
+		[Abstract]
+		[Export ("accessManager:error:")]
+		void AccessManager (TwilioAccessManager accessManager, NSError error);
+	}
 }
-
