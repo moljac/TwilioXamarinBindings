@@ -268,7 +268,7 @@ namespace TwilioIPMessagingSample
 			activity = parentActivity;
 		}
 
-		List<IMessage> messages = new List<Twilio.IPMessaging.Message>();
+		List<Twilio.IPMessaging.Message> messages = new List<Twilio.IPMessaging.Message>();
 		Activity activity;
 
 		public void UpdateMessages(IEnumerable<Twilio.IPMessaging.Message> msgs)

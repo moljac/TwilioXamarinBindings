@@ -30,8 +30,8 @@ namespace TwilioConversationsSampleiOS
         {
             base.ViewDidLoad ();
 
-            /* LocalMedia represents our local camera and microphone (media) configuration */
-            localMedia = new LocalMedia (this);
+			/* LocalMedia represents our local camera and microphone (media) configuration */
+			localMedia = new LocalMedia(); //mc++ (this);
 
             if (ObjCRuntime.Runtime.Arch == ObjCRuntime.Arch.DEVICE) {
                 /* Microphone is enabled by default, to enable Camera, we first create a Camera capturer */
@@ -48,7 +48,11 @@ namespace TwilioConversationsSampleiOS
              */
             if (camera != null) {
                 camera.VideoTrack.Attach (localVideoContainer);
-                camera.VideoTrack.Delegate = this;
+				camera.VideoTrack.Delegate = //mc++ this;
+					new VideoTrackDelegate()
+					{
+						//
+					};
             }
 
             /* For this demonstration, we always use Speaker audio output (vs. TWCAudioOutputReceiver) */
@@ -93,7 +97,11 @@ namespace TwilioConversationsSampleiOS
         void acceptHandler (Conversation c, NSError error) 
         {
             if (c != null) {
-                c.Delegate = this;
+				c.Delegate = //mc++this;
+					new ConversationDelegate()
+					{
+						//
+					};
                 conversation = c;
             }
             else {
@@ -163,7 +171,10 @@ namespace TwilioConversationsSampleiOS
         public void ConnectedToParticipant (Conversation conversation, Participant participant)
         {
             Console.WriteLine ($"Participant connected: {participant.Identity}");
-            participant.Delegate = this;
+			participant.Delegate = //mc++ this;
+				new ParticipantDelegate()
+				{
+				};
         }
 
         [Export ("conversationEnded:")]
@@ -226,7 +237,10 @@ namespace TwilioConversationsSampleiOS
 
             BeginInvokeOnMainThread (() => {
                 remoteVideoTrack.Attach (this.remoteVideoContainer);
-                remoteVideoTrack.Delegate = this;
+				remoteVideoTrack.Delegate = //mc++ this;
+					new VideoTrackDelegate()
+					{
+					};
             });
         }
 

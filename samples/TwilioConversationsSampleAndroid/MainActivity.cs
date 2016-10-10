@@ -421,7 +421,7 @@ namespace TwilioConversationsSampleAndroid
         /*
      * Conversation Listener
      */
-        IConversationListener conversationListener() {
+        ConversationListener conversationListener() {
             return new ConversationListener {
                 ParticipantConnectedHandler = (conversation, participant) => {
                     conversationStatusTextView.Text = "onParticipantConnected " + participant.Identity;

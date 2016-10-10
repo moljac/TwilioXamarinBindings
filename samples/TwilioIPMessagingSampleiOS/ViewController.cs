@@ -14,7 +14,8 @@ using CoreGraphics;
 
 namespace TwilioIPMessagingSampleiOS
 {
-	public partial class ViewController : UIViewController, ITwilioIPMessagingClientDelegate, IUITextFieldDelegate, ITwilioAccessManagerDelegate
+	public partial class ViewController : UIViewController, ITwilioIPMessagingClientDelegate, IUITextFieldDelegate, 
+		Twilio.IPMessaging.ITwilioAccessManagerDelegate
 	{
 		public ViewController(IntPtr handle) : base(handle)
 		{
@@ -37,7 +38,7 @@ namespace TwilioIPMessagingSampleiOS
 
 			var token = await GetToken();
 			this.NavigationItem.Prompt = $"Logged in as {identity}";
-			var accessManager = TwilioAccessManager.Create(token, this);
+			var accessManager = Twilio.IPMessaging.TwilioAccessManager.Create(token, this);
 			client = TwilioIPMessagingClient.Create(accessManager, this);
 
 			client.GetChannelsList((result, channels) =>
@@ -98,7 +99,7 @@ namespace TwilioIPMessagingSampleiOS
 		}
 
 		[Foundation.Export("ipMessagingClient:channelHistoryLoaded:")]
-		public void ChannelHistoryLoaded(TwilioIPMessagingClient client, Channel channel)
+		public void ChannelHistoryLoaded(TwilioIPMessagingClient client, Channels channel)
 		{
 			var msgs = channel.Messages.AllMessages.OrderBy(m => m.Timestamp);
 
@@ -109,7 +110,7 @@ namespace TwilioIPMessagingSampleiOS
 		}
 
 		[Foundation.Export("ipMessagingClient:errorReceived:")]
-		public void ErrorReceived(TwilioIPMessagingClient client, TwilioError error)
+		public void ErrorReceived(TwilioIPMessagingClient client, /*mc++ Twilio*/Error error)
 		{
 			Console.WriteLine("Error: " + error.Description);
 		}

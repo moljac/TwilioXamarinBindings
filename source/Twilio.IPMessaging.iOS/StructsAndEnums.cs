@@ -4,14 +4,14 @@ using ObjCRuntime;
 namespace Twilio.IPMessaging
 {
 	[Native]
-	public enum TWMClientSynchronizationStrategy : ulong //mc++ nint
+	public enum /*mc++ TWM*/ClientSynchronizationStrategy : ulong //mc++ nint
 	{
 		All,
 		ChannelsList
 	}
 
 	[Native]
-	public enum TWMClientSynchronizationStatus : ulong //mc++ nint
+	public enum /*mc++ TWM*/ClientSynchronizationStatus : ulong //mc++ nint
 	{
 		Started = 0,
 		ChannelsListCompleted,
@@ -20,7 +20,7 @@ namespace Twilio.IPMessaging
 	}
 
 	[Native]
-	public enum TWMLogLevel : ulong //mc++ nint
+	public enum /*mc++ TWM*/LogLevel : ulong //mc++ nint
 	{
 		Fatal = 0,
 		Critical,
@@ -30,7 +30,7 @@ namespace Twilio.IPMessaging
 	}
 
 	[Native]
-	public enum TWMChannelSynchronizationStatus : ulong //mc++ nint
+	public enum /*mc++ TWM*/ChannelSynchronizationStatus : ulong //mc++ nint
 	{
 		None = 0,
 		Identifier,
@@ -40,7 +40,7 @@ namespace Twilio.IPMessaging
 	}
 
 	[Native]
-	public enum TWMChannelStatus : ulong //mc++ nint
+	public enum /*mc++ TWM*/ChannelStatus : ulong //mc++ nint
 	{
 		Invited = 0,
 		Joined,
@@ -48,14 +48,14 @@ namespace Twilio.IPMessaging
 	}
 
 	[Native]
-	public enum TWMChannelType : ulong //mc++ nint
+	public enum /*mc++ TWM*/ChannelType : ulong //mc++ nint
 	{
 		ublic = 0,
 		rivate
 	}
 
 	[Native]
-	public enum TWMUserInfoUpdate : ulong //mc++ nint
+	public enum /*mc++ TWM*/UserInfoUpdate : ulong //mc++ nint
 	{
 		FriendlyName = 0,
 		Attributes,

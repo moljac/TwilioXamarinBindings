@@ -6,7 +6,7 @@ using ObjCRuntime;
 namespace Twilio.Conversations
 {
 	[Native]
-	public enum TWCMediaTrackState : ulong //mc++ nuint
+	public enum /*TWC*/MediaTrackState : ulong //mc++ nuint
 	{
 		Idle = 0,
 		Starting,
@@ -16,14 +16,14 @@ namespace Twilio.Conversations
 	}
 
 	[Native]
-	public enum TWCVideoCaptureSource : ulong //mc++ nuint
+	public enum /*TWC*/VideoCaptureSource : ulong //mc++ nuint
 	{
 		FrontCamera = 0,
 		BackCamera
 	}
 
 	[Native]
-	public enum TWCInviteStatus : ulong //mc++ nuint
+	public enum /*TWC*/InviteStatus : ulong //mc++ nuint
 	{
 		Pending = 0,
 		Accepting,
@@ -34,14 +34,14 @@ namespace Twilio.Conversations
 	}
 
 	[Native]
-	public enum TWCIceTransportPolicy : ulong //mc++ nuint
+	public enum /*TWC*/IceTransportPolicy : ulong //mc++ nuint
 	{
 		All = 0,
 		Relay = 1
 	}
 
 	[Native]
-	public enum TWCVideoOrientation : ulong //mc++ nuint
+	public enum /*TWC*/VideoOrientation : ulong //mc++ nuint
 	{
 		Up = 0,
 		Left,
@@ -54,21 +54,21 @@ namespace Twilio.Conversations
 		// CGAffineTransform TWCVideoOrientationMakeTransform (TWCVideoOrientation orientation);
 		[DllImport ("__Internal")]
 		//mc++ [Verify (PlatformInvoke)]
-		static extern CGAffineTransform TWCVideoOrientationMakeTransform (TWCVideoOrientation orientation);
+		static extern CGAffineTransform TWCVideoOrientationMakeTransform (/*TWC*/VideoOrientation orientation);
 
 		// BOOL TWCVideoOrientationIsRotated (TWCVideoOrientation orientation);
 		[DllImport ("__Internal")]
 		//mc++ [Verify (PlatformInvoke)]
-		static extern bool TWCVideoOrientationIsRotated (TWCVideoOrientation orientation);
+		static extern bool /*TWC*/VideoOrientationIsRotated (/*TWC*/VideoOrientation orientation);
 
 		// TWCAspectRatio TWCAspectRatioMake (NSUInteger numerator, NSUInteger denominator);
 		[DllImport ("__Internal")]
 		//mc++ [Verify (PlatformInvoke)]
-		static extern TWCAspectRatio TWCAspectRatioMake (nuint numerator, nuint denominator);
+		static extern TWCAspectRatio /*TWC*/AspectRatioMake (nuint numerator, nuint denominator);
 	}
 
 	[StructLayout (LayoutKind.Sequential)]
-	public struct TWCAspectRatio
+	public struct /*TWC*/TWCAspectRatio
 	{
 		public nuint numerator;
 
@@ -76,14 +76,14 @@ namespace Twilio.Conversations
 	}
 
 	[Native]
-	public enum TWCVideoRenderingType : ulong //mc++ nuint
+	public enum /*TWC*/VideoRenderingType : ulong //mc++ nuint
 	{
 		Metal = 0,
 		OpenGLES
 	}
 
 	[Native]
-	public enum TWCErrorCode : long //mc++ nuint
+	public enum /*TWC*/ErrorCode : long //mc++ nuint
 	{
 		Unknown = -1,
 		InvalidAuthData = 100,
@@ -109,7 +109,7 @@ namespace Twilio.Conversations
 	}
 
 	[Native]
-	public enum TWCLogLevel : ulong //mc++ nuint
+	public enum /*TWC*/LogLevel : ulong //mc++ nuint
 	{
 		Off = 0,
 		Fatal,
@@ -122,7 +122,7 @@ namespace Twilio.Conversations
 	}
 
 	[Native]
-	public enum TWCLogModule : ulong //mc++ nuint
+	public enum /*TWC*/LogModule : ulong //mc++ nuint
 	{
 		Core = 0,
 		Platform,
@@ -131,7 +131,7 @@ namespace Twilio.Conversations
 	}
 
 	[Native]
-	public enum TWCAudioOutput : ulong //mc++ nuint
+	public enum /*TWC*/AudioOutput : ulong //mc++ nuint
 	{
 		Default = 0,
 		Speaker = 1,

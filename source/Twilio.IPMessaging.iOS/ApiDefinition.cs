@@ -62,18 +62,20 @@ namespace Twilio.IPMessaging
 	}
 
 	// @interface TWMError : NSError
-	[BaseType(typeof(NSError))]
-	interface TWMError
+	[BaseType(typeof(NSError), Name = "TWMError")]
+	//mc++ [BaseType(typeof(NSError))]
+	interface /*mc++ TWM*/Error
 	{
 	}
 
 	// @interface TWMResult : NSObject
-	[BaseType(typeof(NSObject))]
-	interface TWMResult
+	[BaseType(typeof(NSObject), Name = "TWMResult")]
+	//mc++ [BaseType(typeof(NSObject))]
+	interface /*mc++ TWM*/Result
 	{
 		// @property (readonly, nonatomic, strong) TWMError * error;
 		[Export("error", ArgumentSemantic.Strong)]
-		TWMError Error { get; }
+		/*mc++ TWM*/Error Error { get; }
 
 		// -(BOOL)isSuccessful;
 		[Export("isSuccessful")]
@@ -82,16 +84,16 @@ namespace Twilio.IPMessaging
 	}
 
 	// typedef void (^TWMCompletion)(TWMResult *);
-	delegate void TWMCompletion(TWMResult arg0);
+	delegate void /*mc++ TWM*/Completion(/*mc++ TWM*/Result arg0);
 
 	// typedef void (^TWMChannelListCompletion)(TWMResult *, TWMChannels *);
-	delegate void TWMChannelListCompletion(TWMResult arg0, TWMChannels arg1);
+	delegate void /*mc++ TWM*/ChannelListCompletion(/*mc++ TWM*/Result arg0, /*mc++ TWM*/Channels arg1);
 
 	// typedef void (^TWMChannelCompletion)(TWMResult *, TWMChannel *);
-	delegate void TWMChannelCompletion(TWMResult arg0, TWMChannel arg1);
+	delegate void /*mc++ TWM*/ChannelCompletion(/*mc++ TWM*/Result arg0, /*mc++ TWM*/Channel arg1);
 
 	// typedef void (^TWMMessagesCompletion)(TWMResult *, NSArray<TWMMessage *> *);
-	delegate void TWMMessagesCompletion(TWMResult arg0, TWMMessage[] arg1);
+	delegate void /*mc++ TWM*/MessagesCompletion(/*mc++ TWM*/Result arg0, /*mc++ TWM*/Message[] arg1);
 
 	[Static]
 	//mc++ [Verify(ConstantsInterfaceAssociation)]
@@ -99,58 +101,60 @@ namespace Twilio.IPMessaging
 	{
 		// extern NSString *const TWMChannelOptionFriendlyName;
 		[Field("TWMChannelOptionFriendlyName", "__Internal")]
-		NSString TWMChannelOptionFriendlyName { get; }
+		NSString /*mc++ TWM*/ChannelOptionFriendlyName { get; }
 
 		// extern NSString *const TWMChannelOptionUniqueName;
 		[Field("TWMChannelOptionUniqueName", "__Internal")]
-		NSString TWMChannelOptionUniqueName { get; }
+		NSString /*mc++ TWM*/ChannelOptionUniqueName { get; }
 
 		// extern NSString *const TWMChannelOptionType;
 		[Field("TWMChannelOptionType", "__Internal")]
-		NSString TWMChannelOptionType { get; }
+		NSString /*mc++ TWM*/ChannelOptionType { get; }
 
 		// extern NSString *const TWMChannelOptionAttributes;
 		[Field("TWMChannelOptionAttributes", "__Internal")]
-		NSString TWMChannelOptionAttributes { get; }
+		NSString /*mc++ TWM*/ChannelOptionAttributes { get; }
 
 		// extern NSString *const TWMErrorDomain;
 		[Field("TWMErrorDomain", "__Internal")]
-		NSString TWMErrorDomain { get; }
+		NSString /*mc++ TWM*/ErrorDomain { get; }
 
 		// extern const NSInteger TWMErrorGeneric;
 		[Field("TWMErrorGeneric", "__Internal")]
-		nint TWMErrorGeneric { get; }
+		nint /*mc++ TWM*/ErrorGeneric { get; }
 
 		// extern NSString *const TWMErrorMsgKey;
 		[Field("TWMErrorMsgKey", "__Internal")]
-		NSString TWMErrorMsgKey { get; }
+		NSString /*mc++ TWM*/ErrorMsgKey { get; }
 	}
 
 	// @interface TWMChannels : NSObject
-	[BaseType(typeof(NSObject))]
-	interface TWMChannels
+	[BaseType(typeof(NSObject), Name = "TWMChannels")]
+	//mc++ [BaseType(typeof(NSObject))]
+	interface /*mc++ TWM*/Channels
 	{
 		// -(NSArray<TWMChannel *> *)allObjects;
 		[Export("allObjects")]
 		//mc++ [Verify(MethodToProperty)]
-		TWMChannel[] AllObjects(); //mc++ { get; }
+		/*mc++ TWM*/Channel[] AllObjects(); //mc++ { get; }
 
 		// -(void)createChannelWithOptions:(NSDictionary *)options completion:(TWMChannelCompletion)completion;
 		[Export("createChannelWithOptions:completion:")]
-		void CreateChannelWithOptions(NSDictionary options, TWMChannelCompletion completion);
+		void CreateChannelWithOptions(NSDictionary options, /*mc++ TWM*/ChannelCompletion completion);
 
 		// -(TWMChannel *)channelWithId:(NSString *)channelId;
 		[Export("channelWithId:")]
-		TWMChannel ChannelWithId(string channelId);
+		/*mc++ TWM*/Channel ChannelWithId(string channelId);
 
 		// -(TWMChannel *)channelWithUniqueName:(NSString *)uniqueName;
 		[Export("channelWithUniqueName:")]
-		TWMChannel ChannelWithUniqueName(string uniqueName);
+		/*mc++ TWM*/Channel ChannelWithUniqueName(string uniqueName);
 	}
 
 	// @interface TWMMessage : NSObject
-	[BaseType(typeof(NSObject))]
-	interface TWMMessage
+	[BaseType(typeof(NSObject), Name = "TWMMessage")]
+	//mc++ [BaseType(typeof(NSObject))]
+	interface /*mc++ TWM*/Message
 	{
 		// @property (readonly, copy, nonatomic) NSString * sid;
 		[Export("sid")]
@@ -190,7 +194,7 @@ namespace Twilio.IPMessaging
 
 		// -(void)updateBody:(NSString *)body completion:(TWMCompletion)completion;
 		[Export("updateBody:completion:")]
-		void UpdateBody(string body, TWMCompletion completion);
+		void UpdateBody(string body, /*mc++ TWM*/Completion completion);
 
 		// -(NSDictionary<NSString *,id> *)attributes;
 		[Export("attributes")]
@@ -199,12 +203,13 @@ namespace Twilio.IPMessaging
 
 		// -(void)setAttributes:(NSDictionary<NSString *,id> *)attributes completion:(TWMCompletion)completion;
 		[Export("setAttributes:completion:")]
-		void SetAttributes(NSDictionary<NSString, NSObject> attributes, TWMCompletion completion);
+		void SetAttributes(NSDictionary<NSString, NSObject> attributes, /*mc++ TWM*/Completion completion);
 	}
 
 	// @interface TWMMessages : NSObject
-	[BaseType(typeof(NSObject))]
-	interface TWMMessages
+	[BaseType(typeof(NSObject), Name = "TWMMessages")]
+	//mc++ [BaseType(typeof(NSObject))]
+	interface /*mc++ TWM*/Messages
 	{
 		// @property (readonly, copy, nonatomic) NSNumber * lastConsumedMessageIndex;
 		[Export("lastConsumedMessageIndex", ArgumentSemantic.Copy)]
@@ -212,40 +217,40 @@ namespace Twilio.IPMessaging
 
 		// -(TWMMessage *)createMessageWithBody:(NSString *)body;
 		[Export("createMessageWithBody:")]
-		TWMMessage CreateMessageWithBody(string body);
+		/*mc++ TWM*/Message CreateMessageWithBody(string body);
 
 		// -(void)sendMessage:(TWMMessage *)message completion:(TWMCompletion)completion;
 		[Export("sendMessage:completion:")]
-		void SendMessage(TWMMessage message, TWMCompletion completion);
+		void SendMessage(/*mc++ TWM*/Message message, /*mc++ TWM*/Completion completion);
 
 		// -(void)removeMessage:(TWMMessage *)message completion:(TWMCompletion)completion;
 		[Export("removeMessage:completion:")]
-		void RemoveMessage(TWMMessage message, TWMCompletion completion);
+		void RemoveMessage(/*mc++ TWM*/Message message, /*mc++ TWM*/Completion completion);
 
 		// -(NSArray<TWMMessage *> *)allObjects;
 		[Export("allObjects")]
 		//mc++ [Verify(MethodToProperty)]
-		TWMMessage[] AllObjects(); //mc++ { get; }
+		/*mc++ TWM*/Message[] AllObjects(); //mc++ { get; }
 
 		// -(void)getLastMessagesWithCount:(NSUInteger)count completion:(TWMMessagesCompletion)completion;
 		[Export("getLastMessagesWithCount:completion:")]
-		void GetLastMessagesWithCount(nuint count, TWMMessagesCompletion completion);
+		void GetLastMessagesWithCount(nuint count, /*mc++ TWM*/MessagesCompletion completion);
 
 		// -(void)getMessagesBefore:(NSUInteger)index withCount:(NSUInteger)count completion:(TWMMessagesCompletion)completion;
 		[Export("getMessagesBefore:withCount:completion:")]
-		void GetMessagesBefore(nuint index, nuint count, TWMMessagesCompletion completion);
+		void GetMessagesBefore(nuint index, nuint count, /*mc++ TWM*/MessagesCompletion completion);
 
 		// -(void)getMessagesAfter:(NSUInteger)index withCount:(NSUInteger)count completion:(TWMMessagesCompletion)completion;
 		[Export("getMessagesAfter:withCount:completion:")]
-		void GetMessagesAfter(nuint index, nuint count, TWMMessagesCompletion completion);
+		void GetMessagesAfter(nuint index, nuint count, /*mc++ TWM*/MessagesCompletion completion);
 
 		// -(TWMMessage *)messageWithIndex:(NSNumber *)index;
 		[Export("messageWithIndex:")]
-		TWMMessage MessageWithIndex(NSNumber index);
+		/*mc++ TWM*/Message MessageWithIndex(NSNumber index);
 
 		// -(TWMMessage *)messageForConsumptionIndex:(NSNumber *)index;
 		[Export("messageForConsumptionIndex:")]
-		TWMMessage MessageForConsumptionIndex(NSNumber index);
+		/*mc++ TWM*/Message MessageForConsumptionIndex(NSNumber index);
 
 		// -(void)setLastConsumedMessageIndex:(NSNumber *)index;
 		[Export("setLastConsumedMessageIndex:")]
@@ -265,8 +270,9 @@ namespace Twilio.IPMessaging
 	}
 
 	// @interface TWMUserInfo : NSObject
-	[BaseType(typeof(NSObject))]
-	interface TWMUserInfo
+	[BaseType(typeof(NSObject), Name = "TWMUserInfo")]
+	//mc++ [BaseType(typeof(NSObject))]
+	interface /*mc++ TWM*/UserInfo
 	{
 		// @property (readonly, copy, nonatomic) NSString * identity;
 		[Export("identity")]
@@ -283,11 +289,11 @@ namespace Twilio.IPMessaging
 
 		// -(void)setAttributes:(NSDictionary<NSString *,id> *)attributes completion:(TWMCompletion)completion;
 		[Export("setAttributes:completion:")]
-		void SetAttributes(NSDictionary<NSString, NSObject> attributes, TWMCompletion completion);
+		void SetAttributes(NSDictionary<NSString, NSObject> attributes, /*mc++ TWM*/Completion completion);
 
 		// -(void)setFriendlyName:(NSString *)friendlyName completion:(TWMCompletion)completion;
 		[Export("setFriendlyName:completion:")]
-		void SetFriendlyName(string friendlyName, TWMCompletion completion);
+		void SetFriendlyName(string friendlyName, /*mc++ TWM*/Completion completion);
 
 		// -(BOOL)isOnline;
 		[Export("isOnline")]
@@ -301,12 +307,13 @@ namespace Twilio.IPMessaging
 	}
 
 	// @interface TWMMember : NSObject
-	[BaseType(typeof(NSObject))]
-	interface TWMMember
+	[BaseType(typeof(NSObject), Name = "TWMMember")]
+	//mc++ [BaseType(typeof(NSObject))]
+	interface /*mc++ TWM*/Member
 	{
 		// @property (readonly, nonatomic, strong) TWMUserInfo * userInfo;
 		[Export("userInfo", ArgumentSemantic.Strong)]
-		TWMUserInfo UserInfo { get; }
+		/*mc++ TWM*/UserInfo UserInfo { get; }
 
 		// @property (readonly, copy, nonatomic) NSNumber * lastConsumedMessageIndex;
 		[Export("lastConsumedMessageIndex", ArgumentSemantic.Copy)]
@@ -322,33 +329,35 @@ namespace Twilio.IPMessaging
 	}
 
 	// @interface TWMMembers : NSObject
-	[BaseType(typeof(NSObject))]
-	interface TWMMembers
+	[BaseType(typeof(NSObject), Name = "TWMMembers")]
+	//mc++ [BaseType(typeof(NSObject))]
+	interface /*mc++ TWM*/Members
 	{
 		// -(NSArray<TWMMember *> *)allObjects;
 		[Export("allObjects")]
 		//mc++ [Verify(MethodToProperty)]
-		TWMMember[] AllObjects(); //mc++ { get; }
+		/*mc++ TWM*/Member[] AllObjects(); //mc++ { get; }
 
 		// -(void)addByIdentity:(NSString *)identity completion:(TWMCompletion)completion;
 		[Export("addByIdentity:completion:")]
-		void AddByIdentity(string identity, TWMCompletion completion);
+		void AddByIdentity(string identity, /*mc++ TWM*/Completion completion);
 
 		// -(void)inviteByIdentity:(NSString *)identity completion:(TWMCompletion)completion;
 		[Export("inviteByIdentity:completion:")]
-		void InviteByIdentity(string identity, TWMCompletion completion);
+		void InviteByIdentity(string identity, /*mc++ TWM*/Completion completion);
 
 		// -(void)removeMember:(TWMMember *)member completion:(TWMCompletion)completion;
 		[Export("removeMember:completion:")]
-		void RemoveMember(TWMMember member, TWMCompletion completion);
+		void RemoveMember(/*mc++ TWM*/Member member, /*mc++ TWM*/Completion completion);
 	}
 
 	// @interface TWMChannel : NSObject
-	[BaseType(typeof(NSObject))]
-	interface TWMChannel
+	[BaseType(typeof(NSObject), Name = "TWMChannel")]
+	//mc++ [BaseType(typeof(NSObject))]
+	interface /*mc++ TWM*/Channel
 	{
 		[Wrap("WeakDelegate")]
-		TWMChannelDelegate Delegate { get; set; }
+		/*mc++ TWM*/ChannelDelegate Delegate { get; set; }
 
 		// @property (nonatomic, weak) id<TWMChannelDelegate> delegate;
 		[NullAllowed, Export("delegate", ArgumentSemantic.Weak)]
@@ -368,23 +377,23 @@ namespace Twilio.IPMessaging
 
 		// @property (readonly, nonatomic, strong) TWMMessages * messages;
 		[Export("messages", ArgumentSemantic.Strong)]
-		TWMMessages Messages { get; }
+		/*mc++ TWM*/Messages Messages { get; }
 
 		// @property (readonly, nonatomic, strong) TWMMembers * members;
 		[Export("members", ArgumentSemantic.Strong)]
-		TWMMembers Members { get; }
+		/*mc++ TWM*/Members Members { get; }
 
 		// @property (readonly, assign, nonatomic) TWMChannelSynchronizationStatus synchronizationStatus;
 		[Export("synchronizationStatus", ArgumentSemantic.Assign)]
-		TWMChannelSynchronizationStatus SynchronizationStatus { get; }
+		/*mc++ TWM*/ChannelSynchronizationStatus SynchronizationStatus { get; }
 
 		// @property (readonly, assign, nonatomic) TWMChannelStatus status;
 		[Export("status", ArgumentSemantic.Assign)]
-		TWMChannelStatus Status { get; }
+		/*mc++ TWM*/ChannelStatus Status { get; }
 
 		// @property (readonly, assign, nonatomic) TWMChannelType type;
 		[Export("type", ArgumentSemantic.Assign)]
-		TWMChannelType Type { get; }
+		/*mc++ TWM*/ChannelType Type { get; }
 
 		// @property (readonly, nonatomic, strong) NSString * dateCreated;
 		[Export("dateCreated", ArgumentSemantic.Strong)]
@@ -404,7 +413,7 @@ namespace Twilio.IPMessaging
 
 		// -(void)synchronizeWithCompletion:(TWMCompletion)completion;
 		[Export("synchronizeWithCompletion:")]
-		void SynchronizeWithCompletion(TWMCompletion completion);
+		void SynchronizeWithCompletion(/*mc++ TWM*/Completion completion);
 
 		// -(NSDictionary<NSString *,id> *)attributes;
 		[Export("attributes")]
@@ -413,31 +422,31 @@ namespace Twilio.IPMessaging
 
 		// -(void)setAttributes:(NSDictionary<NSString *,id> *)attributes completion:(TWMCompletion)completion;
 		[Export("setAttributes:completion:")]
-		void SetAttributes(NSDictionary<NSString, NSObject> attributes, TWMCompletion completion);
+		void SetAttributes(NSDictionary<NSString, NSObject> attributes, /*mc++ TWM*/Completion completion);
 
 		// -(void)setFriendlyName:(NSString *)friendlyName completion:(TWMCompletion)completion;
 		[Export("setFriendlyName:completion:")]
-		void SetFriendlyName(string friendlyName, TWMCompletion completion);
+		void SetFriendlyName(string friendlyName, /*mc++ TWM*/Completion completion);
 
 		// -(void)setUniqueName:(NSString *)uniqueName completion:(TWMCompletion)completion;
 		[Export("setUniqueName:completion:")]
-		void SetUniqueName(string uniqueName, TWMCompletion completion);
+		void SetUniqueName(string uniqueName, /*mc++ TWM*/Completion completion);
 
 		// -(void)joinWithCompletion:(TWMCompletion)completion;
 		[Export("joinWithCompletion:")]
-		void JoinWithCompletion(TWMCompletion completion);
+		void JoinWithCompletion(/*mc++ TWM*/Completion completion);
 
 		// -(void)declineInvitationWithCompletion:(TWMCompletion)completion;
 		[Export("declineInvitationWithCompletion:")]
-		void DeclineInvitationWithCompletion(TWMCompletion completion);
+		void DeclineInvitationWithCompletion(/*mc++ TWM*/Completion completion);
 
 		// -(void)leaveWithCompletion:(TWMCompletion)completion;
 		[Export("leaveWithCompletion:")]
-		void LeaveWithCompletion(TWMCompletion completion);
+		void LeaveWithCompletion(/*mc++ TWM*/Completion completion);
 
 		// -(void)destroyWithCompletion:(TWMCompletion)completion;
 		[Export("destroyWithCompletion:")]
-		void DestroyWithCompletion(TWMCompletion completion);
+		void DestroyWithCompletion(/*mc++ TWM*/Completion completion);
 
 		// -(void)typing;
 		[Export("typing")]
@@ -445,66 +454,67 @@ namespace Twilio.IPMessaging
 
 		// -(TWMMember *)memberWithIdentity:(NSString *)identity;
 		[Export("memberWithIdentity:")]
-		TWMMember MemberWithIdentity(string identity);
+		/*mc++ TWM*/Member MemberWithIdentity(string identity);
 	}
 
 	// @protocol TWMChannelDelegate <NSObject>
 	[Protocol, Model]
-	[BaseType(typeof(NSObject))]
-	interface TWMChannelDelegate
+	[BaseType(typeof(NSObject), Name = "TWMChannelDelegate")]
+	//mc++ [BaseType(typeof(NSObject))]
+	interface /*mc++ TWM*/ChannelDelegate
 	{
 		// @optional -(void)ipMessagingClient:(TwilioIPMessagingClient *)client channelChanged:(TWMChannel *)channel;
 		[Export("ipMessagingClient:channelChanged:")]
-		void ChannelChanged(TwilioIPMessagingClient client, TWMChannel channel);
+		void ChannelChanged(TwilioIPMessagingClient client, /*mc++ TWM*/Channel channel);
 
 		// @optional -(void)ipMessagingClient:(TwilioIPMessagingClient *)client channelDeleted:(TWMChannel *)channel;
 		[Export("ipMessagingClient:channelDeleted:")]
-		void ChannelDeleted(TwilioIPMessagingClient client, TWMChannel channel);
+		void ChannelDeleted(TwilioIPMessagingClient client, /*mc++ TWM*/Channel channel);
 
 		// @optional -(void)ipMessagingClient:(TwilioIPMessagingClient *)client channel:(TWMChannel *)channel synchronizationStatusChanged:(TWMChannelSynchronizationStatus)status;
 		[Export("ipMessagingClient:channel:synchronizationStatusChanged:")]
-		void Channel(TwilioIPMessagingClient client, TWMChannel channel, TWMChannelSynchronizationStatus status);
+		void Channel(TwilioIPMessagingClient client, /*mc++ TWM*/Channel channel, /*mc++ TWM*/ChannelSynchronizationStatus status);
 
 		// @optional -(void)ipMessagingClient:(TwilioIPMessagingClient *)client channel:(TWMChannel *)channel memberJoined:(TWMMember *)member;
 		[Export("ipMessagingClient:channel:memberJoined:")]
-		void Channel(TwilioIPMessagingClient client, TWMChannel channel, TWMMember member);
+		void Channel(TwilioIPMessagingClient client, /*mc++ TWM*/Channel channel, /*mc++ TWM*/Member member);
 
 		// @optional -(void)ipMessagingClient:(TwilioIPMessagingClient *)client channel:(TWMChannel *)channel memberChanged:(TWMMember *)member;
 		[Export("ipMessagingClient:channel:memberChanged:")]
 		//mc++ void Channel(TwilioIPMessagingClient client, TWMChannel channel, TWMMember member);
-		void ChannelMemberChanged(TwilioIPMessagingClient client, TWMChannel channel, TWMMember member);
+		void ChannelMemberChanged(TwilioIPMessagingClient client, /*mc++ TWM*/Channel channel, /*mc++ TWM*/Member member);
 
 		// @optional -(void)ipMessagingClient:(TwilioIPMessagingClient *)client channel:(TWMChannel *)channel member:(TWMMember *)member userInfo:(TWMUserInfo *)userInfo updated:(TWMUserInfoUpdate)updated;
 		[Export("ipMessagingClient:channel:member:userInfo:updated:")]
 		//mc++ void Channel(TwilioIPMessagingClient client, TWMChannel channel, TWMMember member, TWMUserInfo userInfo, TWMUserInfoUpdate updated);
-		void ChannelUserInfoUpdated(TwilioIPMessagingClient client, TWMChannel channel, TWMMember member, TWMUserInfo userInfo, TWMUserInfoUpdate updated);
+		void ChannelUserInfoUpdated(TwilioIPMessagingClient client, /*mc++ TWM*/Channel channel, /*mc++ TWM*/Member member, /*mc++ TWM*/UserInfo userInfo, /*mc++ TWM*/UserInfoUpdate updated);
 
 		// @optional -(void)ipMessagingClient:(TwilioIPMessagingClient *)client channel:(TWMChannel *)channel memberLeft:(TWMMember *)member;
 		[Export("ipMessagingClient:channel:memberLeft:")]
 		//mc++ void Channel(TwilioIPMessagingClient client, TWMChannel channel, TWMMember member);
-		void ChannelMemberLeft(TwilioIPMessagingClient client, TWMChannel channel, TWMMember member);
+		void ChannelMemberLeft(TwilioIPMessagingClient client, /*mc++ TWM*/Channel channel, /*mc++ TWM*/Member member);
 
 		// @optional -(void)ipMessagingClient:(TwilioIPMessagingClient *)client channel:(TWMChannel *)channel messageAdded:(TWMMessage *)message;
 		[Export("ipMessagingClient:channel:messageAdded:")]
 		//mc++ void Channel(TwilioIPMessagingClient client, TWMChannel channel, TWMMessage message);
-		void ChannelMessageAdded(TwilioIPMessagingClient client, TWMChannel channel, TWMMessage message);
+		void ChannelMessageAdded(TwilioIPMessagingClient client, /*mc++ TWM*/Channel channel, /*mc++ TWM*/Message message);
 
 		// @optional -(void)ipMessagingClient:(TwilioIPMessagingClient *)client channel:(TWMChannel *)channel messageChanged:(TWMMessage *)message;
 		[Export("ipMessagingClient:channel:messageChanged:")]
 		//mc++ void Channel(TwilioIPMessagingClient client, TWMChannel channel, TWMMessage message);
-		void ChannelMessageChanged(TwilioIPMessagingClient client, TWMChannel channel, TWMMessage message);
+		void ChannelMessageChanged(TwilioIPMessagingClient client, /*mc++ TWM*/Channel channel, /*mc++ TWM*/Message message);
 
 		// @optional -(void)ipMessagingClient:(TwilioIPMessagingClient *)client channel:(TWMChannel *)channel messageDeleted:(TWMMessage *)message;
 		[Export("ipMessagingClient:channel:messageDeleted:")]
-		void Channel(TwilioIPMessagingClient client, TWMChannel channel, TWMMessage message);
+		void Channel(TwilioIPMessagingClient client, /*mc++ TWM*/Channel channel, /*mc++ TWM*/Message message);
 
 		// @optional -(void)ipMessagingClient:(TwilioIPMessagingClient *)client typingStartedOnChannel:(TWMChannel *)channel member:(TWMMember *)member;
 		[Export("ipMessagingClient:typingStartedOnChannel:member:")]
-		void TypingStartedOnChannel(TwilioIPMessagingClient client, TWMChannel channel, TWMMember member);
+		void TypingStartedOnChannel(TwilioIPMessagingClient client, /*mc++ TWM*/Channel channel, /*mc++ TWM*/Member member);
 
 		// @optional -(void)ipMessagingClient:(TwilioIPMessagingClient *)client typingEndedOnChannel:(TWMChannel *)channel member:(TWMMember *)member;
 		[Export("ipMessagingClient:typingEndedOnChannel:member:")]
-		void TypingEndedOnChannel(TwilioIPMessagingClient client, TWMChannel channel, TWMMember member);
+		void TypingEndedOnChannel(TwilioIPMessagingClient client, /*mc++ TWM*/Channel channel, /*mc++ TWM*/Member member);
 	}
 
 	// @interface TwilioIPMessagingClient : NSObject
@@ -524,18 +534,18 @@ namespace Twilio.IPMessaging
 
 		// @property (readonly, nonatomic, strong) TWMUserInfo * userInfo;
 		[Export("userInfo", ArgumentSemantic.Strong)]
-		TWMUserInfo UserInfo { get; }
+		/*mc++ TWM*/UserInfo UserInfo { get; }
 
 		// @property (readonly, assign, nonatomic) TWMClientSynchronizationStatus synchronizationStatus;
 		[Export("synchronizationStatus", ArgumentSemantic.Assign)]
-		TWMClientSynchronizationStatus SynchronizationStatus { get; }
+		/*mc++ TWM*/ClientSynchronizationStatus SynchronizationStatus { get; }
 
 		// +(TWMLogLevel)logLevel;
 		// +(void)setLogLevel:(TWMLogLevel)logLevel;
 		[Static]
 		[Export("logLevel")]
 		//mc++ [Verify(MethodToProperty)]
-		TWMLogLevel LogLevel { get; set; }
+		/*mc++ TWM*/LogLevel LogLevel { get; set; }
 
 		// +(TwilioIPMessagingClient *)ipMessagingClientWithAccessManager:(TwilioAccessManager *)accessManager properties:(TwilioIPMessagingClientProperties *)properties delegate:(id<TwilioIPMessagingClientDelegate>)delegate;
 		[Static]
@@ -550,7 +560,7 @@ namespace Twilio.IPMessaging
 		// -(TWMChannels *)channelsList;
 		[Export("channelsList")]
 		//mc++ [Verify(MethodToProperty)]
-		TWMChannels ChannelsList { get; }
+		/*mc++ TWM*/Channels ChannelsList { get; }
 
 		// -(void)registerWithToken:(NSData *)token;
 		[Export("registerWithToken:")]
@@ -580,7 +590,7 @@ namespace Twilio.IPMessaging
 	{
 		// @property (assign, nonatomic) TWMClientSynchronizationStrategy synchronizationStrategy;
 		[Export("synchronizationStrategy", ArgumentSemantic.Assign)]
-		TWMClientSynchronizationStrategy SynchronizationStrategy { get; set; }
+		/*mc++ TWM*/ClientSynchronizationStrategy SynchronizationStrategy { get; set; }
 
 		// @property (assign, nonatomic) uint initialMessageCount;
 		[Export("initialMessageCount")]
@@ -599,72 +609,72 @@ namespace Twilio.IPMessaging
 		// @optional -(void)ipMessagingClient:(TwilioIPMessagingClient *)client synchronizationStatusChanged:(TWMClientSynchronizationStatus)status;
 		[Export("ipMessagingClient:synchronizationStatusChanged:")]
 		//mc++ void IpMessagingClient(TwilioIPMessagingClient client, TWMClientSynchronizationStatus status);
-		void IpMessagingClientStatusChanged(TwilioIPMessagingClient client, TWMClientSynchronizationStatus status);
+		void IpMessagingClientStatusChanged(TwilioIPMessagingClient client, /*mc++ TWM*/ClientSynchronizationStatus status);
 
 		// @optional -(void)ipMessagingClient:(TwilioIPMessagingClient *)client channelAdded:(TWMChannel *)channel;
 		[Export("ipMessagingClient:channelAdded:")]
 		//mc++ void IpMessagingClient(TwilioIPMessagingClient client, TWMChannel channel);
-		void IpMessagingClientChannelAdded(TwilioIPMessagingClient client, TWMChannel channel);
+		void IpMessagingClientChannelAdded(TwilioIPMessagingClient client, /*mc++ TWM*/Channel channel);
 
 		// @optional -(void)ipMessagingClient:(TwilioIPMessagingClient *)client channelChanged:(TWMChannel *)channel;
 		[Export("ipMessagingClient:channelChanged:")]
 		//mc++ void IpMessagingClient(TwilioIPMessagingClient client, TWMChannel channel);
-		void IpMessagingClientChannelChanged(TwilioIPMessagingClient client, TWMChannel channel);
+		void IpMessagingClientChannelChanged(TwilioIPMessagingClient client, /*mc++ TWM*/Channel channel);
 
 		// @optional -(void)ipMessagingClient:(TwilioIPMessagingClient *)client channelDeleted:(TWMChannel *)channel;
 		[Export("ipMessagingClient:channelDeleted:")]
 		//mc++ void IpMessagingClient(TwilioIPMessagingClient client, TWMChannel channel);
-		void IpMessagingClientChannelDeleted(TwilioIPMessagingClient client, TWMChannel channel);
+		void IpMessagingClientChannelDeleted(TwilioIPMessagingClient client, /*mc++ TWM*/Channel channel);
 
 		// @optional -(void)ipMessagingClient:(TwilioIPMessagingClient *)client channel:(TWMChannel *)channel synchronizationStatusChanged:(TWMChannelSynchronizationStatus)status;
 		[Export("ipMessagingClient:channel:synchronizationStatusChanged:")]
 		//mc++ void IpMessagingClient(TwilioIPMessagingClient client, TWMChannel channel, TWMChannelSynchronizationStatus status);
-		void IpMessagingClientStatusChanged(TwilioIPMessagingClient client, TWMChannel channel, TWMChannelSynchronizationStatus status);
+		void IpMessagingClientStatusChanged(TwilioIPMessagingClient client, /*mc++ TWM*/Channel channel, /*mc++ TWM*/ChannelSynchronizationStatus status);
 
 		// @optional -(void)ipMessagingClient:(TwilioIPMessagingClient *)client channel:(TWMChannel *)channel memberJoined:(TWMMember *)member;
 		[Export("ipMessagingClient:channel:memberJoined:")]
 		//mc++ void IpMessagingClient(TwilioIPMessagingClient client, TWMChannel channel, TWMMember member);
-		void IpMessagingClientMemberJoined(TwilioIPMessagingClient client, TWMChannel channel, TWMMember member);
+		void IpMessagingClientMemberJoined(TwilioIPMessagingClient client, /*mc++ TWM*/Channel channel, /*mc++ TWM*/Member member);
 
 		// @optional -(void)ipMessagingClient:(TwilioIPMessagingClient *)client channel:(TWMChannel *)channel memberChanged:(TWMMember *)member;
 		[Export("ipMessagingClient:channel:memberChanged:")]
 		//mc++ void IpMessagingClient(TwilioIPMessagingClient client, TWMChannel channel, TWMMember member);
-		void IpMessagingClientMemberChanged(TwilioIPMessagingClient client, TWMChannel channel, TWMMember member);
+		void IpMessagingClientMemberChanged(TwilioIPMessagingClient client, /*mc++ TWM*/Channel channel, /*mc++ TWM*/Member member);
 
 		// @optional -(void)ipMessagingClient:(TwilioIPMessagingClient *)client channel:(TWMChannel *)channel memberLeft:(TWMMember *)member;
 		[Export("ipMessagingClient:channel:memberLeft:")]
 		//mc++ void IpMessagingClient(TwilioIPMessagingClient client, TWMChannel channel, TWMMember member);
-		void IpMessagingClientMemberLeft(TwilioIPMessagingClient client, TWMChannel channel, TWMMember member);
+		void IpMessagingClientMemberLeft(TwilioIPMessagingClient client, /*mc++ TWM*/Channel channel, /*mc++ TWM*/Member member);
 
 		// @optional -(void)ipMessagingClient:(TwilioIPMessagingClient *)client channel:(TWMChannel *)channel messageAdded:(TWMMessage *)message;
 		[Export("ipMessagingClient:channel:messageAdded:")]
 		//mc++ void IpMessagingClient(TwilioIPMessagingClient client, TWMChannel channel, TWMMessage message);
-		void IpMessagingClientMessageAdded(TwilioIPMessagingClient client, TWMChannel channel, TWMMessage message);
+		void IpMessagingClientMessageAdded(TwilioIPMessagingClient client, /*mc++ TWM*/Channel channel, /*mc++ TWM*/Message message);
 
 		// @optional -(void)ipMessagingClient:(TwilioIPMessagingClient *)client channel:(TWMChannel *)channel messageChanged:(TWMMessage *)message;
 		[Export("ipMessagingClient:channel:messageChanged:")]
 		//mc++ void IpMessagingClient(TwilioIPMessagingClient client, TWMChannel channel, TWMMessage message);
-		void IpMessagingClientMessageChanged(TwilioIPMessagingClient client, TWMChannel channel, TWMMessage message);
+		void IpMessagingClientMessageChanged(TwilioIPMessagingClient client, /*mc++ TWM*/Channel channel, /*mc++ TWM*/Message message);
 
 		// @optional -(void)ipMessagingClient:(TwilioIPMessagingClient *)client channel:(TWMChannel *)channel messageDeleted:(TWMMessage *)message;
 		[Export("ipMessagingClient:channel:messageDeleted:")]
 		//mc++ void IpMessagingClient(TwilioIPMessagingClient client, TWMChannel channel, TWMMessage message);
-		void IpMessagingClientMessageDeleted(TwilioIPMessagingClient client, TWMChannel channel, TWMMessage message);
+		void IpMessagingClientMessageDeleted(TwilioIPMessagingClient client, /*mc++ TWM*/Channel channel, /*mc++ TWM*/Message message);
 
 		// @optional -(void)ipMessagingClient:(TwilioIPMessagingClient *)client errorReceived:(TWMError *)error;
 		[Export("ipMessagingClient:errorReceived:")]
 		//mc++ void IpMessagingClient(TwilioIPMessagingClient client, TWMError error);
-		void IpMessagingClientErrorReceived(TwilioIPMessagingClient client, TWMError error);
+		void IpMessagingClientErrorReceived(TwilioIPMessagingClient client, /*mc++ TWM*/Error error);
 
 		// @optional -(void)ipMessagingClient:(TwilioIPMessagingClient *)client typingStartedOnChannel:(TWMChannel *)channel member:(TWMMember *)member;
 		[Export("ipMessagingClient:typingStartedOnChannel:member:")]
 		//mc++ void IpMessagingClient(TwilioIPMessagingClient client, TWMChannel channel, TWMMember member);
-		void IpMessagingClientTypingStarted(TwilioIPMessagingClient client, TWMChannel channel, TWMMember member);
+		void IpMessagingClientTypingStarted(TwilioIPMessagingClient client, /*mc++ TWM*/Channel channel, /*mc++ TWM*/Member member);
 
 		// @optional -(void)ipMessagingClient:(TwilioIPMessagingClient *)client typingEndedOnChannel:(TWMChannel *)channel member:(TWMMember *)member;
 		[Export("ipMessagingClient:typingEndedOnChannel:member:")]
 		//mc++ void IpMessagingClient(TwilioIPMessagingClient client, TWMChannel channel, TWMMember member);
-		void IpMessagingClientTypingEnded(TwilioIPMessagingClient client, TWMChannel channel, TWMMember member);
+		void IpMessagingClientTypingEnded(TwilioIPMessagingClient client, /*mc++ TWM*/Channel channel, /*mc++ TWM*/Member member);
 
 		// @optional -(void)ipMessagingClientToastSubscribed:(TwilioIPMessagingClient *)client;
 		[Export("ipMessagingClientToastSubscribed:")]
@@ -673,16 +683,16 @@ namespace Twilio.IPMessaging
 		// @optional -(void)ipMessagingClient:(TwilioIPMessagingClient *)client toastReceivedOnChannel:(TWMChannel *)channel message:(TWMMessage *)message;
 		[Export("ipMessagingClient:toastReceivedOnChannel:message:")]
 		//mc++ void IpMessagingClient(TwilioIPMessagingClient client, TWMChannel channel, TWMMessage message);
-		void IpMessagingClientToastReceived(TwilioIPMessagingClient client, TWMChannel channel, TWMMessage message);
+		void IpMessagingClientToastReceived(TwilioIPMessagingClient client, /*mc++ TWM*/Channel channel, /*mc++ TWM*/Message message);
 
 		// @optional -(void)ipMessagingClient:(TwilioIPMessagingClient *)client toastRegistrationFailedWithError:(TWMError *)error;
 		[Export("ipMessagingClient:toastRegistrationFailedWithError:")]
 		//mc++ void IpMessagingClient(TwilioIPMessagingClient client, TWMError error);
-		void IpMessagingClient(TwilioIPMessagingClient client, TWMError error);
+		void IpMessagingClient(TwilioIPMessagingClient client, /*mc++ TWM*/Error error);
 
 		// @optional -(void)ipMessagingClient:(TwilioIPMessagingClient *)client userInfo:(TWMUserInfo *)userInfo updated:(TWMUserInfoUpdate)updated;
 		[Export("ipMessagingClient:userInfo:updated:")]
 		//mc++ void IpMessagingClient(TwilioIPMessagingClient client, TWMUserInfo userInfo, TWMUserInfoUpdate updated);
-		void IpMessagingClient(TwilioIPMessagingClient client, TWMUserInfo userInfo, TWMUserInfoUpdate updated);
+		void IpMessagingClient(TwilioIPMessagingClient client, /*mc++ TWM*/UserInfo userInfo, /*mc++ TWM*/UserInfoUpdate updated);
 	}
 }

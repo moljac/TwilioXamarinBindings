@@ -27,9 +27,9 @@ namespace TwilioConversationsSampleiOS
 
             var token = await GetIdentity ();
 
-            TwilioConversationsClient.LogLevel = LogLevel.Verbose;
+			TwilioConversationsClient.LogLevel = LogLevel.All; //mc++ .Verbose;
 
-            twilio = TwilioConversationsClient.From (token, this);
+			twilio = TwilioConversationsClient.FromObject((NSObject)token); //mc++ .From(token, this);
             twilio.Listen ();
         }
 
