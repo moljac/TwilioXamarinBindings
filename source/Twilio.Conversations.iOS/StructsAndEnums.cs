@@ -64,11 +64,11 @@ namespace Twilio.Conversations
 		// TWCAspectRatio TWCAspectRatioMake (NSUInteger numerator, NSUInteger denominator);
 		[DllImport ("__Internal")]
 		//mc++ [Verify (PlatformInvoke)]
-		static extern TWCAspectRatio /*TWC*/AspectRatioMake (nuint numerator, nuint denominator);
+		static extern /*TWC*/AspectRatio /*TWC*/AspectRatioMake (nuint numerator, nuint denominator);
 	}
 
 	[StructLayout (LayoutKind.Sequential)]
-	public struct /*TWC*/TWCAspectRatio
+	public struct /*TWC*/AspectRatio
 	{
 		public nuint numerator;
 

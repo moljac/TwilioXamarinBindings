@@ -19,7 +19,7 @@ namespace Twilio.Conversations
 
 		// @property (readonly, assign, nonatomic) TWCMediaTrackState state;
 		[Export("state", ArgumentSemantic.Assign)]
-		/*TWC*/MediaTrackState State { get; }
+		/*mc++ TWC*/MediaTrackState State { get; }
 
 		// @property (readonly, copy, nonatomic) NSString * trackId;
 		[Export("trackId")]
@@ -50,59 +50,64 @@ namespace Twilio.Conversations
 		LocalVideoTrack VideoTrack { get; set; }
 	}
 
-	//mc++ [Static]
+	// Avoid linker stripping the following symbols
+	// FieldAttribute does not support certain (all) types
+	//		in this case structs (struct CMVideoDimensions)
+	//		these symbols are used in Extra.Fields.cs
+	// [Internal] 	// already applied
+	// [Static]		// already applied
 	//mc++ [Verify(ConstantsInterfaceAssociation)]
-	partial interface Constants
+	partial interface VideoConstraintsFieldsSentinel //mc++Constants
 	{
 		// extern const CMVideoDimensions TWCVideoConstraintsSize352x288;
 		[Field("TWCVideoConstraintsSize352x288", "__Internal")]
 		//mc++ CMVideoDimensions TWCVideoConstraintsSize352x288 { get; }
-		IntPtr VideoConstraintsSize352x288 { get; }
+		IntPtr /*mc++ VideoConstraints*/Size352x288 { get; }
 
 		// extern const CMVideoDimensions TWCVideoConstraintsSize480x360;
 		[Field("TWCVideoConstraintsSize480x360", "__Internal")]
 		//mc++ CMVideoDimensions TWCVideoConstraintsSize480x360 { get; }
-		IntPtr VideoConstraintsSize480x360 { get; }
+		IntPtr /*mc++ VideoConstraints*/Size480x360 { get; }
 
 		// extern const CMVideoDimensions TWCVideoConstraintsSize640x480;
 		[Field("TWCVideoConstraintsSize640x480", "__Internal")]
 		//mc++ CMVideoDimensions TWCVideoConstraintsSize640x480 { get; }
-		IntPtr VideoConstraintsSize640x480 { get; }
+		IntPtr /*mc++ VideoConstraints*/Size640x480 { get; }
 
 		// extern const CMVideoDimensions TWCVideoConstraintsSize960x540;
 		[Field("TWCVideoConstraintsSize960x540", "__Internal")]
 		//mc++ CMVideoDimensions TWCVideoConstraintsSize960x540 { get; }
-		IntPtr VideoConstraintsSize960x540 { get; }
+		IntPtr /*mc++ VideoConstraints*/Size960x540 { get; }
 
 		// extern const CMVideoDimensions TWCVideoConstraintsSize1280x720;
 		[Field("TWCVideoConstraintsSize1280x720", "__Internal")]
 		//mc++ CMVideoDimensions TWCVideoConstraintsSize1280x720 { get; }
-		IntPtr VideoConstraintsSize1280x720 { get; }
+		IntPtr /*mc++ VideoConstraints*/Size1280x720 { get; }
 
 		// extern const CMVideoDimensions TWCVideoConstraintsSize1280x960;
 		[Field("TWCVideoConstraintsSize1280x960", "__Internal")]
 		//mc++ CMVideoDimensions TWCVideoConstraintsSize1280x960 { get; }
-		IntPtr TWCVideoConstraintsSize1280x960 { get; }
+		IntPtr /*mc++ VideoConstraints*/Size1280x960 { get; }
 
 		// extern const NSUInteger TWCVideoConstraintsFrameRate30;
 		[Field("TWCVideoConstraintsFrameRate30", "__Internal")]
-		nuint TWCVideoConstraintsFrameRate30 { get; }
+		nuint /*mc++ VideoConstraints*/FrameRate30 { get; }
 
 		// extern const NSUInteger TWCVideoConstraintsFrameRate24;
 		[Field("TWCVideoConstraintsFrameRate24", "__Internal")]
-		nuint TWCVideoConstraintsFrameRate24 { get; }
+		nuint /*mc++ VideoConstraints*/FrameRate24 { get; }
 
 		// extern const NSUInteger TWCVideoConstraintsFrameRate20;
 		[Field("TWCVideoConstraintsFrameRate20", "__Internal")]
-		nuint TWCVideoConstraintsFrameRate20 { get; }
+		nuint /*mc++ VideoConstraints*/FrameRate20 { get; }
 
 		// extern const NSUInteger TWCVideoConstraintsFrameRate15;
 		[Field("TWCVideoConstraintsFrameRate15", "__Internal")]
-		nuint TWCVideoConstraintsFrameRate15 { get; }
+		nuint /*mc++ VideoConstraints*/FrameRate15 { get; }
 
 		// extern const NSUInteger TWCVideoConstraintsFrameRate10;
 		[Field("TWCVideoConstraintsFrameRate10", "__Internal")]
-		nuint TWCVideoConstraintsFrameRate10 { get; }
+		nuint /*mc++ VideoConstraints*/FrameRate10 { get; }
 	}
 
 	// @protocol TWCCameraCapturerDelegate <NSObject>
@@ -172,7 +177,7 @@ namespace Twilio.Conversations
 
 		// -(instancetype _Nonnull)initWithDelegate:(id<TWCCameraCapturerDelegate> _Nullable)delegate source:(TWCVideoCaptureSource)source;
 		[Export("initWithDelegate:source:")]
-		IntPtr Constructor([NullAllowed] /*TWC*/CameraCapturerDelegate @delegate, /*TWC*/VideoCaptureSource source);
+		IntPtr Constructor([NullAllowed] /*mc++ TWC*/CameraCapturerDelegate @delegate, /*mc++ TWC*/VideoCaptureSource source);
 
 		// -(BOOL)startPreview;
 		[Export("startPreview")]
@@ -206,7 +211,7 @@ namespace Twilio.Conversations
 	{
 		// @property (readonly, nonatomic, strong) TWCIceOptions * _Nonnull iceOptions;
 		[Export("iceOptions", ArgumentSemantic.Strong)]
-		/*TWC*/IceOptions IceOptions { get; }
+		/*mc++ TWC*/IceOptions IceOptions { get; }
 
 		// @property (readonly, assign, nonatomic) BOOL preferH264;
 		[Export("preferH264")]
@@ -214,24 +219,24 @@ namespace Twilio.Conversations
 
 		// -(instancetype _Null_unspecified)initWithIceOptions:(TWCIceOptions * _Nonnull)options;
 		[Export("initWithIceOptions:")]
-		IntPtr Constructor(/*TWC*/IceOptions options);
+		IntPtr Constructor(/*mc++ TWC*/IceOptions options);
 
 		// -(instancetype _Null_unspecified)initWithIceOptions:(TWCIceOptions * _Nonnull)options preferH264:(BOOL)preferH264;
 		[Export("initWithIceOptions:preferH264:")]
-		IntPtr Constructor(/*TWC*/IceOptions options, bool preferH264);
+		IntPtr Constructor(/*mc++ TWC*/IceOptions options, bool preferH264);
 	}
 
 	// typedef void (^TWCInviteAcceptanceBlock)(TWCConversation * _Nullable, NSError * _Nullable);
-	delegate void /*TWC*/InviteAcceptanceBlock([NullAllowed] /*TWC*/Conversation arg0, [NullAllowed] NSError arg1);
+	delegate void /*mc++ TWC*/InviteAcceptanceBlock([NullAllowed] /*mc++ TWC*/Conversation arg0, [NullAllowed] NSError arg1);
 
 	// @interface TWCOutgoingInvite : NSObject
 	//mc++ [BaseType(typeof(NSObject))]
 	[BaseType(typeof(NSObject), Name = "TWCOutgoingInvite")]
-	interface /*TWC*/OutgoingInvite
+	interface /*mc++ TWC*/OutgoingInvite
 	{
 		// @property (readonly, assign, nonatomic) TWCInviteStatus status;
 		[Export("status", ArgumentSemantic.Assign)]
-		/*TWC*/InviteStatus Status { get; }
+		/*mc++ TWC*/InviteStatus Status { get; }
 
 		// @property (readonly, copy, nonatomic) NSArray<NSString *> * _Nonnull to;
 		[Export("to", ArgumentSemantic.Copy)]
@@ -245,20 +250,20 @@ namespace Twilio.Conversations
 	// @interface TWCMedia : NSObject
 	//mc++ [BaseType(typeof(NSObject))]
 	[BaseType(typeof(NSObject), Name = "TWCMedia")]
-	interface /*TWC*/Media
+	interface /*mc++ TWC*/Media
 	{
 		// @property (readonly, nonatomic, strong) NSArray<TWCAudioTrack *> * _Nonnull audioTracks;
 		[Export("audioTracks", ArgumentSemantic.Strong)]
-		/*TWC*/AudioTrack[] AudioTracks { get; }
+		/*mc++ TWC*/AudioTrack[] AudioTracks { get; }
 
 		// @property (readonly, nonatomic, strong) NSArray<TWCVideoTrack *> * _Nonnull videoTracks;
 		[Export("videoTracks", ArgumentSemantic.Strong)]
-		/*TWC*/VideoTrack[] VideoTracks { get; }
+		/*mc++ TWC*/VideoTrack[] VideoTracks { get; }
 
 		// -(TWCMediaTrack * _Nullable)getTrack:(NSString * _Nonnull)trackId;
 		[Export("getTrack:")]
 		[return: NullAllowed]
-		/*TWC*/MediaTrack GetTrack(string trackId);
+		/*mc++ TWC*/MediaTrack GetTrack(string trackId);
 	}
 
 	// @protocol TWCLocalMediaDelegate <NSObject>
@@ -269,21 +274,21 @@ namespace Twilio.Conversations
 	{
 		// @optional -(void)localMedia:(TWCLocalMedia * _Nonnull)media didAddVideoTrack:(TWCVideoTrack * _Nonnull)videoTrack;
 		[Export("localMedia:didAddVideoTrack:")]
-		void DidAddVideoTrack(/*TWC*/LocalMedia media, /*TWC*/VideoTrack videoTrack);
+		void DidAddVideoTrack(/*mc++ TWC*/LocalMedia media, /*mc++ TWC*/VideoTrack videoTrack);
 
 		// @optional -(void)localMedia:(TWCLocalMedia * _Nonnull)media didFailToAddVideoTrack:(TWCVideoTrack * _Nonnull)videoTrack error:(NSError * _Nonnull)error;
 		[Export("localMedia:didFailToAddVideoTrack:error:")]
-		void DidFailToAddVideoTrack(/*TWC*/LocalMedia media, /*TWC*/VideoTrack videoTrack, NSError error);
+		void DidFailToAddVideoTrack(/*mc++ TWC*/LocalMedia media, /*mc++ TWC*/VideoTrack videoTrack, NSError error);
 
 		// @optional -(void)localMedia:(TWCLocalMedia * _Nonnull)media didRemoveVideoTrack:(TWCVideoTrack * _Nonnull)videoTrack;
 		[Export("localMedia:didRemoveVideoTrack:")]
-		void DidRemoveVideoTrack(/*TWC*/LocalMedia media, /*TWC*/VideoTrack videoTrack);
+		void DidRemoveVideoTrack(/*mc++ TWC*/LocalMedia media, /*mc++ TWC*/VideoTrack videoTrack);
 	}
 
 	// @interface TWCLocalMedia : TWCMedia
 	//mc++ [BaseType(typeof(TWCMedia))]
-	[BaseType(typeof(/*TWC*/Media), Name = "TWCLocalMedia")]
-	interface /*TWC*/LocalMedia
+	[BaseType(typeof(/*mc++ TWC*/Media), Name = "TWCLocalMedia")]
+	interface /*mc++ TWC*/LocalMedia
 	{
 		// @property (getter = isMicrophoneMuted, assign, nonatomic) BOOL microphoneMuted;
 		[Export("microphoneMuted")]
@@ -295,7 +300,7 @@ namespace Twilio.Conversations
 
 		[Wrap("WeakDelegate")]
 		[NullAllowed]
-		/*TWC*/LocalMediaDelegate Delegate { get; set; }
+		/*mc++ TWC*/LocalMediaDelegate Delegate { get; set; }
 
 		// @property (nonatomic, weak) id<TWCLocalMediaDelegate> _Nullable delegate;
 		[NullAllowed, Export("delegate", ArgumentSemantic.Weak)]
@@ -303,33 +308,33 @@ namespace Twilio.Conversations
 
 		// -(instancetype _Nullable)initWithDelegate:(id<TWCLocalMediaDelegate> _Nullable)delegate;
 		[Export("initWithDelegate:")]
-		IntPtr Constructor([NullAllowed] /*TWC*/LocalMediaDelegate @delegate);
+		IntPtr Constructor([NullAllowed] /*mc++ TWC*/LocalMediaDelegate @delegate);
 
 		// -(BOOL)addTrack:(TWCVideoTrack * _Nonnull)track;
 		[Export("addTrack:")]
-		bool AddTrack(/*TWC*/VideoTrack track);
+		bool AddTrack(/*mc++ TWC*/VideoTrack track);
 
 		// -(BOOL)addTrack:(TWCVideoTrack * _Nonnull)track error:(NSError * _Nullable * _Nullable)error;
 		[Export("addTrack:error:")]
-		bool AddTrack(/*TWC*/VideoTrack track, [NullAllowed] out NSError error);
+		bool AddTrack(/*mc++ TWC*/VideoTrack track, [NullAllowed] out NSError error);
 
 		// -(BOOL)removeTrack:(TWCVideoTrack * _Nonnull)track;
 		[Export("removeTrack:")]
-		bool RemoveTrack(/*TWC*/VideoTrack track);
+		bool RemoveTrack(/*mc++ TWC*/VideoTrack track);
 
 		// -(BOOL)removeTrack:(TWCVideoTrack * _Nonnull)track error:(NSError * _Nullable * _Nullable)error;
 		[Export("removeTrack:error:")]
-		bool RemoveTrack(/*TWC*/VideoTrack track, [NullAllowed] out NSError error);
+		bool RemoveTrack(/*mc++ TWC*/VideoTrack track, [NullAllowed] out NSError error);
 
 		// -(TWCCameraCapturer * _Nullable)addCameraTrack;
 		[NullAllowed, Export("addCameraTrack")]
 		//mc++ [Verify(MethodToProperty)]
-		/*TWC*/CameraCapturer AddCameraTrack(); //mc++ { get; }
+		/*mc++ TWC*/CameraCapturer AddCameraTrack(); //mc++ { get; }
 
 		// -(TWCCameraCapturer * _Nullable)addCameraTrack:(NSError * _Nullable * _Nullable)error;
 		[Export("addCameraTrack:")]
 		[return: NullAllowed]
-		/*TWC*/CameraCapturer AddCameraTrack([NullAllowed] out NSError error);
+		/*mc++ TWC*/CameraCapturer AddCameraTrack([NullAllowed] out NSError error);
 
 		// -(BOOL)addMicrophone;
 		[Export("addMicrophone")]
@@ -350,33 +355,33 @@ namespace Twilio.Conversations
 	{
 		// @optional -(void)participant:(TWCParticipant * _Nonnull)participant addedVideoTrack:(TWCVideoTrack * _Nonnull)videoTrack;
 		[Export("participant:addedVideoTrack:")]
-		void AddedVideoTrack(/*TWC*/Participant participant, /*TWC*/VideoTrack videoTrack);
+		void AddedVideoTrack(/*mc++ TWC*/Participant participant, /*mc++ TWC*/VideoTrack videoTrack);
 
 		// @optional -(void)participant:(TWCParticipant * _Nonnull)participant removedVideoTrack:(TWCVideoTrack * _Nonnull)videoTrack;
 		[Export("participant:removedVideoTrack:")]
-		void RemovedVideoTrack(/*TWC*/Participant participant, /*TWC*/VideoTrack videoTrack);
+		void RemovedVideoTrack(/*mc++ TWC*/Participant participant, /*mc++ TWC*/VideoTrack videoTrack);
 
 		// @optional -(void)participant:(TWCParticipant * _Nonnull)participant addedAudioTrack:(TWCAudioTrack * _Nonnull)audioTrack;
 		[Export("participant:addedAudioTrack:")]
-		void AddedAudioTrack(/*TWC*/Participant participant, /*TWC*/AudioTrack audioTrack);
+		void AddedAudioTrack(/*mc++ TWC*/Participant participant, /*mc++ TWC*/AudioTrack audioTrack);
 
 		// @optional -(void)participant:(TWCParticipant * _Nonnull)participant removedAudioTrack:(TWCAudioTrack * _Nonnull)audioTrack;
 		[Export("participant:removedAudioTrack:")]
-		void RemovedAudioTrack(/*TWC*/Participant participant, /*TWC*/AudioTrack audioTrack);
+		void RemovedAudioTrack(/*mc++ TWC*/Participant participant, /*mc++ TWC*/AudioTrack audioTrack);
 
 		// @optional -(void)participant:(TWCParticipant * _Nonnull)participant disabledTrack:(TWCMediaTrack * _Nonnull)track;
 		[Export("participant:disabledTrack:")]
-		void DisabledTrack(/*TWC*/Participant participant, /*TWC*/MediaTrack track);
+		void DisabledTrack(/*mc++ TWC*/Participant participant, /*mc++ TWC*/MediaTrack track);
 
 		// @optional -(void)participant:(TWCParticipant * _Nonnull)participant enabledTrack:(TWCMediaTrack * _Nonnull)track;
 		[Export("participant:enabledTrack:")]
-		void EnabledTrack(/*TWC*/Participant participant, /*TWC*/MediaTrack track);
+		void EnabledTrack(/*mc++ TWC*/Participant participant, /*mc++ TWC*/MediaTrack track);
 	}
 
 	// @interface TWCParticipant : NSObject
 	//mc++ [BaseType(typeof(NSObject))]
 	[BaseType(typeof(NSObject), Name = "TWCParticipant")]
-	interface /*TWC*/Participant
+	interface /*mc++ TWC*/Participant
 	{
 		// @property (readonly, nonatomic, strong) NSString * _Nonnull identity;
 		[Export("identity", ArgumentSemantic.Strong)]
@@ -384,7 +389,7 @@ namespace Twilio.Conversations
 
 		// @property (readonly, nonatomic, weak) TWCConversation * _Null_unspecified conversation;
 		[Export("conversation", ArgumentSemantic.Weak)]
-		/*TWC*/Conversation Conversation { get; }
+		/*mc++ TWC*/Conversation Conversation { get; }
 
 		[Wrap("WeakDelegate")]
 		[NullAllowed]
@@ -410,15 +415,15 @@ namespace Twilio.Conversations
 	{
 		// @property (readonly, nonatomic, strong) NSArray<TWCParticipant *> * _Nonnull participants;
 		[Export("participants", ArgumentSemantic.Strong)]
-		/*TWC*/Participant[] Participants { get; }
+		/*mc++ TWC*/Participant[] Participants { get; }
 
 		// @property (readonly, nonatomic, strong) TWCLocalMedia * _Nullable localMedia;
 		[NullAllowed, Export("localMedia", ArgumentSemantic.Strong)]
-		/*TWC*/LocalMedia LocalMedia { get; }
+		/*mc++ TWC*/LocalMedia LocalMedia { get; }
 
 		[Wrap("WeakDelegate")]
 		[NullAllowed]
-		/*TWC*/ConversationDelegate Delegate { get; set; }
+		/*mc++ TWC*/ConversationDelegate Delegate { get; set; }
 
 		// @property (nonatomic, weak) id<TWCConversationDelegate> _Nullable delegate;
 		[NullAllowed, Export("delegate", ArgumentSemantic.Weak)]
@@ -426,7 +431,7 @@ namespace Twilio.Conversations
 
 		[Wrap("WeakStatisticsDelegate")]
 		[NullAllowed]
-		TWCMediaTrackStatisticsDelegate StatisticsDelegate { get; set; }
+		/*mc++ TWC*/MediaTrackStatisticsDelegate StatisticsDelegate { get; set; }
 
 		// @property (nonatomic, weak) id<TWCMediaTrackStatisticsDelegate> _Nullable statisticsDelegate;
 		[NullAllowed, Export("statisticsDelegate", ArgumentSemantic.Weak)]
@@ -456,7 +461,7 @@ namespace Twilio.Conversations
 		// -(TWCParticipant * _Nullable)getParticipant:(NSString * _Nonnull)participantSID;
 		[Export("getParticipant:")]
 		[return: NullAllowed]
-		/*TWC*/Participant GetParticipant(string participantSID);
+		/*mc++ TWC*/Participant GetParticipant(string participantSID);
 	}
 
 	// @protocol TWCConversationDelegate <NSObject>
@@ -467,35 +472,35 @@ namespace Twilio.Conversations
 	{
 		// @optional -(void)conversation:(TWCConversation * _Nonnull)conversation didConnectParticipant:(TWCParticipant * _Nonnull)participant;
 		[Export("conversation:didConnectParticipant:")]
-		void ConversationDidConnectParticipant(/*TWC*/Conversation conversation, /*TWC*/Participant participant);
+		void ConversationDidConnectParticipant(/*mc++ TWC*/Conversation conversation, /*mc++ TWC*/Participant participant);
 
 		// @optional -(void)conversation:(TWCConversation * _Nonnull)conversation didFailToConnectParticipant:(TWCParticipant * _Nonnull)participant error:(NSError * _Nonnull)error;
 		[Export("conversation:didFailToConnectParticipant:error:")]
-		void Conversation(/*TWC*/Conversation conversation, /*TWC*/Participant participant, NSError error);
+		void Conversation(/*mc++ TWC*/Conversation conversation, /*mc++ TWC*/Participant participant, NSError error);
 
 		// @optional -(void)conversation:(TWCConversation * _Nonnull)conversation didDisconnectParticipant:(TWCParticipant * _Nonnull)participant;
 		[Export("conversation:didDisconnectParticipant:")]
-		void ConversationDidDisconnectParticipant(/*TWC*/Conversation conversation, /*TWC*/Participant participant);
+		void ConversationDidDisconnectParticipant(/*mc++ TWC*/Conversation conversation, /*mc++ TWC*/Participant participant);
 
 		// @optional -(void)conversationEnded:(TWCConversation * _Nonnull)conversation;
 		[Export("conversationEnded:")]
-		void ConversationEnded(/*TWC*/Conversation conversation);
+		void ConversationEnded(/*mc++ TWC*/Conversation conversation);
 
 		// @optional -(void)conversationEnded:(TWCConversation * _Nonnull)conversation error:(NSError * _Nonnull)error;
 		[Export("conversationEnded:error:")]
-		void ConversationEnded(/*TWC*/Conversation conversation, NSError error);
+		void ConversationEnded(/*mc++ TWC*/Conversation conversation, NSError error);
 	}
 
 	// @protocol TWCMediaTrackStatisticsDelegate <NSObject>
 	[Protocol, Model]
 	//mc++ [BaseType(typeof(NSObject))]
-	[BaseType(typeof(NSObject), Name = "")]
-	interface TWCMediaTrackStatisticsDelegate
+	[BaseType(typeof(NSObject), Name = "TWCMediaTrackStatisticsDelegate")]
+	interface /*mc++ TWC*/MediaTrackStatisticsDelegate
 	{
 		// @required -(void)conversation:(TWCConversation * _Nonnull)conversation didReceiveTrackStatistics:(TWCMediaTrackStatsRecord * _Nonnull)trackStatistics;
 		[Abstract]
 		[Export("conversation:didReceiveTrackStatistics:")]
-		void DidReceiveTrackStatistics(/*TWC*/Conversation conversation, /*TWC*/MediaTrackStatsRecord trackStatistics);
+		void DidReceiveTrackStatistics(/*mc++ TWC*/Conversation conversation, /*mc++ TWC*/MediaTrackStatsRecord trackStatistics);
 	}
 
 	// @interface TWCIncomingInvite : NSObject
@@ -518,19 +523,19 @@ namespace Twilio.Conversations
 
 		// @property (readonly, assign, nonatomic) TWCInviteStatus status;
 		[Export("status", ArgumentSemantic.Assign)]
-		/*TWC*/InviteStatus Status { get; }
+		/*mc++ TWC*/InviteStatus Status { get; }
 
 		// -(void)acceptWithCompletion:(TWCInviteAcceptanceBlock _Nonnull)acceptHandler;
 		[Export("acceptWithCompletion:")]
-		void AcceptWithCompletion(/*TWC*/InviteAcceptanceBlock acceptHandler);
+		void AcceptWithCompletion(/*mc++ TWC*/InviteAcceptanceBlock acceptHandler);
 
 		// -(void)acceptWithLocalMedia:(TWCLocalMedia * _Nonnull)localMedia completion:(TWCInviteAcceptanceBlock _Nonnull)acceptHandler;
 		[Export("acceptWithLocalMedia:completion:")]
-		void AcceptWithLocalMedia(/*TWC*/LocalMedia localMedia, /*TWC*/InviteAcceptanceBlock acceptHandler);
+		void AcceptWithLocalMedia(/*mc++ TWC*/LocalMedia localMedia, /*mc++ TWC*/InviteAcceptanceBlock acceptHandler);
 
 		// -(void)acceptWithLocalMedia:(TWCLocalMedia * _Nonnull)localMedia iceOptions:(TWCIceOptions * _Nonnull)iceOptions completion:(TWCInviteAcceptanceBlock _Nonnull)acceptHandler;
 		[Export("acceptWithLocalMedia:iceOptions:completion:")]
-		void AcceptWithLocalMedia(/*TWC*/LocalMedia localMedia, /*TWC*/IceOptions iceOptions, /*TWC*/InviteAcceptanceBlock acceptHandler);
+		void AcceptWithLocalMedia(/*mc++ TWC*/LocalMedia localMedia, /*mc++ TWC*/IceOptions iceOptions, /*mc++ TWC*/InviteAcceptanceBlock acceptHandler);
 
 		// -(void)reject;
 		[Export("reject")]
@@ -570,25 +575,25 @@ namespace Twilio.Conversations
 	{
 		// @property (readonly, copy, nonatomic) NSArray<TWCIceServer *> * _Nonnull iceServers;
 		[Export("iceServers", ArgumentSemantic.Copy)]
-		/*TWC*/IceServer[] IceServers { get; }
+		/*mc++ TWC*/IceServer[] IceServers { get; }
 
 		// @property (readonly, assign, nonatomic) TWCIceTransportPolicy iceTransportPolicy;
 		[Export("iceTransportPolicy", ArgumentSemantic.Assign)]
-		/*TWC*/IceTransportPolicy IceTransportPolicy { get; }
+		/*mc++ TWC*/IceTransportPolicy IceTransportPolicy { get; }
 
 		// -(instancetype _Null_unspecified)initWithTransportPolicy:(TWCIceTransportPolicy)transportPolicy;
 		[Export("initWithTransportPolicy:")]
-		IntPtr Constructor(/*TWC*/IceTransportPolicy transportPolicy);
+		IntPtr Constructor(/*mc++ TWC*/IceTransportPolicy transportPolicy);
 
 		// -(instancetype _Null_unspecified)initWithTransportPolicy:(TWCIceTransportPolicy)transportPolicy servers:(NSArray<TWCIceServer *> * _Nonnull)servers;
 		[Export("initWithTransportPolicy:servers:")]
-		IntPtr Constructor(/*TWC*/IceTransportPolicy transportPolicy, /*TWC*/IceServer[] servers);
+		IntPtr Constructor(/*mc++ TWC*/IceTransportPolicy transportPolicy, /*mc++ TWC*/IceServer[] servers);
 	}
 
 	// @interface TWCI420Frame : NSObject
 	//mc++ [BaseType(typeof(NSObject))]
 	[BaseType(typeof(NSObject), Name = "TWCI420Frame")]
-	interface /*TWC*/I420Frame
+	interface /*mc++ TWC*/I420Frame
 	{
 		// @property (readonly, nonatomic) NSUInteger width;
 		[Export("width")]
@@ -612,7 +617,7 @@ namespace Twilio.Conversations
 
 		// @property (readonly, nonatomic) TWCVideoOrientation orientation;
 		[Export("orientation")]
-		/*TWC*/VideoOrientation Orientation { get; }
+		/*mc++ TWC*/VideoOrientation Orientation { get; }
 
 		// @property (readonly, nonatomic) const uint8_t * yPlane;
 		[Export("yPlane")]
@@ -642,46 +647,51 @@ namespace Twilio.Conversations
 		nint VPitch { get; }
 	}
 
-	//mc++ [Static]
+	// Avoid linker stripping the following symbols
+	// FieldAttribute does not support certain (all) types
+	//		in this case structs (struct CMVideoDimensions)
+	//		these symbols are used in Extra.Fields.cs
+	[Internal]
+	[Static]
 	//mc++ [Verify(ConstantsInterfaceAssociation)]
-	partial interface Constants
+	partial interface VideoConstraintsFieldsSentinel //mc++Constants
 	{
 		// extern const NSUInteger TWCVideoConstraintsMaximumFPS;
 		[Field("TWCVideoConstraintsMaximumFPS", "__Internal")]
-		nuint TWCVideoConstraintsMaximumFPS { get; }
+		/*mc++ nuint*/ IntPtr /*mc++ TWC*/VideoConstraintsMaximumFPS { get; }
 
 		// extern const NSUInteger TWCVideoConstraintsMinimumFPS;
 		[Field("TWCVideoConstraintsMinimumFPS", "__Internal")]
-		nuint TWCVideoConstraintsMinimumFPS { get; }
+		/*mc++ nuint*/ IntPtr /*mc++ TWC*/VideoConstraintsMinimumFPS { get; }
 
 		// extern const CMVideoDimensions TWCVideoSizeConstraintsNone;
 		[Field("TWCVideoSizeConstraintsNone", "__Internal")]
 		//mc++ CMVideoDimensions TWCVideoSizeConstraintsNone { get; }
-		IntPtr TWCVideoSizeConstraintsNone { get; }
+		IntPtr /*mc++ TWC*/VideoSizeConstraintsNone { get; }
 
 		// extern const NSUInteger TWCVideoFrameRateConstraintsNone;
 		[Field("TWCVideoFrameRateConstraintsNone", "__Internal")]
-		nuint TWCVideoFrameRateConstraintsNone { get; }
+		/*mc++ nuint*/ IntPtr /*TWC*/VideoFrameRateConstraintsNone { get; }
 
 		// extern const TWCAspectRatio TWCVideoAspectRatioConstraintsNone;
 		[Field("TWCVideoAspectRatioConstraintsNone", "__Internal")]
 		//mc++ TWCAspectRatio TWCVideoAspectRatioConstraintsNone { get; }
-		IntPtr TWCVideoAspectRatioConstraintsNone { get; }
+		IntPtr /*TWCVideo*/AspectRatioConstraintsNone { get; }
 
 		// extern const TWCAspectRatio TWCAspectRatio11x9;
 		[Field("TWCAspectRatio11x9", "__Internal")]
 		//mc++ TWCAspectRatio TWCAspectRatio11x9 { get; }
-		IntPtr TWCAspectRatio11x9 { get; }
+		IntPtr /*TWC*/AspectRatio11x9 { get; }
 
 		// extern const TWCAspectRatio TWCAspectRatio4x3;
 		[Field("TWCAspectRatio4x3", "__Internal")]
 		//mc++ TWCAspectRatio TWCAspectRatio4x3 { get; }
-		IntPtr TWCAspectRatio4x3 { get; }
+		IntPtr /*TWC*/AspectRatio4x3 { get; }
 
 		// extern const TWCAspectRatio TWCAspectRatio16x9;
 		[Field("TWCAspectRatio16x9", "__Internal")]
-		//TWCAspectRatio TWCAspectRatio16x9 { get; }
-		IntPtr TWCAspectRatio16x9 { get; }
+		//mc++TWCAspectRatio TWCAspectRatio16x9 { get; }
+		IntPtr /*TWC*/AspectRatio16x9 { get; }
 	}
 
 	// @interface TWCVideoConstraintsBuilder : NSObject
@@ -692,7 +702,7 @@ namespace Twilio.Conversations
 		// @property (assign, nonatomic) CMVideoDimensions maxSize;
 		[Export("maxSize", ArgumentSemantic.Assign)]
 		//mc++ CMVideoDimensions MaxSize { get; set; }
-		IntPtr MaxSize { get; set; }
+		CMVideoDimensions MaxSize { get; set; }
 
 		// @property (assign, nonatomic) CMVideoDimensions minSize;
 		[Export("minSize", ArgumentSemantic.Assign)]
@@ -709,11 +719,11 @@ namespace Twilio.Conversations
 
 		// @property (assign, nonatomic) TWCAspectRatio aspectRatio;
 		[Export("aspectRatio", ArgumentSemantic.Assign)]
-		TWCAspectRatio AspectRatio { get; set; }
+		/*TWC*/AspectRatio AspectRatio { get; set; }
 	}
 
 	// typedef void (^TWCVideoConstraintsBuilderBlock)(TWCVideoConstraintsBuilder * _Nonnull);
-	delegate void /*TWC*/VideoConstraintsBuilderBlock(/*TWC*/VideoConstraintsBuilder arg0);
+	delegate void /*mc++ TWC*/VideoConstraintsBuilderBlock(/*mc++ TWC*/VideoConstraintsBuilder arg0);
 
 	// @interface TWCVideoConstraints : NSObject
 	//mc++ [BaseType(typeof(NSObject))]
@@ -723,12 +733,12 @@ namespace Twilio.Conversations
 		// +(instancetype _Null_unspecified)constraints;
 		[Static]
 		[Export("constraints")]
-		/*TWC*/VideoConstraints Constraints();
+		/*mc++ TWC*/VideoConstraints Constraints();
 
 		// +(instancetype _Null_unspecified)constraintsWithBlock:(TWCVideoConstraintsBuilderBlock _Nonnull)builderBlock;
 		[Static]
 		[Export("constraintsWithBlock:")]
-		/*TWC*/VideoConstraints ConstraintsWithBlock(/*TWC*/VideoConstraintsBuilderBlock builderBlock);
+		/*mc++ TWC*/VideoConstraints ConstraintsWithBlock(/*mc++ TWC*/VideoConstraintsBuilderBlock builderBlock);
 
 		// @property (readonly, assign, nonatomic) CMVideoDimensions maxSize;
 		[Export("maxSize", ArgumentSemantic.Assign)]
@@ -750,7 +760,7 @@ namespace Twilio.Conversations
 
 		// @property (readonly, assign, nonatomic) TWCAspectRatio aspectRatio;
 		[Export("aspectRatio", ArgumentSemantic.Assign)]
-		TWCAspectRatio AspectRatio { get; }
+		/*TWC*/AspectRatio AspectRatio { get; }
 	}
 
 	// @protocol TWCVideoRenderer <NSObject>
@@ -762,12 +772,12 @@ namespace Twilio.Conversations
 		// @required -(void)renderFrame:(TWCI420Frame * _Nonnull)frame;
 		[Abstract]
 		[Export("renderFrame:")]
-		void RenderFrame(/*TWC*/I420Frame frame);
+		void RenderFrame(/*mc++ TWC*/I420Frame frame);
 
 		// @required -(void)updateVideoSize:(CMVideoDimensions)videoSize orientation:(TWCVideoOrientation)orientation;
 		[Abstract]
 		[Export("updateVideoSize:orientation:")]
-		void UpdateVideoSize(CMVideoDimensions videoSize, /*TWC*/VideoOrientation orientation);
+		void UpdateVideoSize(CMVideoDimensions videoSize, /*mc++ TWC*/VideoOrientation orientation);
 
 		// @optional -(BOOL)supportsVideoFrameOrientation;
 		[Export("supportsVideoFrameOrientation")]
@@ -783,17 +793,17 @@ namespace Twilio.Conversations
 	{
 		// @optional -(void)videoTrack:(TWCVideoTrack * _Nonnull)track dimensionsDidChange:(CMVideoDimensions)dimensions;
 		[Export("videoTrack:dimensionsDidChange:")]
-		void DimensionsDidChange(/*TWC*/VideoTrack track, CMVideoDimensions dimensions);
+		void DimensionsDidChange(/*mc++ TWC*/VideoTrack track, CMVideoDimensions dimensions);
 	}
 
 	// @interface TWCVideoTrack : TWCMediaTrack
 	//mc++ [BaseType(typeof(TWCMediaTrack))]
-	[BaseType(typeof(/*TWC*/MediaTrack), Name = "TWCVideoTrack")]
-	interface /*TWC*/VideoTrack
+	[BaseType(typeof(/*mc++ TWC*/MediaTrack), Name = "TWCVideoTrack")]
+	interface /*mc++ TWC*/VideoTrack
 	{
 		[Wrap("WeakDelegate")]
 		[NullAllowed]
-		/*TWC*/VideoTrackDelegate Delegate { get; set; }
+		/*mc++ TWC*/VideoTrackDelegate Delegate { get; set; }
 
 		// @property (nonatomic, weak) id<TWCVideoTrackDelegate> _Nullable delegate;
 		[NullAllowed, Export("delegate", ArgumentSemantic.Weak)]
@@ -805,7 +815,7 @@ namespace Twilio.Conversations
 
 		// @property (readonly, nonatomic, strong) NSArray<id<TWCVideoRenderer>> * _Nonnull renderers;
 		[Export("renderers", ArgumentSemantic.Strong)]
-		/*TWC*/VideoRenderer[] Renderers { get; }
+		/*mc++ TWC*/VideoRenderer[] Renderers { get; }
 
 		// @property (readonly, assign, nonatomic) CMVideoDimensions videoDimensions;
 		[Export("videoDimensions", ArgumentSemantic.Assign)]
@@ -822,25 +832,25 @@ namespace Twilio.Conversations
 
 		// -(void)addRenderer:(id<TWCVideoRenderer> _Nonnull)renderer;
 		[Export("addRenderer:")]
-		void AddRenderer(/*TWC*/VideoRenderer renderer);
+		void AddRenderer(/*mc++ TWC*/VideoRenderer renderer);
 
 		// -(void)removeRenderer:(id<TWCVideoRenderer> _Nonnull)renderer;
 		[Export("removeRenderer:")]
-		void RemoveRenderer(/*TWC*/VideoRenderer renderer);
+		void RemoveRenderer(/*mc++ TWC*/VideoRenderer renderer);
 	}
 
 	// @interface TWCLocalVideoTrack : TWCVideoTrack
 	//mc++ [BaseType(typeof(TWCVideoTrack))]
-	[BaseType(typeof(/*TWC*/VideoTrack), Name = "TWCLocalVideoTrack")]
-	interface /*TWC*/LocalVideoTrack
+	[BaseType(typeof(/*mc++ TWC*/VideoTrack), Name = "TWCLocalVideoTrack")]
+	interface /*mc++ TWC*/LocalVideoTrack
 	{
 		// -(instancetype _Nonnull)initWithCapturer:(id<TWCVideoCapturer> _Nonnull)capturer;
 		[Export("initWithCapturer:")]
-		IntPtr Constructor(/*TWC*/VideoCapturer capturer);
+		IntPtr Constructor(/*mc++ TWC*/VideoCapturer capturer);
 
 		// -(instancetype _Nonnull)initWithCapturer:(id<TWCVideoCapturer> _Nonnull)capturer constraints:(TWCVideoConstraints * _Nonnull)constraints;
 		[Export("initWithCapturer:constraints:")]
-		IntPtr Constructor(/*TWC*/VideoCapturer capturer, /*TWC*/VideoConstraints constraints);
+		IntPtr Constructor(/*mc++ TWC*/VideoCapturer capturer, /*mc++ TWC*/VideoConstraints constraints);
 
 		// @property (getter = isEnabled, assign, nonatomic) BOOL enabled;
 		[Export("enabled")]
@@ -848,34 +858,34 @@ namespace Twilio.Conversations
 
 		// @property (readonly, nonatomic, strong) id<TWCVideoCapturer> _Nonnull capturer;
 		[Export("capturer", ArgumentSemantic.Strong)]
-		/*TWC*/VideoCapturer Capturer { get; }
+		/*mc++ TWC*/VideoCapturer Capturer { get; }
 
 		// @property (readonly, nonatomic, strong) TWCVideoConstraints * _Nonnull constraints;
 		[Export("constraints", ArgumentSemantic.Strong)]
-		/*TWC*/VideoConstraints Constraints { get; }
+		/*mc++ TWC*/VideoConstraints Constraints { get; }
 	}
 
 	// @protocol TWCVideoViewRendererDelegate <NSObject>
 	[Protocol, Model]
 	//mc++ [BaseType(typeof(NSObject))]
 	[BaseType(typeof(NSObject), Name = "TWCVideoViewRendererDelegate")]
-	interface /*TWC*/VideoViewRendererDelegate
+	interface /*mc++ TWC*/VideoViewRendererDelegate
 	{
 		// @optional -(void)rendererDidReceiveVideoData:(TWCVideoViewRenderer * _Nonnull)renderer;
 		[Export("rendererDidReceiveVideoData:")]
-		void RendererDidReceiveVideoData(/*TWC*/VideoViewRenderer renderer);
+		void RendererDidReceiveVideoData(/*mc++ TWC*/VideoViewRenderer renderer);
 
 		// @optional -(void)renderer:(TWCVideoViewRenderer * _Nonnull)renderer dimensionsDidChange:(CMVideoDimensions)dimensions;
 		[Export("renderer:dimensionsDidChange:")]
-		void Renderer(/*TWC*/VideoViewRenderer renderer, CMVideoDimensions dimensions);
+		void Renderer(/*mc++ TWC*/VideoViewRenderer renderer, CMVideoDimensions dimensions);
 
 		// @optional -(void)renderer:(TWCVideoViewRenderer * _Nonnull)renderer orientationDidChange:(TWCVideoOrientation)orientation;
 		[Export("renderer:orientationDidChange:")]
-		void Renderer(/*TWC*/VideoViewRenderer renderer, /*TWC*/VideoOrientation orientation);
+		void Renderer(/*mc++ TWC*/VideoViewRenderer renderer, /*mc++ TWC*/VideoOrientation orientation);
 
 		// @optional -(BOOL)rendererShouldRotateContent:(TWCVideoViewRenderer * _Nonnull)renderer;
 		[Export("rendererShouldRotateContent:")]
-		bool RendererShouldRotateContent(/*TWC*/VideoViewRenderer renderer);
+		bool RendererShouldRotateContent(/*mc++ TWC*/VideoViewRenderer renderer);
 	}
 
 	// @interface TWCVideoViewRenderer : NSObject <TWCVideoRenderer>
@@ -899,7 +909,7 @@ namespace Twilio.Conversations
 
 		[Wrap("WeakDelegate")]
 		[NullAllowed]
-		/*TWC*/VideoViewRendererDelegate Delegate { get; }
+		/*mc++ TWC*/VideoViewRendererDelegate Delegate { get; }
 
 		// @property (readonly, nonatomic, weak) id<TWCVideoViewRendererDelegate> _Nullable delegate;
 		[NullAllowed, Export("delegate", ArgumentSemantic.Weak)]
@@ -912,7 +922,7 @@ namespace Twilio.Conversations
 
 		// @property (readonly, assign, nonatomic) TWCVideoOrientation videoFrameOrientation;
 		[Export("videoFrameOrientation", ArgumentSemantic.Assign)]
-		/*TWC*/VideoOrientation VideoFrameOrientation { get; }
+		/*mc++ TWC*/VideoOrientation VideoFrameOrientation { get; }
 
 		// @property (readonly, assign, atomic) BOOL hasVideoData;
 		[Export("hasVideoData")]
@@ -926,7 +936,7 @@ namespace Twilio.Conversations
 	// @interface TWCMediaTrackStatsRecord : NSObject
 	//mc++ [BaseType(typeof(NSObject))]
 	[BaseType(typeof(NSObject), Name = "TWCMediaTrackStatsRecord")]
-	interface /*TWC*/MediaTrackStatsRecord
+	interface /*mc++ TWC*/MediaTrackStatsRecord
 	{
 		// @property (readonly, nonatomic) NSString * trackId;
 		[Export("trackId")]
@@ -959,8 +969,8 @@ namespace Twilio.Conversations
 
 	// @interface TWCLocalVideoMediaStatsRecord : TWCMediaTrackStatsRecord
 	//mc++ [BaseType(typeof(TWCMediaTrackStatsRecord))]
-	[BaseType(typeof(/*TWC*/MediaTrackStatsRecord), Name = "TWCLocalVideoMediaStatsRecord")]
-	interface /*TWC*/LocalVideoMediaStatsRecord
+	[BaseType(typeof(/*mc++ TWC*/MediaTrackStatsRecord), Name = "TWCLocalVideoMediaStatsRecord")]
+	interface /*mc++ TWC*/LocalVideoMediaStatsRecord
 	{
 		// @property (readonly, nonatomic) NSUInteger bytesSent;
 		[Export("bytesSent")]
@@ -992,7 +1002,7 @@ namespace Twilio.Conversations
 	// @interface TWCLocalAudioMediaStatsRecord : TWCMediaTrackStatsRecord
 	//mc++ [BaseType(typeof(TWCMediaTrackStatsRecord))]
 	[BaseType(typeof(MediaTrackStatsRecord), Name = "TWCLocalAudioMediaStatsRecord")]
-	interface /*TWC*/LocalAudioMediaStatsRecord
+	interface /*mc++ TWC*/LocalAudioMediaStatsRecord
 	{
 		// @property (readonly, nonatomic) NSUInteger bytesSent;
 		[Export("bytesSent")]
@@ -1022,7 +1032,7 @@ namespace Twilio.Conversations
 	// @interface TWCRemoteVideoMediaStatsRecord : TWCMediaTrackStatsRecord
 	//mc++ [BaseType(typeof(TWCMediaTrackStatsRecord))]
 	[BaseType(typeof(MediaTrackStatsRecord), Name = "TWCRemoteVideoMediaStatsRecord")]
-	interface /*TWC*/RemoteVideoMediaStatsRecord
+	interface /*mc++ TWC*/RemoteVideoMediaStatsRecord
 	{
 		// @property (readonly, nonatomic) NSUInteger bytesReceived;
 		[Export("bytesReceived")]
@@ -1049,7 +1059,7 @@ namespace Twilio.Conversations
 	// @interface TWCRemoteAudioMediaStatsRecord : TWCMediaTrackStatsRecord
 	//mc++ [BaseType(typeof(TWCMediaTrackStatsRecord))]
 	[BaseType(typeof(MediaTrackStatsRecord), Name = "TWCRemoteAudioMediaStatsRecord")]
-	interface /*TWC*/RemoteAudioMediaStatsRecord
+	interface /*mc++ TWC*/RemoteAudioMediaStatsRecord
 	{
 		// @property (readonly, nonatomic) NSUInteger bytesReceived;
 		[Export("bytesReceived")]
@@ -1078,7 +1088,7 @@ namespace Twilio.Conversations
 	{
 		// extern NSString *const TWCConversationsErrorDomain;
 		[Field("TWCConversationsErrorDomain", "__Internal")]
-		NSString TWCConversationsErrorDomain { get; }
+		NSString /*mc++ TWC*/ConversationsErrorDomain { get; }
 	}
 
 	// @interface TwilioConversationsClient : NSObject
@@ -1116,7 +1126,7 @@ namespace Twilio.Conversations
 		[Static]
 		[Export("conversationsClientWithAccessManager:options:delegateQueue:delegate:")]
 		[return: NullAllowed]
-		TwilioConversationsClient ConversationsClientWithAccessManager(TwilioAccessManager accessManager, [NullAllowed] /*TWC*/ClientOptions options, [NullAllowed] DispatchQueue queue, [NullAllowed] TwilioConversationsClientDelegate @delegate);
+		TwilioConversationsClient ConversationsClientWithAccessManager(TwilioAccessManager accessManager, [NullAllowed] /*mc++ TWC*/ClientOptions options, [NullAllowed] DispatchQueue queue, [NullAllowed] TwilioConversationsClientDelegate @delegate);
 
 		// -(void)listen;
 		[Export("listen")]
@@ -1129,22 +1139,22 @@ namespace Twilio.Conversations
 		// -(TWCOutgoingInvite * _Nullable)inviteToConversation:(NSString * _Nonnull)client handler:(TWCInviteAcceptanceBlock _Nonnull)handler;
 		[Export("inviteToConversation:handler:")]
 		[return: NullAllowed]
-		/*TWC*/OutgoingInvite InviteToConversation(string client, /*TWC*/InviteAcceptanceBlock handler);
+		/*mc++ TWC*/OutgoingInvite InviteToConversation(string client, /*mc++ TWC*/InviteAcceptanceBlock handler);
 
 		// -(TWCOutgoingInvite * _Nullable)inviteToConversation:(NSString * _Nonnull)client localMedia:(TWCLocalMedia * _Nonnull)localMedia handler:(TWCInviteAcceptanceBlock _Nonnull)handler;
 		[Export("inviteToConversation:localMedia:handler:")]
 		[return: NullAllowed]
-		/*TWC*/OutgoingInvite InviteToConversation(string client, /*TWC*/LocalMedia localMedia, /*TWC*/InviteAcceptanceBlock handler);
+		/*mc++ TWC*/OutgoingInvite InviteToConversation(string client, /*mc++ TWC*/LocalMedia localMedia, /*mc++ TWC*/InviteAcceptanceBlock handler);
 
 		// -(TWCOutgoingInvite * _Nullable)inviteManyToConversation:(NSArray<NSString *> * _Nonnull)clients localMedia:(TWCLocalMedia * _Nonnull)localMedia handler:(TWCInviteAcceptanceBlock _Nonnull)handler;
 		[Export("inviteManyToConversation:localMedia:handler:")]
 		[return: NullAllowed]
-		/*TWC*/OutgoingInvite InviteManyToConversation(string[] clients, /*TWC*/LocalMedia localMedia, /*TWC*/InviteAcceptanceBlock handler);
+		/*mc++ TWC*/OutgoingInvite InviteManyToConversation(string[] clients, /*mc++ TWC*/LocalMedia localMedia, /*mc++ TWC*/InviteAcceptanceBlock handler);
 
 		// -(TWCOutgoingInvite * _Nullable)inviteManyToConversation:(NSArray<NSString *> * _Nonnull)clients localMedia:(TWCLocalMedia * _Nonnull)localMedia iceOptions:(TWCIceOptions * _Nonnull)iceOptions handler:(TWCInviteAcceptanceBlock _Nonnull)handler;
 		[Export("inviteManyToConversation:localMedia:iceOptions:handler:")]
 		[return: NullAllowed]
-		/*TWC*/OutgoingInvite InviteManyToConversation(string[] clients, /*TWC*/LocalMedia localMedia, /*TWC*/IceOptions iceOptions, /*TWC*/InviteAcceptanceBlock handler);
+		/*mc++ TWC*/OutgoingInvite InviteManyToConversation(string[] clients, /*mc++ TWC*/LocalMedia localMedia, /*mc++ TWC*/IceOptions iceOptions, /*mc++ TWC*/InviteAcceptanceBlock handler);
 
 		// +(NSString * _Nonnull)version;
 		[Static]
@@ -1157,22 +1167,22 @@ namespace Twilio.Conversations
 		[Static]
 		[Export("logLevel")]
 		//mc++ [Verify(MethodToProperty)]
-		/*TWC*/LogLevel LogLevel { get; set; }
+		/*mc++ TWC*/LogLevel LogLevel { get; set; }
 
 		// +(void)setLogLevel:(TWCLogLevel)logLevel module:(TWCLogModule)module;
 		[Static]
 		[Export("setLogLevel:module:")]
-		void SetLogLevel(/*TWC*/LogLevel logLevel, /*TWC*/LogModule module);
+		void SetLogLevel(/*mc++ TWC*/LogLevel logLevel, /*mc++ TWC*/LogModule module);
 
 		// +(void)setAudioOutput:(TWCAudioOutput)audioOutput;
 		[Static]
 		[Export("setAudioOutput:")]
-		void SetAudioOutput(/*TWC*/AudioOutput audioOutput);
+		void SetAudioOutput(/*mc++ TWC*/AudioOutput audioOutput);
 
 		// +(TWCAudioOutput)audioOutput;
 		[Static]
 		[Export("audioOutput")]
-		/*TWC*/AudioOutput AudioOutput();
+		/*mc++ TWC*/AudioOutput AudioOutput();
 	}
 
 	// @protocol TwilioConversationsClientDelegate <NSObject>
@@ -1195,10 +1205,10 @@ namespace Twilio.Conversations
 
 		// @optional -(void)conversationsClient:(TwilioConversationsClient * _Nonnull)conversationsClient didReceiveInvite:(TWCIncomingInvite * _Nonnull)invite;
 		[Export("conversationsClient:didReceiveInvite:")]
-		void ConversationsClientInviteReceived(TwilioConversationsClient conversationsClient, /*TWC*/IncomingInvite invite);
+		void ConversationsClientInviteReceived(TwilioConversationsClient conversationsClient, /*mc++ TWC*/IncomingInvite invite);
 
 		// @optional -(void)conversationsClient:(TwilioConversationsClient * _Nonnull)conversationsClient inviteDidCancel:(TWCIncomingInvite * _Nonnull)invite;
 		[Export("conversationsClient:inviteDidCancel:")]
-		void ConversationsClientInviteCancelled(TwilioConversationsClient conversationsClient, /*TWC*/IncomingInvite invite);
+		void ConversationsClientInviteCancelled(TwilioConversationsClient conversationsClient, /*mc++ TWC*/IncomingInvite invite);
 	}
 }
