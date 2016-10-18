@@ -820,7 +820,7 @@ namespace Twilio.Conversations
 		// @property (readonly, assign, nonatomic) CMVideoDimensions videoDimensions;
 		[Export("videoDimensions", ArgumentSemantic.Assign)]
 		//mc++ CMVideoDimensions VideoDimensions { get; }
-		IntPtr VideoDimensions { get; }
+		CMVideoDimensions VideoDimensions { get; }
 
 		// -(void)attach:(UIView * _Nonnull)view;
 		[Export("attach:")]

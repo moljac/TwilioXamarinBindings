@@ -80,8 +80,10 @@ namespace TwilioConversationsSampleiOS
 
             if (camera != null) {
                 var cameraTrack = camera.VideoTrack;
-                if (cameraTrack != null && cameraTrack.VideoDimensions.Width > 0 && cameraTrack.VideoDimensions.Height > 0) {
-                    var dimensions = camera.VideoTrack.VideoDimensions;
+				CoreMedia.CMVideoDimensions dimensions_outer = cameraTrack.VideoDimensions;
+
+                if (cameraTrack != null && dimensions_outer.Width > 0 && dimensions_outer.Height > 0) {
+					CoreMedia.CMVideoDimensions dimensions = camera.VideoTrack.VideoDimensions;
 
                     if (dimensions.Width > 0 && dimensions.Height > 0) {
                         var boundingRect = new CGRect (0, 0, 160, 160);

@@ -29,7 +29,7 @@ namespace TwilioConversationsSampleiOS
 
 			TwilioConversationsClient.LogLevel = LogLevel.All; //mc++ .Verbose;
 
-			twilio = TwilioConversationsClient.FromObject((NSObject)token); //mc++ .From(token, this);
+			twilio = TwilioConversationsClient.FromObject(token); //mc++ .From(token, this);
             twilio.Listen ();
         }
 
