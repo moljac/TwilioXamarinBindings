@@ -57,13 +57,13 @@
   <ItemGroup>
     <None Include="Additions\AboutAdditions.txt" />
     <None Include="Jars\AboutJars.txt" />
+    <None Include="Transforms\Metadata.add-node.IPMessagingClient.xml" />
   </ItemGroup>
   <ItemGroup>
     <TransformFile Include="Transforms\EnumFields.xml" />
     <TransformFile Include="Transforms\EnumMethods.xml" />
     <TransformFile Include="Transforms\Metadata.xml" />
     <TransformFile Include="Transforms\Metadata.generated.xml" />
-    <TransformFile Include="Transforms\Metadata.add-node.IPMessagingClient.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.Bindings.targets" />
   <ItemGroup>

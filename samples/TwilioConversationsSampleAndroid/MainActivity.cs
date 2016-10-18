@@ -421,7 +421,7 @@ namespace TwilioConversationsSampleAndroid
         /*
      * Conversation Listener
      */
-        ConversationListener conversationListener() {
+        Conversation.IListener conversationListener() {
             return new ConversationListener {
                 ParticipantConnectedHandler = (conversation, participant) => {
                     conversationStatusTextView.Text = "onParticipantConnected " + participant.Identity;
@@ -444,7 +444,7 @@ namespace TwilioConversationsSampleAndroid
         /*
      * LocalMedia listener
      */
-        ILocalMediaListener localMediaListener () 
+        LocalMedia.IListener localMediaListener () 
         {
             return new LocalMediaListener {
                 LocalVideoTrackAddedHandler = (conversation, localVideoTrack) => {
@@ -460,7 +460,7 @@ namespace TwilioConversationsSampleAndroid
         }
 
 
-        IParticipantListener participantListener () 
+        Participant.IListener participantListener () 
         {
             return new ParticipantListener {
                 VideoTrackAddedHandler = (conversation, participant, videoTrack) => {
@@ -485,7 +485,7 @@ namespace TwilioConversationsSampleAndroid
        /*
         * ConversationsClient listener
         */
-        IConversationsClientListener conversationsClientListener() {
+        ConversationsClientListener conversationsClientListener() {
             return new ConversationsClientListener {
                 StartListeningForInvitesHandler = (c) => {
                     conversationStatusTextView.Text = "onStartListeningForInvites";
@@ -523,9 +523,9 @@ namespace TwilioConversationsSampleAndroid
             };
         }
 
-        ITwilioAccessManagerListener accessManagerListener ()
+        /*Twilio*/AccessManager.IListener accessManagerListener ()
         {
-            return new TwilioAccessManagerListener() {
+            return new /*Twilio*/AccessManager.IListener() {
                 TokenExpiredHandler = (am) => {
                     conversationStatusTextView.Text = "onTokenExpired";
                 },

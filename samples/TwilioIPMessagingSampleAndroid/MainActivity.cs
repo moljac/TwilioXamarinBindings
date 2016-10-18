@@ -15,7 +15,7 @@ using Twilio.IPMessaging;
 namespace TwilioIPMessagingSample
 {
 	[Activity(Label = "#general", MainLauncher = true, Icon = "@mipmap/icon")]
-	public class MainActivity : Activity, IPMessagingClientListener, IChannelListener, IAccessManagerListener
+	public class MainActivity : Activity, IPMessagingClientListener, IChannelListener, AccessManager.IListener
 	{
 		internal const string TAG = "TWILIO";
 
@@ -76,10 +76,10 @@ namespace TwilioIPMessagingSample
 		async Task Setup()
 		{
 			var token = await GetIdentity();
-			var accessManager = TwilioAccessManagerFactory.CreateAccessManager(token, this);
+			var accessManager = /*Twilio*/AccessManagerFactory.CreateAccessManager(token, this);
 			client = TwilioIPMessagingSDK.CreateIPMessagingClientWithAccessManager(accessManager, this);
 
-			client.Channels.LoadChannelsWithListener(new StatusListener
+			client.Channels.LoadChannelsWithListener(new Constants.StatusListener
 			{
 				SuccessHandler = () =>
 				{
@@ -100,7 +100,7 @@ namespace TwilioIPMessagingSample
 
 		void JoinGeneralChannel()
 		{
-			generalChannel.Join(new StatusListener
+			generalChannel.Join(new Constants.StatusListener
 			{
 				SuccessHandler = () =>
 				{
@@ -114,7 +114,7 @@ namespace TwilioIPMessagingSample
 		{
 			var options = new Dictionary<string, Java.Lang.Object>();
 			options["friendlyName"] = "General Chat Channel";
-			options["ChannelType"] = ChannelChannelType.ChannelTypePublic;
+			options["ChannelType"] = Channel.ChannelType.Public;
 			client.Channels.CreateChannel(options, new CreateChannelListener
 			{
 				OnCreatedHandler = channel =>
@@ -259,6 +259,31 @@ namespace TwilioIPMessagingSample
 		{
 			Console.WriteLine("token updated");
 		}
+
+
+		/*
+		 * mc++ IPMessagingClientListener
+		 */
+		public void OnChannelSynchronizationChange(Channel p0)
+		{
+			return;
+		}
+
+		public void OnClientSynchronization(IPMessagingClient.SynchronizationStatus p0)
+		{
+			return;
+		}
+
+		public void OnToastFailed(ErrorInfo p0)
+		{
+			return;
+		}
+
+		public void OnToastNotification(string p0, string p1)
+		{
+			return;
+		}
+
 	}
 
 	class MessagesAdapter : BaseAdapter<Twilio.IPMessaging.Message>
@@ -328,5 +353,8 @@ namespace TwilioIPMessagingSample
 		{
 			base.OnError(errorInfo);
 		}
+
+
+
 	}
 }
