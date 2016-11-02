@@ -28,565 +28,691 @@ using System.Json;
 
 namespace TwilioConversationsSampleAndroid
 {
-    [Activity (Label = "Twilio Conversations", 
-        MainLauncher = true, 
-        Theme="@style/AppTheme",
-        Icon = "@mipmap/ic_launcher")]
-    public class MainActivity : AppCompatActivity
-    {
-        const string TAG = "TWILIO";
-        const int CAMERA_MIC_PERMISSION_REQUEST_CODE = 1;
-        const string urlBase = "http://twilio-video.redth.info/";
+	[Activity(Label = "Twilio Conversations",
+		MainLauncher = true,
+		Theme = "@style/AppTheme",
+		Icon = "@mipmap/ic_launcher")]
+	public class MainActivity : AppCompatActivity
+	{
+		const string TAG = "TWILIO";
+		const int CAMERA_MIC_PERMISSION_REQUEST_CODE = 1;
+		const string urlBase = "http://twilio-video.redth.info/";
 
-       /*
-        * Twilio AccessToken authorizes you to connect to the Conversations service
-        */
-        string accessToken;
+		/*
+		 * Twilio AccessToken authorizes you to connect to the Conversations service
+		 */
+		string accessToken;
 
-       /*
-        * Twilio Conversations Client allows a client to create or participate in a conversation.
-        */
-        TwilioConversationsClient conversationsClient;
+		/*
+		 * Twilio Conversations Client allows a client to create or participate in a conversation.
+		 */
+		TwilioConversationsClient conversationsClient;
 
-       /*
-        * A Conversation represents communication between the client and one or more participants.
-        */
-        Conversation conversation;
+		/*
+		 * A Conversation represents communication between the client and one or more participants.
+		 */
+		Conversation conversation;
 
-       /*
-        * An OutgoingInvite represents an invitation to start or join a conversation with one or more participants
-        */
-        OutgoingInvite outgoingInvite;
+		/*
+		 * An OutgoingInvite represents an invitation to start or join a conversation with one or more participants
+		 */
+		OutgoingInvite outgoingInvite;
 
-       /*
-        * A VideoViewRenderer receives frames from a local or remote video track and renders the frames to a provided view
-        */
-        VideoViewRenderer participantVideoRenderer;
-        VideoViewRenderer localVideoRenderer;
+		/*
+		 * A VideoViewRenderer receives frames from a local or remote video track and renders the frames to a provided view
+		 */
+		VideoViewRenderer participantVideoRenderer;
+		VideoViewRenderer localVideoRenderer;
 
-       /*
-        * Android application UI elements
-        */
-        FrameLayout previewFrameLayout;
-        ViewGroup localContainer;
-        ViewGroup participantContainer;
-        TextView conversationStatusTextView;
-        AccessManager accessManager;
-        CameraCapturer cameraCapturer;
-        FloatingActionButton callActionFab;
-        FloatingActionButton switchCameraActionFab;
-        FloatingActionButton localVideoActionFab;
-        FloatingActionButton muteActionFab;
-        FloatingActionButton speakerActionFab;
-        Android.Support.V7.App.AlertDialog alertDialog;
+		/*
+		 * Android application UI elements
+		 */
+		FrameLayout previewFrameLayout;
+		ViewGroup localContainer;
+		ViewGroup participantContainer;
+		TextView conversationStatusTextView;
+		AccessManager accessManager;
+		CameraCapturer cameraCapturer;
+		FloatingActionButton callActionFab;
+		FloatingActionButton switchCameraActionFab;
+		FloatingActionButton localVideoActionFab;
+		FloatingActionButton muteActionFab;
+		FloatingActionButton speakerActionFab;
+		Android.Support.V7.App.AlertDialog alertDialog;
 
-        bool muteMicrophone;
-        bool pauseVideo;
+		bool muteMicrophone;
+		bool pauseVideo;
 
-        protected async override void OnCreate (Bundle savedInstanceState)
-        {
-            base.OnCreate (savedInstanceState);
+		protected async override void OnCreate(Bundle savedInstanceState)
+		{
+			base.OnCreate(savedInstanceState);
 
-            // Set our view from the "main" layout resource
-            SetContentView (Resource.Layout.activity_conversation);
+			// Set our view from the "main" layout resource
+			SetContentView(Resource.Layout.activity_conversation);
 
-           /*
-            * Check camera and microphone permissions. Needed in Android M.
-            */
-            if (!checkPermissionForCameraAndMicrophone ()) {
-                requestPermissionForCameraAndMicrophone ();
-            }
+			/*
+			 * Check camera and microphone permissions. Needed in Android M.
+			 */
+			if (!checkPermissionForCameraAndMicrophone())
+			{
+				requestPermissionForCameraAndMicrophone();
+			}
 
-           /*
-            * Load views from resources
-            */
-            previewFrameLayout = FindViewById<FrameLayout> (Resource.Id.previewFrameLayout);
-            localContainer = FindViewById<ViewGroup> (Resource.Id.localContainer);
-            participantContainer = FindViewById<ViewGroup> (Resource.Id.participantContainer);
-            conversationStatusTextView = FindViewById<TextView> (Resource.Id.conversation_status_textview);
+			/*
+			 * Load views from resources
+			 */
+			previewFrameLayout = FindViewById<FrameLayout>(Resource.Id.previewFrameLayout);
+			localContainer = FindViewById<ViewGroup>(Resource.Id.localContainer);
+			participantContainer = FindViewById<ViewGroup>(Resource.Id.participantContainer);
+			conversationStatusTextView = FindViewById<TextView>(Resource.Id.conversation_status_textview);
 
-            callActionFab = FindViewById<FloatingActionButton> (Resource.Id.call_action_fab);
-            switchCameraActionFab = FindViewById<FloatingActionButton> (Resource.Id.switch_camera_action_fab);
-            localVideoActionFab = FindViewById<FloatingActionButton> (Resource.Id.local_video_action_fab);
-            muteActionFab = FindViewById<FloatingActionButton> (Resource.Id.mute_action_fab);
-            speakerActionFab = FindViewById<FloatingActionButton> (Resource.Id.speaker_action_fab);
+			callActionFab = FindViewById<FloatingActionButton>(Resource.Id.call_action_fab);
+			switchCameraActionFab = FindViewById<FloatingActionButton>(Resource.Id.switch_camera_action_fab);
+			localVideoActionFab = FindViewById<FloatingActionButton>(Resource.Id.local_video_action_fab);
+			muteActionFab = FindViewById<FloatingActionButton>(Resource.Id.mute_action_fab);
+			speakerActionFab = FindViewById<FloatingActionButton>(Resource.Id.speaker_action_fab);
 
-           /*
-            * Enable changing the volume using the up/down keys during a conversation
-            */
-            VolumeControlStream = Stream.VoiceCall;
+			/*
+			 * Enable changing the volume using the up/down keys during a conversation
+			 */
+			VolumeControlStream = Stream.VoiceCall;
 
-           /*
-            * Get the capability token
-            */
-            accessToken = await GetIdentity ();
+			/*
+			 * Get the capability token
+			 */
+			accessToken = await GetIdentity();
 
-            /*
+			/*
             * Initialize the Twilio Conversations SDK
             */
-            initializeTwilioSdk ();
+			initializeTwilioSdk();
 
-            /*
+			/*
             * Set the initial state of the UI
             */
-            setCallAction ();
-        }
+			setCallAction();
+		}
 
-        protected override void OnResume ()
-        {
-            base.OnResume ();
+		protected override void OnResume()
+		{
+			base.OnResume();
 
-            //if (participantVideoRenderer != null)
-            //    participantVideoRenderer.OnResume ();
+			//if (participantVideoRenderer != null)
+			//    participantVideoRenderer.OnResume ();
 
-            //if (localVideoRenderer != null)
-            //    localVideoRenderer.OnResume ();
+			//if (localVideoRenderer != null)
+			//    localVideoRenderer.OnResume ();
 
-            if (TwilioConversations.IsInitialized && conversationsClient != null && !conversationsClient.IsListening)
-                conversationsClient.Listen ();
-        }
+			if (TwilioConversationsClient.IsInitialized && conversationsClient != null && !conversationsClient.IsListening)
+				conversationsClient.Listen();
+		}
 
-        protected override void OnPause ()
-        {
-            base.OnPause ();
+		protected override void OnPause()
+		{
+			base.OnPause();
 
-            //if(participantVideoRenderer != null)
-            //    participantVideoRenderer.OnPause ();
+			//if(participantVideoRenderer != null)
+			//    participantVideoRenderer.OnPause ();
 
-            //if (localVideoRenderer != null)
-            //    localVideoRenderer.OnPause ();
-            
-            if (TwilioConversations.IsInitialized && conversationsClient != null  && conversationsClient.IsListening)
-                conversationsClient.Unlisten ();
-        }
+			//if (localVideoRenderer != null)
+			//    localVideoRenderer.OnPause ();
 
-        /*
+			if (TwilioConversationsClient.IsInitialized && conversationsClient != null && conversationsClient.IsListening)
+				conversationsClient.Unlisten();
+		}
+
+		/*
      * The initial state when there is no active conversation.
      */
-        void setCallAction () 
-        {
-            callActionFab.SetImageDrawable (ContextCompat.GetDrawable (this, Resource.Drawable.ic_call_white_24px));
-            callActionFab.Show ();
-            callActionFab.Click += (sender, e) => {
-                showCallDialog ();
-            };
-            switchCameraActionFab.Show();
-            switchCameraActionFab.Click += (sender, e) => {
-                if(cameraCapturer != null)
-                    cameraCapturer.SwitchCamera ();
-            };
+		void setCallAction()
+		{
+			callActionFab.SetImageDrawable(ContextCompat.GetDrawable(this, Resource.Drawable.ic_call_white_24px));
+			callActionFab.Show();
+			callActionFab.Click += (sender, e) =>
+			{
+				showCallDialog();
+			};
+			switchCameraActionFab.Show();
+			switchCameraActionFab.Click += (sender, e) =>
+			{
+				if (cameraCapturer != null)
+					cameraCapturer.SwitchCamera();
+			};
 
-            localVideoActionFab.Show();
-            localVideoActionFab.Click += (sender, e) => {
-                /*
+			localVideoActionFab.Show();
+			localVideoActionFab.Click += (sender, e) =>
+			{
+				/*
                  * Enable/disable local video track
                  */
-                pauseVideo = !pauseVideo;
-                if (conversation != null) {
-                    var videoTrackList = conversation.LocalMedia.LocalVideoTracks;
-                    if (videoTrackList.Count > 0) {
-                        var videoTrack = videoTrackList[0];
-                        videoTrack.Enable (!pauseVideo);
-                    } else {
-                        Android.Util.Log.Warn (TAG, "LocalVideoTrack is not present, unable to pause");
-                    }
-                }
-                if (pauseVideo) {
-                    switchCameraActionFab.Hide();
-                    localVideoActionFab.SetImageDrawable (ContextCompat.GetDrawable (this, Resource.Drawable.ic_videocam_off_red_24px));
-                } else {
-                    switchCameraActionFab.Show();
-                    localVideoActionFab.SetImageDrawable (ContextCompat.GetDrawable (this, Resource.Drawable.ic_videocam_green_24px));
-                }
-            };
+				pauseVideo = !pauseVideo;
+				if (conversation != null)
+				{
+					var videoTrackList = conversation.LocalMedia.LocalVideoTracks;
+					if (videoTrackList.Count > 0)
+					{
+						var videoTrack = videoTrackList[0];
+						videoTrack.Enable(!pauseVideo);
+					}
+					else {
+						Android.Util.Log.Warn(TAG, "LocalVideoTrack is not present, unable to pause");
+					}
+				}
+				if (pauseVideo)
+				{
+					switchCameraActionFab.Hide();
+					localVideoActionFab.SetImageDrawable(ContextCompat.GetDrawable(this, Resource.Drawable.ic_videocam_off_red_24px));
+				}
+				else {
+					switchCameraActionFab.Show();
+					localVideoActionFab.SetImageDrawable(ContextCompat.GetDrawable(this, Resource.Drawable.ic_videocam_green_24px));
+				}
+			};
 
-            muteActionFab.Show();
-            muteActionFab.Click += (sender, e) => {
-                /*
+			muteActionFab.Show();
+			muteActionFab.Click += (sender, e) =>
+			{
+				/*
                  * Mute/unmute microphone
                  */
-                muteMicrophone = !muteMicrophone;
-                if (conversation != null)
-                    conversation.LocalMedia.Mute (muteMicrophone);
+				muteMicrophone = !muteMicrophone;
+				if (conversation != null)
+					conversation.LocalMedia.Mute(muteMicrophone);
 
-                if (muteMicrophone)
-                    muteActionFab.SetImageDrawable (ContextCompat.GetDrawable (this, Resource.Drawable.ic_mic_off_red_24px));
-                else
-                    muteActionFab.SetImageDrawable (ContextCompat.GetDrawable (this, Resource.Drawable.ic_mic_green_24px));
-            };
-            speakerActionFab.Hide ();
-        }
+				if (muteMicrophone)
+					muteActionFab.SetImageDrawable(ContextCompat.GetDrawable(this, Resource.Drawable.ic_mic_off_red_24px));
+				else
+					muteActionFab.SetImageDrawable(ContextCompat.GetDrawable(this, Resource.Drawable.ic_mic_green_24px));
+			};
+			speakerActionFab.Hide();
+		}
 
-       /*
-        * The actions performed during hangup.
-        */
-        void setHangupAction() {
-            callActionFab.SetImageDrawable (ContextCompat.GetDrawable (this, Resource.Drawable.ic_call_end_white_24px));
-            callActionFab.Show();
-            callActionFab.Click += (sender, e) => {
-                hangup ();
-                setCallAction ();
-            };
+		/*
+		 * The actions performed during hangup.
+		 */
+		void setHangupAction()
+		{
+			callActionFab.SetImageDrawable(ContextCompat.GetDrawable(this, Resource.Drawable.ic_call_end_white_24px));
+			callActionFab.Show();
+			callActionFab.Click += (sender, e) =>
+			{
+				hangup();
+				setCallAction();
+			};
 
-            speakerActionFab.Show();
-            speakerActionFab.Click += (sender, e) => {
-                /*
+			speakerActionFab.Show();
+			speakerActionFab.Click += (sender, e) =>
+			{
+				/*
                  * Audio routing to speakerphone or headset
                  */
-                if (conversationsClient == null) {
-                    Android.Util.Log.Error (TAG, "Unable to set audio output, conversation client is null");
-                    return;
-                }
-                var speakerOn = !(conversationsClient.AudioOutput == AudioOutput.Speakerphone) ?  true : false;
-                conversationsClient.AudioOutput = speakerOn ? AudioOutput.Speakerphone : AudioOutput.Headset;
-                if (speakerOn)
-                    speakerActionFab.SetImageDrawable (ContextCompat.GetDrawable (this, Resource.Drawable.ic_volume_down_green_24px));
-                else
-                    speakerActionFab.SetImageDrawable (ContextCompat.GetDrawable (this, Resource.Drawable.ic_volume_down_white_24px));
-            };
-        }
+				if (conversationsClient == null)
+				{
+					Android.Util.Log.Error(TAG, "Unable to set audio output, conversation client is null");
+					return;
+				}
+				var speakerOn = !(conversationsClient.AudioOutput == AudioOutput.Speakerphone) ? true : false;
+				conversationsClient.AudioOutput = speakerOn ? AudioOutput.Speakerphone : AudioOutput.Headset;
+				if (speakerOn)
+					speakerActionFab.SetImageDrawable(ContextCompat.GetDrawable(this, Resource.Drawable.ic_volume_down_green_24px));
+				else
+					speakerActionFab.SetImageDrawable(ContextCompat.GetDrawable(this, Resource.Drawable.ic_volume_down_white_24px));
+			};
+		}
 
-        /*
+		/*
      * Creates an outgoing conversation UI dialog
      */
-        private void showCallDialog() {
-            var participantEditText = new EditText(this);
-            alertDialog = Dialog.CreateCallParticipantsDialog (participantEditText, delegate {
-                /*
+		private void showCallDialog()
+		{
+			var participantEditText = new EditText(this);
+			alertDialog = Dialog.CreateCallParticipantsDialog(participantEditText, delegate
+			{
+				/*
                  * Make outgoing invite
                  */
-                var participant = participantEditText.Text;
-                if (!string.IsNullOrEmpty (participant) && conversationsClient != null) {
-                    stopPreview();
-                    // Create participants set (we support only one in this example)
-                    var participants = new List<string> ();
-                    participants.Add (participant);
+				var participant = participantEditText.Text;
+				if (!string.IsNullOrEmpty(participant) && conversationsClient != null)
+				{
+					stopPreview();
+					// Create participants set (we support only one in this example)
+					var participants = new List<string>();
+					participants.Add(participant);
 
-                    // Create local media
-                    var localMedia = setupLocalMedia ();
+					// Create local media
+					var localMedia = setupLocalMedia();
 
-                    // Create outgoing invite
-                    outgoingInvite = conversationsClient.SendConversationInvite (participants, localMedia, new ConversationCallback {
-                        ConversationHandler = (c, err) => {
-                            if (err == null) {
-                                // Participant has accepted invite, we are in active conversation
-                                this.conversation = c;
-                                conversation.ConversationListener = conversationListener();
-                            } else {
-                                Android.Util.Log.Error (TAG, err.Message);
-                                hangup();
-                                reset();
-                            }
-                        }
-                    });
+					// Create outgoing invite
+					outgoingInvite = conversationsClient
+											//mc++ .SendConversationInvite (participants, localMedia, new ConversationCallback {
+											.InviteToConversation(participants, localMedia, new ConversationCallback
+											{
+												/*
+												 * mc++
+												ConversationHandler = (c, err) =>
+												{
+													if (err == null)
+													{
+														// Participant has accepted invite, we are in active conversation
+														this.conversation = c;
+														conversation.ConversationListener = conversationListener();
+													}
+													else {
+														Android.Util.Log.Error(TAG, err.Message);
+														hangup();
+														reset();
+													}
+												}
+												*/
+											}
+											);
 
-                    setHangupAction();
-                } else {
-                    Android.Util.Log.Error (TAG, "invalid participant call");
-                    conversationStatusTextView.Text = "call participant failed";
-                }
-            }, delegate {
-                setCallAction();
-                alertDialog.Dismiss ();
-            }, this);
+					setHangupAction();
+				}
+				else {
+					Android.Util.Log.Error(TAG, "invalid participant call");
+					conversationStatusTextView.Text = "call participant failed";
+				}
+			}, delegate
+			{
+				setCallAction();
+				alertDialog.Dismiss();
+			}, this);
 
-            alertDialog.Show ();
-        }
+			alertDialog.Show();
+		}
 
-       /*
-        * Creates an incoming conversation UI dialog
-        */
-        void showInviteDialog(IncomingInvite incomingInvite)
-        {
-            alertDialog = Dialog.CreateInviteDialog (incomingInvite.Invitee, 
-                new EventHandler<DialogClickEventArgs> ((s, e) => {
-                    /*
+		/*
+		 * Creates an incoming conversation UI dialog
+		 */
+		void showInviteDialog(IncomingInvite incomingInvite)
+		{
+			alertDialog = Dialog.CreateInviteDialog
+			                    (
+				                    //mc++ incomingInvite.Invitee,
+				                    "IncomingInvite.Invitee",
+									new EventHandler<DialogClickEventArgs>((s, e) =>
+				{
+					/*
                  * Accept incoming invite
                  */
-                    var localMedia = setupLocalMedia();
-                    incomingInvite.Accept (localMedia, new ConversationCallback {
-                        ConversationHandler = (c, ex) => {
-                            Android.Util.Log.Error (TAG, "sendConversationInvite onConversation");
-                            if (ex == null) {
-                                this.conversation = c;
-                                c.ConversationListener = conversationListener();
-                            } else {
-                                Android.Util.Log.Error (TAG, ex.Message);
-                                hangup();
-                                reset();
-                            }
-                        }
-                    });
-                    setHangupAction ();
-                }),
-                new EventHandler<DialogClickEventArgs> ((s, e) => {
-                    incomingInvite.Reject ();
-                    setCallAction ();
-                }), this);
-            alertDialog.Show ();
-        }
+					var localMedia = setupLocalMedia();
+					incomingInvite.Accept(localMedia, new ConversationCallback
+					{
+						/*
+						ConversationHandler = (c, ex) =>
+						{
+							Android.Util.Log.Error(TAG, "sendConversationInvite onConversation");
+							if (ex == null)
+							{
+								this.conversation = c;
+								c.ConversationListener = conversationListener();
+							}
+							else {
+								Android.Util.Log.Error(TAG, ex.Message);
+								hangup();
+								reset();
+							}
+						}
+						*/
+					});
+					setHangupAction();
+				}),
+				new EventHandler<DialogClickEventArgs>((s, e) =>
+				{
+					incomingInvite.Reject();
+					setCallAction();
+				}), this);
+			alertDialog.Show();
+		}
 
 
-       /*
-        * Initialize the Twilio Conversations SDK
-        */
-        void initializeTwilioSdk ()
-        {
-            TwilioConversations.SetLogLevel (TwilioConversations.LogLevel.Debug);
+		/*
+		 * Initialize the Twilio Conversations SDK
+		 */
+		void initializeTwilioSdk()
+		{
+			TwilioConversationsClient.LogLevel = LogLevel.Debug;
 
-            if(!TwilioConversations.IsInitialized) {
-                TwilioConversations.Initialize (ApplicationContext, new TwilioConversations.InitListener {
-                    InitHandler = () => {
-                        /*
+			if (!TwilioConversationsClient.IsInitialized)
+			{
+				TwilioConversationsClient.Initialize(ApplicationContext, new TwilioConversationsClient.InitListener
+				{
+					InitHandler = () =>
+					{
+						/*
                          * Now that the SDK is initialized we create a ConversationsClient and register for incoming calls.
                          */
-                        // The TwilioAccessManager manages the lifetime of the access token and notifies the client of token expirations.
-                        accessManager = TwilioAccessManagerFactory.CreateAccessManager (accessToken, accessManagerListener ());
-                        conversationsClient = TwilioConversations.CreateConversationsClient (accessManager, conversationsClientListener());
+						// The TwilioAccessManager manages the lifetime of the access token and notifies the client of token expirations.
+						accessManager = TwilioAccessManagerFactory.CreateAccessManager(accessToken, accessManagerListener());
+						conversationsClient = TwilioConversations.CreateConversationsClient(accessManager, conversationsClientListener());
 
-                        // Specify the audio output to use for this conversation client
-                        conversationsClient.AudioOutput = AudioOutput.Speakerphone;
+						// Specify the audio output to use for this conversation client
+						conversationsClient.AudioOutput = AudioOutput.Speakerphone;
 
-                        // Initialize the camera capturer and start the camera preview
-                        cameraCapturer = CameraCapturerFactory.CreateCameraCapturer (this, CameraCapturerCameraSource.CameraSourceFrontCamera, previewFrameLayout, capturerErrorListener ());
-                        startPreview();
+						// Initialize the camera capturer and start the camera preview
+						cameraCapturer = CameraCapturerFactory.CreateCameraCapturer(this, CameraCapturerCameraSource.CameraSourceFrontCamera, previewFrameLayout, capturerErrorListener());
+						startPreview();
 
-                        // Register to receive incoming invites
-                        conversationsClient.Listen();
-                    }, 
-                    ErrorHandler = err => {
-                        Toast.MakeText (this,
-                            "Failed to initialize the Twilio Conversations SDK",
-                            ToastLength.Long).Show ();
-                    }
-                });
-            }
-        }
+						// Register to receive incoming invites
+						conversationsClient.Listen();
+					},
+					ErrorHandler = err =>
+					{
+						Toast.MakeText(this,
+							"Failed to initialize the Twilio Conversations SDK",
+							ToastLength.Long).Show();
+					}
+				});
+			}
+		}
 
-        void startPreview ()
-        {
-            RunOnUiThread (() => 
-                cameraCapturer.StartPreview ());
-        }
+		void startPreview()
+		{
+			RunOnUiThread(() =>
+			   cameraCapturer.StartPreview());
+		}
 
-        void stopPreview ()
-        {
-            if(cameraCapturer != null && cameraCapturer.IsPreviewing)
-                cameraCapturer.StopPreview ();
-        }
+		void stopPreview()
+		{
+			if (cameraCapturer != null && cameraCapturer.IsPreviewing)
+				cameraCapturer.StopPreview();
+		}
 
-        void hangup ()
-        {
-            if (conversation != null) {
-                conversation.Disconnect ();
-            } else if (outgoingInvite != null){
-                outgoingInvite.Cancel ();
-            }
-        }
+		void hangup()
+		{
+			if (conversation != null)
+			{
+				conversation.Disconnect();
+			}
+			else if (outgoingInvite != null)
+			{
+				outgoingInvite.Cancel();
+			}
+		}
 
-        /*
+		/*
      * Resets UI elements. Used after conversation has ended.
      */
-        void reset()
-        {
-            if (participantVideoRenderer != null) {
-                //participantVideoRenderer.OnPause ();
-                participantVideoRenderer = null;
-            }
-            localContainer.RemoveAllViews();
-            localContainer = FindViewById<ViewGroup> (Resource.Id.localContainer);
-            participantContainer.RemoveAllViews();
+		void reset()
+		{
+			if (participantVideoRenderer != null)
+			{
+				//participantVideoRenderer.OnPause ();
+				participantVideoRenderer = null;
+			}
+			localContainer.RemoveAllViews();
+			localContainer = FindViewById<ViewGroup>(Resource.Id.localContainer);
+			participantContainer.RemoveAllViews();
 
-            if(conversation != null) {
-                conversation.Dispose ();
-                conversation = null;
-            }
-            outgoingInvite = null;
+			if (conversation != null)
+			{
+				conversation.Dispose();
+				conversation = null;
+			}
+			outgoingInvite = null;
 
-            muteMicrophone = false;
-            muteActionFab.SetImageDrawable (ContextCompat.GetDrawable (this, Resource.Drawable.ic_mic_green_24px));
+			muteMicrophone = false;
+			muteActionFab.SetImageDrawable(ContextCompat.GetDrawable(this, Resource.Drawable.ic_mic_green_24px));
 
-            pauseVideo = false;
-            localVideoActionFab.SetImageDrawable (ContextCompat.GetDrawable (this, Resource.Drawable.ic_videocam_green_24px));
-            if (conversationsClient != null)
-                conversationsClient.AudioOutput = AudioOutput.Headset;
-            
-            setCallAction();
-            startPreview();
-        }
+			pauseVideo = false;
+			localVideoActionFab.SetImageDrawable(ContextCompat.GetDrawable(this, Resource.Drawable.ic_videocam_green_24px));
+			if (conversationsClient != null)
+				conversationsClient.AudioOutput = AudioOutput.Headset;
 
-
+			setCallAction();
+			startPreview();
+		}
 
 
-        /*
+
+
+		/*
      * Conversation Listener
      */
-        Conversation.IListener conversationListener() {
-            return new ConversationListener {
-                ParticipantConnectedHandler = (conversation, participant) => {
-                    conversationStatusTextView.Text = "onParticipantConnected " + participant.Identity;
-                    participant.ParticipantListener = participantListener ();
-                },
-                FailedToConnectToParticipantHandler = (conversation, participant, conversationException) => {
-                    Android.Util.Log.Error (TAG, conversationException.Message);
-                    conversationStatusTextView.Text = "onFailedToConnectParticipant " + participant.Identity;
-                },
-                ParticipantDisconnectedHandler = (conversation, participant) => {
-                    conversationStatusTextView.Text = "onParticipantDisconnected " + participant.Identity;
-                },
-                ConversationEndedHandler = (conversation, e) => {
-                    conversationStatusTextView.Text = "onConversationEnded";
-                    reset();
-                }
-            };
-        }
+		Conversation.IListener conversationListener()
+		{
+			return new ConversationListener
+			{
+				ParticipantConnectedHandler = (conversation, participant) =>
+				{
+					conversationStatusTextView.Text = "onParticipantConnected " + participant.Identity;
+					participant.ParticipantListener = participantListener();
+				},
+				FailedToConnectToParticipantHandler = (conversation, participant, conversationException) =>
+				{
+					Android.Util.Log.Error(TAG, conversationException.Message);
+					conversationStatusTextView.Text = "onFailedToConnectParticipant " + participant.Identity;
+				},
+				ParticipantDisconnectedHandler = (conversation, participant) =>
+				{
+					conversationStatusTextView.Text = "onParticipantDisconnected " + participant.Identity;
+				},
+				ConversationEndedHandler = (conversation, e) =>
+				{
+					conversationStatusTextView.Text = "onConversationEnded";
+					reset();
+				}
+			};
+		}
 
-        /*
+		/*
      * LocalMedia listener
      */
-        LocalMedia.IListener localMediaListener () 
-        {
-            return new LocalMediaListener {
-                LocalVideoTrackAddedHandler = (conversation, localVideoTrack) => {
-                    conversationStatusTextView.Text = "onLocalVideoTrackAdded";
-                    localVideoRenderer = new VideoViewRenderer (this, localContainer);
-                    localVideoTrack.AddRenderer (localVideoRenderer);
-                },
-                LocalVideoTrackRemovedHandler = (conversation, localVideoTrack) => {
-                    conversationStatusTextView.Text = "onLocalVideoTrackRemoved";
-                    localContainer.RemoveAllViews ();
-                }
-            };
-        }
+		LocalMedia.IListener localMediaListener()
+		{
+			return new LocalMediaListener
+			{
+				LocalVideoTrackAddedHandler = (conversation, localVideoTrack) =>
+				{
+					conversationStatusTextView.Text = "onLocalVideoTrackAdded";
+					localVideoRenderer = new VideoViewRenderer(this, localContainer);
+					localVideoTrack.AddRenderer(localVideoRenderer);
+				},
+				LocalVideoTrackRemovedHandler = (conversation, localVideoTrack) =>
+				{
+					conversationStatusTextView.Text = "onLocalVideoTrackRemoved";
+					localContainer.RemoveAllViews();
+				}
+			};
+		}
 
 
-        Participant.IListener participantListener () 
-        {
-            return new ParticipantListener {
-                VideoTrackAddedHandler = (conversation, participant, videoTrack) => {
-                    Android.Util.Log.Info (TAG, "onVideoTrackAdded " + participant.Identity);
-                    conversationStatusTextView.Text = "onVideoTrackAdded " + participant.Identity;
+		Participant.IListener participantListener()
+		{
+			return new ParticipantListener
+			{
+				VideoTrackAddedHandler = (conversation, participant, videoTrack) =>
+				{
+					Android.Util.Log.Info(TAG, "onVideoTrackAdded " + participant.Identity);
+					conversationStatusTextView.Text = "onVideoTrackAdded " + participant.Identity;
 
-                    // Remote participant
-                    participantVideoRenderer = new VideoViewRenderer (this, participantContainer);
-                    participantVideoRenderer.SetObserver (new VideoRendererObserver {
-                        FirstFrameHandler = () => {
-                            Android.Util.Log.Info (TAG, "Participant onFirstFrame");
-                        },
-                        FrameDimensionsChangedHandler = (width, height, i) => {
-                            Android.Util.Log.Info (TAG, "Participant onFrameDimensionsChanged " + width + " " + height);
-                        }
-                    });
-                    videoTrack.AddRenderer (participantVideoRenderer);
-                }
-            };
-        }
+					// Remote participant
+					participantVideoRenderer = new VideoViewRenderer(this, participantContainer);
+					participantVideoRenderer.SetObserver(new VideoRendererObserver
+					{
+						FirstFrameHandler = () =>
+						{
+							Android.Util.Log.Info(TAG, "Participant onFirstFrame");
+						},
+						FrameDimensionsChangedHandler = (width, height, i) =>
+						{
+							Android.Util.Log.Info(TAG, "Participant onFrameDimensionsChanged " + width + " " + height);
+						}
+					});
+					videoTrack.AddRenderer(participantVideoRenderer);
+				}
+			};
+		}
 
-       /*
-        * ConversationsClient listener
-        */
-        ConversationsClientListener conversationsClientListener() {
-            return new ConversationsClientListener {
-                StartListeningForInvitesHandler = (c) => {
-                    conversationStatusTextView.Text = "onStartListeningForInvites";
-                },
-                StopListeningForInvitesHandler = (c) => {
-                    conversationStatusTextView.Text = "onStopListeningForInvites";
-                },
-                FailedToStartHandler = (c, ex) => {
-                    conversationStatusTextView.Text = "onFailedToStartListening";
-                },
-                IncomingInviteHandler = (c, invite) => {
-                    conversationStatusTextView.Text = "onIncomingInvite";
-                    if (conversation == null) {
-                        showInviteDialog (invite);
-                    } else {
-                        Android.Util.Log.Warn (TAG, string.Format ("Conversation in progress. Invite from {0} ignored", invite.Invitee));
-                    }
-                },
-                InviteCancelledHandler = (c, invite) => {
-                    conversationStatusTextView.Text = "onIncomingInviteCancelled";
-                }
-            };
-        }
-
-
-       /*
-        * CameraCapture error listener
-        */
-        ICapturerErrorListener capturerErrorListener ()
-        {
-            return new CapturerErrorListener {
-                ErrorHandler = (e) => {
-                    Android.Util.Log.Error (TAG, "Camera capturer error:" + e.Message);
-                }
-            };
-        }
-
-        /*Twilio*/AccessManager.IListener accessManagerListener ()
-        {
-            return new /*Twilio*/AccessManager.IListener() {
-                TokenExpiredHandler = (am) => {
-                    conversationStatusTextView.Text = "onTokenExpired";
-                },
-                TokenUpdatedHandler = (am) => {
-                    conversationStatusTextView.Text = "onTokenUpdated";
-                },
-                ErrorHandler = (am, msg) => {
-                    conversationStatusTextView.Text = "onError";
-                }
-            };
-        }
+		/*
+		 * ConversationsClient listener
+		 * mc++ commented-out
+		 ConversationsClientListener conversationsClientListener() {
+			 return new ConversationsClientListener {
+				 StartListeningForInvitesHandler = (c) => {
+					 conversationStatusTextView.Text = "onStartListeningForInvites";
+				 },
+				 StopListeningForInvitesHandler = (c) => {
+					 conversationStatusTextView.Text = "onStopListeningForInvites";
+				 },
+				 FailedToStartHandler = (c, ex) => {
+					 conversationStatusTextView.Text = "onFailedToStartListening";
+				 },
+				 IncomingInviteHandler = (c, invite) => {
+					 conversationStatusTextView.Text = "onIncomingInvite";
+					 if (conversation == null) {
+						 showInviteDialog (invite);
+					 } else {
+						 Android.Util.Log.Warn (TAG, string.Format ("Conversation in progress. Invite from {0} ignored", invite.Invitee));
+					 }
+				 },
+				 InviteCancelledHandler = (c, invite) => {
+					 conversationStatusTextView.Text = "onIncomingInviteCancelled";
+				 }
+			 };
+		 }
+		 */
 
 
+		/*
+		 * CameraCapture error listener
+		 */
+		ICapturerErrorListener capturerErrorListener()
+		{
+			return new CapturerErrorListener
+			{
+				ErrorHandler = (e) =>
+				{
+					Android.Util.Log.Error(TAG, "Camera capturer error:" + e.Message);
+				}
+			};
+		}
 
-        LocalMedia setupLocalMedia ()
-        {
-            var localMedia = LocalMediaFactory.CreateLocalMedia (localMediaListener ());
-            var localVideoTrack = LocalVideoTrackFactory.CreateLocalVideoTrack (cameraCapturer);
-            if (pauseVideo) {
-                localVideoTrack.Enable (false);
-            }
-            localMedia.AddLocalVideoTrack (localVideoTrack);
-            if (muteMicrophone)
-                localMedia.Mute (true);
-            return localMedia;
-        }
+		/*TwilioAccessManager.IListener*/
+		AccessManagerListener accessManagerListener()
+		{
+			return 
+				//new /*Twilio*/AccessManager.IListener()
+				new AccessManagerListener
+			{
+				/*
+				 * mc++
+				TokenExpiredHandler = (am) =>
+				{
+					conversationStatusTextView.Text = "onTokenExpired";
+				},
+				TokenUpdatedHandler = (am) =>
+				{
+					conversationStatusTextView.Text = "onTokenUpdated";
+				},
+				ErrorHandler = (am, msg) =>
+				{
+					conversationStatusTextView.Text = "onError";
+				}
+				*/
+			};
+		}
 
-        bool checkPermissionForCameraAndMicrophone ()
-        {
-            var resultCamera = ContextCompat.CheckSelfPermission (this, Android.Manifest.Permission.Camera);
-            var resultMic = ContextCompat.CheckSelfPermission (this, Android.Manifest.Permission.RecordAudio);
-            if ((resultCamera == Android.Content.PM.Permission.Granted) && (resultMic ==  Android.Content.PM.Permission.Granted))
-                return true;
-            else
-                return false;
-        }
 
-        void requestPermissionForCameraAndMicrophone ()
-        {
-            if (ActivityCompat.ShouldShowRequestPermissionRationale (this, Android.Manifest.Permission.Camera) || ActivityCompat.ShouldShowRequestPermissionRationale (this, Android.Manifest.Permission.RecordAudio)){
-                Toast.MakeText (this, "Camera and Microphone permissions needed. Please allow in App Settings for additional functionality.", ToastLength.Long).Show ();
-            } else {
-                ActivityCompat.RequestPermissions (this, new [] { Android.Manifest.Permission.Camera, Android.Manifest.Permission.RecordAudio}, CAMERA_MIC_PERMISSION_REQUEST_CODE);
-            }
-        }
 
-        async Task<string> GetIdentity ()
-        {
-            var androidId = Android.Provider.Settings.Secure.GetString (ContentResolver,
-                Android.Provider.Settings.Secure.AndroidId);
+		LocalMedia setupLocalMedia()
+		{
+			var localMedia = LocalMediaFactory.CreateLocalMedia(localMediaListener());
+			var localVideoTrack = LocalVideoTrackFactory.CreateLocalVideoTrack(cameraCapturer);
+			if (pauseVideo)
+			{
+				localVideoTrack.Enable(false);
+			}
+			localMedia.AddLocalVideoTrack(localVideoTrack);
+			if (muteMicrophone)
+				localMedia.Mute(true);
+			return localMedia;
+		}
 
-            var tokenEndpoint = urlBase + $"token.php?device={androidId}";
+		bool checkPermissionForCameraAndMicrophone()
+		{
+			var resultCamera = ContextCompat.CheckSelfPermission(this, Android.Manifest.Permission.Camera);
+			var resultMic = ContextCompat.CheckSelfPermission(this, Android.Manifest.Permission.RecordAudio);
+			if ((resultCamera == Android.Content.PM.Permission.Granted) && (resultMic == Android.Content.PM.Permission.Granted))
+				return true;
+			else
+				return false;
+		}
 
-            var http = new HttpClient ();
-            var data = await http.GetStringAsync (tokenEndpoint);
+		void requestPermissionForCameraAndMicrophone()
+		{
+			if (ActivityCompat.ShouldShowRequestPermissionRationale(this, Android.Manifest.Permission.Camera) || ActivityCompat.ShouldShowRequestPermissionRationale(this, Android.Manifest.Permission.RecordAudio))
+			{
+				Toast.MakeText(this, "Camera and Microphone permissions needed. Please allow in App Settings for additional functionality.", ToastLength.Long).Show();
+			}
+			else {
+				ActivityCompat.RequestPermissions(this, new[] { Android.Manifest.Permission.Camera, Android.Manifest.Permission.RecordAudio }, CAMERA_MIC_PERMISSION_REQUEST_CODE);
+			}
+		}
 
-            var json = System.Json.JsonObject.Parse (data);
+		async Task<string> GetIdentity()
+		{
+			var androidId = Android.Provider.Settings.Secure.GetString(ContentResolver,
+				Android.Provider.Settings.Secure.AndroidId);
 
-            var token = json["token"]?.ToString ()?.Trim ('"');
+			var tokenEndpoint = urlBase + $"token.php?device={androidId}";
 
-            return token;
-        }
-    }
+			var http = new HttpClient();
+			var data = await http.GetStringAsync(tokenEndpoint);
+
+			var json = System.Json.JsonObject.Parse(data);
+
+			var token = json["token"]?.ToString()?.Trim('"');
+
+			return token;
+		}
+	}
+
+
+
+	internal partial class ConversationCallback : Java.Lang.Object, IConversationCallback
+	{
+		public void OnConversation(Conversation p0, TwilioConversationsException p1)
+		{
+			throw new NotImplementedException();
+		}
+	}
+
+	internal partial class LocalMediaListener : Java.Lang.Object, LocalMedia.IListener
+	{
+		public void OnLocalVideoTrackAdded(LocalMedia p0, LocalVideoTrack p1)
+		{
+			throw new NotImplementedException();
+		}
+
+		public void OnLocalVideoTrackError(LocalMedia p0, LocalVideoTrack p1, TwilioConversationsException p2)
+		{
+			throw new NotImplementedException();
+		}
+
+		public void OnLocalVideoTrackRemoved(LocalMedia p0, LocalVideoTrack p1)
+		{
+			throw new NotImplementedException();
+		}
+	}
+
+	internal partial class AccessManagerListener : Java.Lang.Object, AccessManager.IListener
+	{
+		public void OnError(AccessManager p0, string p1)
+		{
+			throw new NotImplementedException();
+		}
+
+		public void OnTokenExpired(AccessManager p0)
+		{
+			throw new NotImplementedException();
+		}
+
+		public void OnTokenUpdated(AccessManager p0)
+		{
+			throw new NotImplementedException();
+		}
+	}
+
 }
