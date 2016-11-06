@@ -6,7 +6,7 @@
     <ProjectTypeGuids>{8FFB629D-F513-41CE-95D2-7ECE97B6EEEC};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <ProjectGuid>{B49319FF-A11F-4EC9-B518-C9F76FFC3707}</ProjectGuid>
     <OutputType>Library</OutputType>
-    <RootNamespace>Twilio.IPMessaging.iOS</RootNamespace>
+    <RootNamespace>Twilio.IPMessaging</RootNamespace>
     <IPhoneResourcePrefix>Resources</IPhoneResourcePrefix>
     <AssemblyName>Twilio.IPMessaging.iOS</AssemblyName>
   </PropertyGroup>

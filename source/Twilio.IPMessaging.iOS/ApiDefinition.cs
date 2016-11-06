@@ -1,9 +1,9 @@
 using System;
 using Foundation;
 using ObjCRuntime;
-using TwilioIPMessagingClient;
+using Twilio.IPMessaging;
 
-namespace TwilioIPMessagingClient
+namespace Twilio.IPMessaging
 {
 	// @interface TWMError : NSError
 	[BaseType (typeof(NSError), Name = "TWMError")]

@@ -6,7 +6,7 @@
     <ProjectTypeGuids>{10368E6C-D01B-4462-8E8B-01FC667A7035};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <ProjectGuid>{113D21B8-63D9-4310-943F-CCF274EC2E1E}</ProjectGuid>
     <OutputType>Library</OutputType>
-    <RootNamespace>Twilio.IPMessaging.Android</RootNamespace>
+    <RootNamespace>Twilio.IPMessaging</RootNamespace>
     <MonoAndroidResourcePrefix>Resources</MonoAndroidResourcePrefix>
     <MonoAndroidAssetsPrefix>Assets</MonoAndroidAssetsPrefix>
     <AndroidUseLatestPlatformSdk>True</AndroidUseLatestPlatformSdk>

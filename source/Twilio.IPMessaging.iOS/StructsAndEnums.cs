@@ -1,7 +1,7 @@
 using System;
 using ObjCRuntime;
 
-namespace TwilioIPMessagingClient
+namespace Twilio.IPMessaging
 {
 	[Native]
 	public enum /*mc++TWM*/ClientSynchronizationStrategy : ulong /*mc++ nint*/
