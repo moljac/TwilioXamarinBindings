@@ -351,7 +351,7 @@ namespace Twilio.Conversations
 	[Protocol, Model]
 	//mc++ [BaseType(typeof(NSObject))]
 	[BaseType(typeof(NSObject), Name = "TWCParticipantDelegate")]
-	interface ParticipantDelegate
+	interface /*mc++ TWC*/ParticipantDelegate
 	{
 		// @optional -(void)participant:(TWCParticipant * _Nonnull)participant addedVideoTrack:(TWCVideoTrack * _Nonnull)videoTrack;
 		[Export("participant:addedVideoTrack:")]
@@ -411,7 +411,7 @@ namespace Twilio.Conversations
 	// @interface TWCConversation : NSObject
 	//mc++ [BaseType(typeof(NSObject))]
 	[BaseType(typeof(NSObject), Name = "TWCConversation")]
-	interface Conversation
+	interface /*mc++ TWC*/Conversation
 	{
 		// @property (readonly, nonatomic, strong) NSArray<TWCParticipant *> * _Nonnull participants;
 		[Export("participants", ArgumentSemantic.Strong)]

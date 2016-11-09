@@ -93,7 +93,7 @@ namespace Twilio.IPMessaging
 	}
 
 	// @interface TWMMessage : NSObject
-	[BaseType (typeof(NSObject))]
+	[BaseType (typeof(NSObject), Name = "TWMMessage")]
 	interface /*mc++TWM*/Message
 	{
 		// @property (readonly, copy, nonatomic) NSString * sid;
