@@ -54,7 +54,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <NativeReference Include="..\..\externals\ios\Pods-20161021-iOS-0.25.1\Pods\TwilioIPMessagingClient\TwilioIPMessagingClient.framework">
+    <NativeReference Include="..\..\externals\ios\TwilioIPMessagingClient.framework">
       <Kind>Framework</Kind>
       <SmartLink>True</SmartLink>
       <ForceLoad>True</ForceLoad>
