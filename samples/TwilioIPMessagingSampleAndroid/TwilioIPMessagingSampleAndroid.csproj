@@ -49,6 +49,10 @@
     <Compile Include="MainActivity.cs" />
     <Compile Include="Resources\Resource.designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="MainActivity.IPMessagingClientListener.cs" />
+    <Compile Include="Helpers\ConstantsStatusListener.cs" />
+    <Compile Include="Helpers\CreateChannelListener.cs" />
+    <Compile Include="Helpers\AccessManagerListener.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\AboutResources.txt" />
@@ -67,6 +71,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Resources\drawable\" />
+    <Folder Include="Helpers\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\source\Twilio.Common.Android\Twilio.Common.Android.csproj">

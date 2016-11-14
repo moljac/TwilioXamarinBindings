@@ -15,7 +15,7 @@ using Twilio.IPMessaging;
 namespace TwilioIPMessagingSample
 {
 	[Activity(Label = "#general", MainLauncher = true, Icon = "@mipmap/icon")]
-	public class MainActivity : Activity, IPMessagingClientListener, IChannelListener, AccessManager.IListener
+	public partial class MainActivity : Activity, /*mc++ IPMessagingClientListener,*/ IChannelListener, AccessManager.IListener
 	{
 		internal const string TAG = "TWILIO";
 
@@ -76,38 +76,31 @@ namespace TwilioIPMessagingSample
 		async Task Setup()
 		{
 			var token = await GetIdentity();
-			var accessManager = /*Twilio*/AccessManagerFactory.CreateAccessManager(token, this);
+			var accessManager =
+				// /*Twilio*/AccessManagerFactory.CreateAccessManager(token, this);
+				new AccessManager(this, token, new AccessManagerListener());
 			client = TwilioIPMessagingSDK.CreateIPMessagingClientWithAccessManager(accessManager, this);
 
-			client.Channels.LoadChannelsWithListener(new Constants.StatusListener
-			{
-				SuccessHandler = () =>
-				{
-					generalChannel = client.Channels.GetChannelByUniqueName("general");
+			client.Channels
+			      	.LoadChannelsWithListener
+			      (
+				      new ConstantsStatusListener
+						{
+							OnSuccess/*Handler*/ = () =>
+							{
+								generalChannel = client.Channels.GetChannelByUniqueName("general");
 
-					if (generalChannel != null)
-					{
-						generalChannel.Listener = this;
-						JoinGeneralChannel();
-					}
-					else
-					{
-						CreateAndJoinGeneralChannel();
-					}
-				}
-			});
-		}
-
-		void JoinGeneralChannel()
-		{
-			generalChannel.Join(new Constants.StatusListener
-			{
-				SuccessHandler = () =>
-				{
-					RunOnUiThread(() =>
-					   Toast.MakeText(this, "Joined general channel!", ToastLength.Short).Show());
-				}
-			});
+								if (generalChannel != null)
+								{
+									generalChannel.Listener = this;
+									JoinGeneralChannel();
+								}
+								else
+								{
+									CreateAndJoinGeneralChannel();
+								}
+							}
+						});
 		}
 
 		void CreateAndJoinGeneralChannel()
@@ -115,19 +108,7 @@ namespace TwilioIPMessagingSample
 			var options = new Dictionary<string, Java.Lang.Object>();
 			options["friendlyName"] = "General Chat Channel";
 			options["ChannelType"] = Channel.ChannelType.Public;
-			client.Channels.CreateChannel(options, new CreateChannelListener
-			{
-				OnCreatedHandler = channel =>
-				{
-					generalChannel = channel;
-					channel.SetUniqueName("general", new StatusListener
-					{
-						SuccessHandler = () => { Console.WriteLine("set unique name successfully!"); }
-					});
-					this.JoinGeneralChannel();
-				},
-				OnErrorHandler = () => { }
-			});
+			client.Channels.CreateChannel(options, new CreateChannelListener(null));
 		}
 
 		void ButtonSend_Click(object sender, EventArgs e)
@@ -136,16 +117,7 @@ namespace TwilioIPMessagingSample
 			{
 				var msg = generalChannel.Messages.CreateMessage(textMessage.Text);
 
-				generalChannel.Messages.SendMessage(msg, new StatusListener
-				{
-					SuccessHandler = () =>
-					{
-						RunOnUiThread(() =>
-						{
-							textMessage.Text = string.Empty;
-						});
-					}
-				});
+				generalChannel.Messages.SendMessage(msg, new ConstantsStatusListener());
 			}
 		}
 
@@ -172,24 +144,6 @@ namespace TwilioIPMessagingSample
 		public void OnAttributesChange(string attr)
 		{
 
-		}
-		public void OnChannelAdd(Channel channel)
-		{
-
-		}
-		public void OnChannelChange(Channel channel)
-		{
-			//Android.Util.Log.Debug (TAG, "Channel Changed");
-			//adapter.UpdateMessages (channel.Messages.GetMessages ());
-		}
-		public void OnChannelDelete(Channel channel)
-		{
-		}
-		public void OnChannelHistoryLoaded(Channel channel)
-		{
-			Android.Util.Log.Debug(TAG, "Channel History Loaded");
-			adapter.UpdateMessages(channel.Messages.GetMessages());
-			listView.SmoothScrollToPosition(adapter.Count - 1);
 		}
 		public void OnError(ErrorInfo errorInfo)
 		{
@@ -284,6 +238,15 @@ namespace TwilioIPMessagingSample
 			return;
 		}
 
+		public void OnToastSubscribed()
+		{
+			throw new NotImplementedException();
+		}
+
+		public void OnSynchronizationChange(Channel p0)
+		{
+			throw new NotImplementedException();
+		}
 	}
 
 	class MessagesAdapter : BaseAdapter<Twilio.IPMessaging.Message>
@@ -339,22 +302,4 @@ namespace TwilioIPMessagingSample
 		public override Twilio.IPMessaging.Message this[int index] { get { return messages[index]; } }
 	}
 
-	public class CreateChannelListener : ConstantsCreateChannelListener
-	{
-		public Action<Channel> OnCreatedHandler { get; set; }
-		public Action OnErrorHandler { get; set; }
-
-		public override void OnCreated(Channel channel)
-		{
-			OnCreatedHandler?.Invoke(channel);
-		}
-
-		public override void OnError(ErrorInfo errorInfo)
-		{
-			base.OnError(errorInfo);
-		}
-
-
-
-	}
 }
