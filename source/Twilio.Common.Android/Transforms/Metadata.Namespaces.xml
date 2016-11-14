@@ -1,0 +1,22 @@
+﻿<metadata>
+	
+	<attr 
+		path="/api/package[@name='com.twilio.common']" 
+		name="managedName"
+		>
+	Twilio.Common
+	</attr>
+	<attr 
+		path="/api/package[@name='com.twilio.common.impl']" 
+		name="managedName"
+		>
+	Twilio.Common.Impl
+	</attr>
+	<attr 
+		path="/api/package[@name='com.twilio.common.internal']" 
+		name="managedName"
+		>
+	Twilio.Common.Internal
+	</attr>
+
+</metadata>

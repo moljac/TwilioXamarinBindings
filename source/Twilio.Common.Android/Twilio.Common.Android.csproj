@@ -53,6 +53,7 @@
     <TransformFile Include="Transforms\EnumMethods.xml" />
     <TransformFile Include="Transforms\Metadata.xml" />
     <TransformFile Include="Transforms\Metadata.generated.xml" />
+    <TransformFile Include="Transforms\Metadata.Namespaces.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.Bindings.targets" />
   <PropertyGroup>

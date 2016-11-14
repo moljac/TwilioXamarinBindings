@@ -1,0 +1,22 @@
+﻿<metadata>
+	<attr 
+		path="/api/package[@name='com.twilio.conversations']" 
+		name="managedName"
+		>
+	Twilio.Conversations
+	</attr>
+	<attr 
+		path="/api/package[@name='com.twilio.conversations.internal']" 
+		name="managedName"
+		>
+	Twilio.Conversations.Internal
+	</attr>
+	<!--
+	mc++ not availalbe
+	<attr path="/api/package[@name='com.twilio.conversations.impl']" name="managedName">Twilio.Conversations.Impl</attr>
+	<attr path="/api/package[@name='com.twilio.conversations.impl.core']" name="managedName">Twilio.Conversations.Impl.Core</attr>
+	<attr path="/api/package[@name='com.twilio.conversations.impl.logging']" name="managedName">Twilio.Conversations.Impl.Logging</attr>
+	<attr path="/api/package[@name='com.twilio.conversations.impl.util']" name="managedName">Twilio.Conversations.Impl.Util</attr>
+	-->
+
+</metadata>

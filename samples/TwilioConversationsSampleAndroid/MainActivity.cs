@@ -376,14 +376,15 @@ namespace TwilioConversationsSampleAndroid
 
 			if (!TwilioConversationsClient.IsInitialized)
 			{
-				TwilioConversationsClient.Initialize(ApplicationContext, new TwilioConversationsClient.InitListener
+				TwilioConversationsClient.Initialize(ApplicationContext
+                 /*
+                  mc++
+                  , new TwilioConversationsClient.InitListener
 				{
 					InitHandler = () =>
 					{
-						/*
-                         * Now that the SDK is initialized we create a ConversationsClient and register for incoming calls.
-                         */
-						// The TwilioAccessManager manages the lifetime of the access token and notifies the client of token expirations.
+						//Now that the SDK is initialized we create a ConversationsClient and register for incoming calls.
+    					// The TwilioAccessManager manages the lifetime of the access token and notifies the client of token expirations.
 						accessManager = TwilioAccessManagerFactory.CreateAccessManager(accessToken, accessManagerListener());
 						conversationsClient = TwilioConversations.CreateConversationsClient(accessManager, conversationsClientListener());
 
@@ -403,14 +404,15 @@ namespace TwilioConversationsSampleAndroid
 							"Failed to initialize the Twilio Conversations SDK",
 							ToastLength.Long).Show();
 					}
-				});
+				}*/
+				);
 			}
 		}
 
 		void startPreview()
 		{
 			RunOnUiThread(() =>
-			   cameraCapturer.StartPreview());
+			   cameraCapturer.StartPreview(/* mc++ ViewGroup needed */));
 		}
 
 		void stopPreview()
@@ -474,6 +476,7 @@ namespace TwilioConversationsSampleAndroid
 		{
 			return new ConversationListener
 			{
+				/*
 				ParticipantConnectedHandler = (conversation, participant) =>
 				{
 					conversationStatusTextView.Text = "onParticipantConnected " + participant.Identity;
@@ -493,6 +496,7 @@ namespace TwilioConversationsSampleAndroid
 					conversationStatusTextView.Text = "onConversationEnded";
 					reset();
 				}
+				*/
 			};
 		}
 
@@ -503,6 +507,7 @@ namespace TwilioConversationsSampleAndroid
 		{
 			return new LocalMediaListener
 			{
+				/*
 				LocalVideoTrackAddedHandler = (conversation, localVideoTrack) =>
 				{
 					conversationStatusTextView.Text = "onLocalVideoTrackAdded";
@@ -514,6 +519,7 @@ namespace TwilioConversationsSampleAndroid
 					conversationStatusTextView.Text = "onLocalVideoTrackRemoved";
 					localContainer.RemoveAllViews();
 				}
+				*/
 			};
 		}
 
@@ -522,6 +528,7 @@ namespace TwilioConversationsSampleAndroid
 		{
 			return new ParticipantListener
 			{
+				/*
 				VideoTrackAddedHandler = (conversation, participant, videoTrack) =>
 				{
 					Android.Util.Log.Info(TAG, "onVideoTrackAdded " + participant.Identity);
@@ -542,14 +549,17 @@ namespace TwilioConversationsSampleAndroid
 					});
 					videoTrack.AddRenderer(participantVideoRenderer);
 				}
+				*/
 			};
 		}
 
 		/*
 		 * ConversationsClient listener
 		 * mc++ commented-out
+		 */
 		 ConversationsClientListener conversationsClientListener() {
 			 return new ConversationsClientListener {
+				/*		
 				 StartListeningForInvitesHandler = (c) => {
 					 conversationStatusTextView.Text = "onStartListeningForInvites";
 				 },
@@ -570,22 +580,24 @@ namespace TwilioConversationsSampleAndroid
 				 InviteCancelledHandler = (c, invite) => {
 					 conversationStatusTextView.Text = "onIncomingInviteCancelled";
 				 }
+				 */
 			 };
 		 }
-		 */
 
 
 		/*
 		 * CameraCapture error listener
 		 */
-		ICapturerErrorListener capturerErrorListener()
+		CapturerErrorListener capturerErrorListener()
 		{
 			return new CapturerErrorListener
 			{
+				/*
 				ErrorHandler = (e) =>
 				{
 					Android.Util.Log.Error(TAG, "Camera capturer error:" + e.Message);
 				}
+				*/
 			};
 		}
 
@@ -679,23 +691,6 @@ namespace TwilioConversationsSampleAndroid
 		}
 	}
 
-	internal partial class LocalMediaListener : Java.Lang.Object, LocalMedia.IListener
-	{
-		public void OnLocalVideoTrackAdded(LocalMedia p0, LocalVideoTrack p1)
-		{
-			throw new NotImplementedException();
-		}
-
-		public void OnLocalVideoTrackError(LocalMedia p0, LocalVideoTrack p1, TwilioConversationsException p2)
-		{
-			throw new NotImplementedException();
-		}
-
-		public void OnLocalVideoTrackRemoved(LocalMedia p0, LocalVideoTrack p1)
-		{
-			throw new NotImplementedException();
-		}
-	}
 
 	internal partial class AccessManagerListener : Java.Lang.Object, AccessManager.IListener
 	{

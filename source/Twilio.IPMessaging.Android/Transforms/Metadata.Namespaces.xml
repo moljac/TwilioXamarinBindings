@@ -1,0 +1,21 @@
+﻿<metadata>
+	<attr 
+		path="/api/package[@name='com.twilio.ipmessaging']" 
+		name="managedName"
+		>
+		Twilio.IPMessaging
+	</attr>
+	<attr 
+		path="/api/package[@name='com.twilio.ipmessaging.internal']" 
+		name="managedName"
+		>
+		Twilio.IPMessaging.Internal
+	</attr>
+
+	<!--
+		mc++ not available
+ 	
+	 <attr path="/api/package[@name='com.twilio.ipmessaging.impl']" name="managedName">Twilio.IPMessaging.Impl</attr>
+	 -->
+	
+</metadata>
