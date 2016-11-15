@@ -2,7 +2,7 @@
 using Android.App;
 using Android.Runtime;
 
-namespace Twilio.IPMessaging.Android
+namespace Twilio.IPMessaging
 {
     [Register ("com/twilio/ipmessaging/TwilioIPMessagingClientService", DoNotGenerateAcw=true)]
     [Service (Name="com.twilio.ipmessaging.TwilioIPMessagingClientService")]

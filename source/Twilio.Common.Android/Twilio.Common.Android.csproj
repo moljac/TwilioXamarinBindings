@@ -6,13 +6,14 @@
     <ProjectTypeGuids>{10368E6C-D01B-4462-8E8B-01FC667A7035};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <ProjectGuid>{F78E29B1-08F2-479B-88F0-2A9AEF0F79A4}</ProjectGuid>
     <OutputType>Library</OutputType>
-    <RootNamespace>Twilio.Common.Android</RootNamespace>
+    <RootNamespace>Twilio.Common</RootNamespace>
     <MonoAndroidResourcePrefix>Resources</MonoAndroidResourcePrefix>
     <MonoAndroidAssetsPrefix>Assets</MonoAndroidAssetsPrefix>
     <AndroidUseLatestPlatformSdk>True</AndroidUseLatestPlatformSdk>
     <AssemblyName>Twilio.Common.Android</AssemblyName>
     <TargetFrameworkVersion>v7.0</TargetFrameworkVersion>
 	<AndroidClassParser>class-parse</AndroidClassParser>
+	<AndroidTlsProvider></AndroidTlsProvider>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -42,11 +43,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Additions\ListenerImplementations\AccessManagerListener.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Additions\AboutAdditions.txt" />
     <None Include="Jars\AboutJars.txt" />
-    <None Include="Additions\ListenerImplementations.cs" />
   </ItemGroup>
   <ItemGroup>
     <TransformFile Include="Transforms\EnumFields.xml" />
@@ -63,5 +64,8 @@
     <LibraryProjectZip Include="..\..\externals\android\twilio-common-android.aar">
       <Link>Jars\twilio-common-android.aar</Link>
     </LibraryProjectZip>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Additions\ListenerImplementations\" />
   </ItemGroup>
 </Project>
