@@ -1,9 +1,21 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2012
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TwilioConversationsSampleAndroid", "TwilioConversationsSampleAndroid\TwilioConversationsSampleAndroid.csproj", "{E4C2D25B-0308-422A-B096-FA2760F64BCB}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "source", "source", "{12ADBDCB-B412-48B6-A315-BEF2209E8FF8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Twilio.IPMessaging.Android", "..\source\Twilio.IPMessaging.Android\Twilio.IPMessaging.Android.csproj", "{113D21B8-63D9-4310-943F-CCF274EC2E1E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Twilio.IPMessaging.iOS", "..\source\Twilio.IPMessaging.iOS\Twilio.IPMessaging.iOS.csproj", "{B49319FF-A11F-4EC9-B518-C9F76FFC3707}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Twilio.Common.iOS", "..\source\Twilio.Common.iOS\Twilio.Common.iOS.csproj", "{B87C8255-A818-4E20-9940-81BFEF9C5137}"
+EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Twilio.Common.Android", "..\source\Twilio.Common.Android\Twilio.Common.Android.csproj", "{F78E29B1-08F2-479B-88F0-2A9AEF0F79A4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Twilio.Conversations.iOS", "..\source\Twilio.Conversations.iOS\Twilio.Conversations.iOS.csproj", "{A88FBAAF-D81A-4D96-BF8C-DE44B9B94543}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Twilio.Conversations.Android", "..\source\Twilio.Conversations.Android\Twilio.Conversations.Android.csproj", "{074FF7DE-DFA6-4FC3-BA69-C9395017E951}"
 EndProject
@@ -13,17 +25,44 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{074FF7DE-DFA6-4FC3-BA69-C9395017E951}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{074FF7DE-DFA6-4FC3-BA69-C9395017E951}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{074FF7DE-DFA6-4FC3-BA69-C9395017E951}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{074FF7DE-DFA6-4FC3-BA69-C9395017E951}.Release|Any CPU.Build.0 = Release|Any CPU
 		{E4C2D25B-0308-422A-B096-FA2760F64BCB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{E4C2D25B-0308-422A-B096-FA2760F64BCB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E4C2D25B-0308-422A-B096-FA2760F64BCB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E4C2D25B-0308-422A-B096-FA2760F64BCB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{113D21B8-63D9-4310-943F-CCF274EC2E1E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{113D21B8-63D9-4310-943F-CCF274EC2E1E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{113D21B8-63D9-4310-943F-CCF274EC2E1E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{113D21B8-63D9-4310-943F-CCF274EC2E1E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B49319FF-A11F-4EC9-B518-C9F76FFC3707}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B49319FF-A11F-4EC9-B518-C9F76FFC3707}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B49319FF-A11F-4EC9-B518-C9F76FFC3707}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B49319FF-A11F-4EC9-B518-C9F76FFC3707}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B87C8255-A818-4E20-9940-81BFEF9C5137}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B87C8255-A818-4E20-9940-81BFEF9C5137}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B87C8255-A818-4E20-9940-81BFEF9C5137}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B87C8255-A818-4E20-9940-81BFEF9C5137}.Release|Any CPU.Build.0 = Release|Any CPU
 		{F78E29B1-08F2-479B-88F0-2A9AEF0F79A4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{F78E29B1-08F2-479B-88F0-2A9AEF0F79A4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F78E29B1-08F2-479B-88F0-2A9AEF0F79A4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F78E29B1-08F2-479B-88F0-2A9AEF0F79A4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A88FBAAF-D81A-4D96-BF8C-DE44B9B94543}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A88FBAAF-D81A-4D96-BF8C-DE44B9B94543}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A88FBAAF-D81A-4D96-BF8C-DE44B9B94543}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A88FBAAF-D81A-4D96-BF8C-DE44B9B94543}.Release|Any CPU.Build.0 = Release|Any CPU
+		{074FF7DE-DFA6-4FC3-BA69-C9395017E951}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{074FF7DE-DFA6-4FC3-BA69-C9395017E951}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{074FF7DE-DFA6-4FC3-BA69-C9395017E951}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{074FF7DE-DFA6-4FC3-BA69-C9395017E951}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{113D21B8-63D9-4310-943F-CCF274EC2E1E} = {12ADBDCB-B412-48B6-A315-BEF2209E8FF8}
+		{B49319FF-A11F-4EC9-B518-C9F76FFC3707} = {12ADBDCB-B412-48B6-A315-BEF2209E8FF8}
+		{B87C8255-A818-4E20-9940-81BFEF9C5137} = {12ADBDCB-B412-48B6-A315-BEF2209E8FF8}
+		{F78E29B1-08F2-479B-88F0-2A9AEF0F79A4} = {12ADBDCB-B412-48B6-A315-BEF2209E8FF8}
+		{A88FBAAF-D81A-4D96-BF8C-DE44B9B94543} = {12ADBDCB-B412-48B6-A315-BEF2209E8FF8}
+		{074FF7DE-DFA6-4FC3-BA69-C9395017E951} = {12ADBDCB-B412-48B6-A315-BEF2209E8FF8}
 	EndGlobalSection
 EndGlobal

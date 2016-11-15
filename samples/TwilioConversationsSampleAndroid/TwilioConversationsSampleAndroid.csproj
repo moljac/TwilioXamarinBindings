@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -15,7 +15,9 @@
     <AndroidApplication>True</AndroidApplication>
     <AndroidUseLatestPlatformSdk>true</AndroidUseLatestPlatformSdk>
     <AssemblyName>TwilioConversationsSampleAndroid</AssemblyName>
-    <TargetFrameworkVersion>v6.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v7.0</TargetFrameworkVersion>
+    <AndroidTlsProvider>
+    </AndroidTlsProvider>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -101,10 +103,6 @@
     <AndroidResource Include="Resources\values-w820dp\dimens.xml" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Resources\drawable\" />
-  </ItemGroup>
-  <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
-  <ItemGroup>
     <ProjectReference Include="..\..\source\Twilio.Common.Android\Twilio.Common.Android.csproj">
       <Project>{F78E29B1-08F2-479B-88F0-2A9AEF0F79A4}</Project>
       <Name>Twilio.Common.Android</Name>
@@ -114,4 +112,5 @@
       <Name>Twilio.Conversations.Android</Name>
     </ProjectReference>
   </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
 </Project>

@@ -2,12 +2,10 @@
 using Android.Widget;
 using Android.OS;
 using Android.Support.V7.App;
-using Twilio.Conversations;
 using Android.Views;
 using Android.Support.Design.Widget;
 using Android.Media;
 using System;
-using Twilio.Common;
 using Android.Content;
 using System.Collections.Generic;
 using Android.Support.V4.Content;
@@ -15,6 +13,9 @@ using Android.Support.V4.App;
 using System.Threading.Tasks;
 using System.Net.Http;
 using System.Json;
+
+using Twilio.Common;
+using Twilio.Conversations;
 
 [assembly: UsesFeature ("android.hardware.camera")]
 [assembly: UsesFeature (GLESVersion=0x00020000, Required=true)]
@@ -372,45 +373,50 @@ namespace TwilioConversationsSampleAndroid
 		 */
 		void initializeTwilioSdk()
 		{
-			TwilioConversationsClient.LogLevel = LogLevel.Debug;
+			TwilioConversationsClient.LogLevel = Twilio.Conversations.LogLevel.Debug;
 
 			if (!TwilioConversationsClient.IsInitialized)
 			{
-				TwilioConversationsClient.Initialize(ApplicationContext, new TwilioConversationsClient.InitListener
-				{
-					InitHandler = () =>
-					{
-						/*
-                         * Now that the SDK is initialized we create a ConversationsClient and register for incoming calls.
-                         */
-						// The TwilioAccessManager manages the lifetime of the access token and notifies the client of token expirations.
-						accessManager = TwilioAccessManagerFactory.CreateAccessManager(accessToken, accessManagerListener());
-						conversationsClient = TwilioConversations.CreateConversationsClient(accessManager, conversationsClientListener());
+				TwilioConversationsClient.Initialize
+						(
+							ApplicationContext
+							/*
+							, new TwilioConversationsClient.InitListener
+							{
+								InitHandler = () =>
+								{
+									// Now that the SDK is initialized we create a ConversationsClient and register for incoming calls.
+									// The TwilioAccessManager manages the lifetime of the access token and notifies the client of token expirations.
+									accessManager = TwilioAccessManagerFactory.CreateAccessManager(accessToken, accessManagerListener());
+									conversationsClient = TwilioConversations.CreateConversationsClient(accessManager, conversationsClientListener());
 
-						// Specify the audio output to use for this conversation client
-						conversationsClient.AudioOutput = AudioOutput.Speakerphone;
+									// Specify the audio output to use for this conversation client
+									conversationsClient.AudioOutput = AudioOutput.Speakerphone;
 
-						// Initialize the camera capturer and start the camera preview
-						cameraCapturer = CameraCapturerFactory.CreateCameraCapturer(this, CameraCapturerCameraSource.CameraSourceFrontCamera, previewFrameLayout, capturerErrorListener());
-						startPreview();
+									// Initialize the camera capturer and start the camera preview
+									cameraCapturer = CameraCapturerFactory.CreateCameraCapturer(this, CameraCapturerCameraSource.CameraSourceFrontCamera, previewFrameLayout, capturerErrorListener());
+									startPreview();
 
-						// Register to receive incoming invites
-						conversationsClient.Listen();
-					},
-					ErrorHandler = err =>
-					{
-						Toast.MakeText(this,
-							"Failed to initialize the Twilio Conversations SDK",
-							ToastLength.Long).Show();
-					}
-				});
+									// Register to receive incoming invites
+									conversationsClient.Listen();
+								},
+								ErrorHandler = err =>
+								{
+									Toast.MakeText(this,
+										"Failed to initialize the Twilio Conversations SDK",
+										ToastLength.Long).Show();
+								}
+							}
+							*/
+						);
 			}
 		}
 
 		void startPreview()
 		{
+			ViewGroup vg = null;
 			RunOnUiThread(() =>
-			   cameraCapturer.StartPreview());
+			   cameraCapturer.StartPreview(vg));
 		}
 
 		void stopPreview()
@@ -470,30 +476,9 @@ namespace TwilioConversationsSampleAndroid
 		/*
      * Conversation Listener
      */
-		Conversation.IListener conversationListener()
+		protected ConversationListener conversationListener()
 		{
-			return new ConversationListener
-			{
-				ParticipantConnectedHandler = (conversation, participant) =>
-				{
-					conversationStatusTextView.Text = "onParticipantConnected " + participant.Identity;
-					participant.ParticipantListener = participantListener();
-				},
-				FailedToConnectToParticipantHandler = (conversation, participant, conversationException) =>
-				{
-					Android.Util.Log.Error(TAG, conversationException.Message);
-					conversationStatusTextView.Text = "onFailedToConnectParticipant " + participant.Identity;
-				},
-				ParticipantDisconnectedHandler = (conversation, participant) =>
-				{
-					conversationStatusTextView.Text = "onParticipantDisconnected " + participant.Identity;
-				},
-				ConversationEndedHandler = (conversation, e) =>
-				{
-					conversationStatusTextView.Text = "onConversationEnded";
-					reset();
-				}
-			};
+			return new ConversationListener();
 		}
 
 		/*
@@ -501,47 +486,20 @@ namespace TwilioConversationsSampleAndroid
      */
 		LocalMedia.IListener localMediaListener()
 		{
-			return new LocalMediaListener
+			return new LocalMediaListener()
 			{
-				LocalVideoTrackAddedHandler = (conversation, localVideoTrack) =>
-				{
-					conversationStatusTextView.Text = "onLocalVideoTrackAdded";
-					localVideoRenderer = new VideoViewRenderer(this, localContainer);
-					localVideoTrack.AddRenderer(localVideoRenderer);
-				},
-				LocalVideoTrackRemovedHandler = (conversation, localVideoTrack) =>
-				{
-					conversationStatusTextView.Text = "onLocalVideoTrackRemoved";
-					localContainer.RemoveAllViews();
-				}
+				LocalContainer = localContainer,
+				LocalVideoRenderer = localVideoRenderer,
+				Context = this,
+				ConversationStatusTextView = conversationStatusTextView,
 			};
 		}
 
 
-		Participant.IListener participantListener()
+		ParticipantListener participantListener()
 		{
 			return new ParticipantListener
 			{
-				VideoTrackAddedHandler = (conversation, participant, videoTrack) =>
-				{
-					Android.Util.Log.Info(TAG, "onVideoTrackAdded " + participant.Identity);
-					conversationStatusTextView.Text = "onVideoTrackAdded " + participant.Identity;
-
-					// Remote participant
-					participantVideoRenderer = new VideoViewRenderer(this, participantContainer);
-					participantVideoRenderer.SetObserver(new VideoRendererObserver
-					{
-						FirstFrameHandler = () =>
-						{
-							Android.Util.Log.Info(TAG, "Participant onFirstFrame");
-						},
-						FrameDimensionsChangedHandler = (width, height, i) =>
-						{
-							Android.Util.Log.Info(TAG, "Participant onFrameDimensionsChanged " + width + " " + height);
-						}
-					});
-					videoTrack.AddRenderer(participantVideoRenderer);
-				}
 			};
 		}
 
@@ -580,12 +538,12 @@ namespace TwilioConversationsSampleAndroid
 		 */
 		ICapturerErrorListener capturerErrorListener()
 		{
-			return new CapturerErrorListener
+			return new CapturerErrorListener()
 			{
 				ErrorHandler = (e) =>
-				{
-					Android.Util.Log.Error(TAG, "Camera capturer error:" + e.Message);
-				}
+					{
+						Android.Util.Log.Error(TAG, "Camera capturer error:" + e.Message);
+					},
 			};
 		}
 
@@ -594,10 +552,8 @@ namespace TwilioConversationsSampleAndroid
 		{
 			return 
 				//new /*Twilio*/AccessManager.IListener()
-				new AccessManagerListener
+				new AccessManagerListener(this, accessToken)
 			{
-				/*
-				 * mc++
 				TokenExpiredHandler = (am) =>
 				{
 					conversationStatusTextView.Text = "onTokenExpired";
@@ -609,8 +565,7 @@ namespace TwilioConversationsSampleAndroid
 				ErrorHandler = (am, msg) =>
 				{
 					conversationStatusTextView.Text = "onError";
-				}
-				*/
+				},
 			};
 		}
 
@@ -618,8 +573,15 @@ namespace TwilioConversationsSampleAndroid
 
 		LocalMedia setupLocalMedia()
 		{
-			var localMedia = LocalMediaFactory.CreateLocalMedia(localMediaListener());
-			var localVideoTrack = LocalVideoTrackFactory.CreateLocalVideoTrack(cameraCapturer);
+			var localMedia = 
+				//mc++ LocalMediaFactory.CreateLocalMedia(localMediaListener())
+				new LocalMedia(new LocalMediaListener())
+				;
+			var localVideoTrack = 
+				//mc++ LocalVideoTrackFactory.CreateLocalVideoTrack(cameraCapturer)
+				new LocalVideoTrack(cameraCapturer)	
+				;
+			
 			if (pauseVideo)
 			{
 				localVideoTrack.Enable(false);
@@ -671,48 +633,5 @@ namespace TwilioConversationsSampleAndroid
 
 
 
-	internal partial class ConversationCallback : Java.Lang.Object, IConversationCallback
-	{
-		public void OnConversation(Conversation p0, TwilioConversationsException p1)
-		{
-			throw new NotImplementedException();
-		}
-	}
-
-	internal partial class LocalMediaListener : Java.Lang.Object, LocalMedia.IListener
-	{
-		public void OnLocalVideoTrackAdded(LocalMedia p0, LocalVideoTrack p1)
-		{
-			throw new NotImplementedException();
-		}
-
-		public void OnLocalVideoTrackError(LocalMedia p0, LocalVideoTrack p1, TwilioConversationsException p2)
-		{
-			throw new NotImplementedException();
-		}
-
-		public void OnLocalVideoTrackRemoved(LocalMedia p0, LocalVideoTrack p1)
-		{
-			throw new NotImplementedException();
-		}
-	}
-
-	internal partial class AccessManagerListener : Java.Lang.Object, AccessManager.IListener
-	{
-		public void OnError(AccessManager p0, string p1)
-		{
-			throw new NotImplementedException();
-		}
-
-		public void OnTokenExpired(AccessManager p0)
-		{
-			throw new NotImplementedException();
-		}
-
-		public void OnTokenUpdated(AccessManager p0)
-		{
-			throw new NotImplementedException();
-		}
-	}
 
 }
