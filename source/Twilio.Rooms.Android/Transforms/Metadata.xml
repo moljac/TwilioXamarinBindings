@@ -1,0 +1,391 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<metadata>
+	<!--
+		removing these packages would cause some classes not being surfaced
+	<remove-node
+		path="/api/package[@name='org.webrtc']"
+		>
+	</remove-node>
+	<remove-node
+		path="/api/package[@name='org.webrtc.voiceengine']"
+		>
+	</remove-node>
+	-->
+
+	
+	<!--
+	====================================================================================================================
+	1st run
+
+	{
+		"Problem" 
+			:
+			"
+				obj/Debug/generated/src/Com.Twilio.Video.Media.cs(1302,35): 
+				error CS0102: 
+				The type 
+					`Com.Twilio.Video.Media.AudioTrackAddedEventArgs' 
+				already contains a definition for 
+					`p0'
+
+				obj/Debug/generated/src/Com.Twilio.Video.Media.cs(1303,42): error CS0102: 
+				The type 
+					`Com.Twilio.Video.Media.AudioTrackAddedEventArgs' 
+				already contains a definition for 
+					`P0'
+			"
+		,
+		"Search" 
+			:
+			"
+			"
+		,
+		"ProblemData" 
+			:
+			{
+				"ErrorId" : "CS0102"
+				,
+				"ErrorDescription"
+					:
+					"
+					"
+					,
+			}
+		,
+		"Analysis"
+			:
+			{
+				"1" 
+					: 
+					"
+					"
+			}
+		,
+		"[Re]Solution/Workaround"
+			:
+			{
+				"1"
+					:
+					"
+					"
+			}
+		,
+	}       
+	-->
+	<attr
+		path="/api/package[@name='com.twilio.video']/class[@name='Media.InternalMediaListenerImpl']/method[@name='onAudioTrackAdded' and count(parameter)=1 and parameter[1][@type='com.twilio.video.AudioTrack']]/parameter[@name='p0']"
+		name="managedName"
+		>
+		audioTrack
+	</attr>
+	<attr
+		path="/api/package[@name='com.twilio.video']/interface[@name='Media.Listener']/method[@name='onAudioTrackAdded' and count(parameter)=2 and parameter[1][@type='com.twilio.video.Media'] and parameter[2][@type='com.twilio.video.AudioTrack']]/parameter[@name='p0']"
+		name="managedName"
+		>
+		media
+	</attr>
+
+	<!--
+	{
+		"Problem" 
+			:
+			"
+				obj/Debug/generated/src/Com.Twilio.Video.Media.cs(1321,35): 
+				error CS0102: 
+				The type 
+					`Com.Twilio.Video.Media.AudioTrackDisabledEventArgs' 
+				already contains a definition for 
+					`p0'
+
+				obj/Debug/generated/src/Com.Twilio.Video.Media.cs(1322,42): 
+				error CS0102: 
+				The type 
+					`Com.Twilio.Video.Media.AudioTrackDisabledEventArgs' 
+				already contains a definition for 
+				`P0'
+			"
+		,
+		"Search" 
+			:
+			"
+			"
+		,
+		"ProblemData" 
+			:
+			{
+				"ErrorId" : "CS0102"
+				,
+				"ErrorDescription"
+					:
+					"
+					"
+					,
+			}
+		,
+		"Analysis"
+			:
+			{
+				"1" 
+					: 
+					"
+					"
+			}
+		,
+		"[Re]Solution/Workaround"
+			:
+			{
+				"1"
+					:
+					"
+					"
+			}
+		,
+	}       
+	-->
+	<attr
+		path="/api/package[@name='com.twilio.video']/interface[@name='Media.Listener']/method[@name='onAudioTrackDisabled' and count(parameter)=2 and parameter[1][@type='com.twilio.video.Media'] and parameter[2][@type='com.twilio.video.AudioTrack']]/parameter[@name='p0']"
+		name="managedName"
+		>
+		media
+	</attr>
+
+	<!--
+		obj/Debug/generated/src/Com.Twilio.Video.Media.cs(1340,35): 
+		error CS0102: 
+		The type 
+			`Com.Twilio.Video.Media.AudioTrackEnabledEventArgs' 
+		already contains a definition for 
+			`p0'
+	
+		obj/Debug/generated/src/Com.Twilio.Video.Media.cs(1341,42): 
+		error CS0102: 
+		The type 
+			`Com.Twilio.Video.Media.AudioTrackEnabledEventArgs' 
+		already contains a definition for 
+			`P0'
+	-->
+	<attr
+		path="/api/package[@name='com.twilio.video']/interface[@name='Media.InternalMediaListener']/method[@name='onAudioTrackEnabled' and count(parameter)=1 and parameter[1][@type='java.lang.String']]"
+		name="managedName"
+		>
+		track
+	</attr>
+
+	<!--
+		obj/Debug/generated/src/Com.Twilio.Video.Media.cs(1359,35): 
+		error CS0102: 
+		The type 
+			`Com.Twilio.Video.Media.AudioTrackRemovedEventArgs' 
+		already contains a definition for 
+			`p0'
+
+		obj/Debug/generated/src/Com.Twilio.Video.Media.cs(1360,42): 
+		error CS0102: 
+		The type 
+			`Com.Twilio.Video.Media.AudioTrackRemovedEventArgs' 
+		already contains a definition for 
+			`P0'
+
+	-->
+	<attr
+		path="/api/package[@name='com.twilio.video']/interface[@name='Media.Listener']/method[@name='onAudioTrackRemoved' and count(parameter)=2 and parameter[1][@type='com.twilio.video.Media'] and parameter[2][@type='com.twilio.video.AudioTrack']]/parameter[@name='p0']"
+		name="managedName"
+		>
+		media
+	</attr>
+
+	<!--
+	obj/Debug/generated/src/Com.Twilio.Video.Media.cs(1378,35): 
+	error CS0102: The type 
+		`Com.Twilio.Video.Media.VideoTrackAddedEventArgs'
+	already contains a definition for 
+		`p0'
+	
+	obj/Debug/generated/src/Com.Twilio.Video.Media.cs(1379,42): 
+	error CS0102: 
+	The type 
+		`Com.Twilio.Video.Media.VideoTrackAddedEventArgs' 
+	already contains a definition for 
+		`P0'
+
+	-->
+	<attr
+		path="/api/package[@name='com.twilio.video']/class[@name='Media.InternalMediaListenerImpl']/method[@name='onVideoTrackAdded' and count(parameter)=1 and parameter[1][@type='com.twilio.video.VideoTrack']]/parameter[@name='p0']"
+		name="managedName"
+		>
+		audioTrack
+	</attr>
+	<attr
+		path="/api/package[@name='com.twilio.video']/interface[@name='Media.Listener']/method[@name='onVideoTrackAdded' and count(parameter)=2 and parameter[1][@type='com.twilio.video.Media'] and parameter[2][@type='com.twilio.video.VideoTrack']]/parameter[@name='p0']"
+		name="managedName"
+		>
+		media
+	</attr>
+
+	<!--
+		obj/Debug/generated/src/Com.Twilio.Video.Media.cs(1397,35): 
+		error CS0102: 
+		The type 
+			`Com.Twilio.Video.Media.VideoTrackDisabledEventArgs' 
+		already contains a definition for 
+			`p0'
+		
+		obj/Debug/generated/src/Com.Twilio.Video.Media.cs(1398,42): 
+		error CS0102: 
+		The type 
+			`Com.Twilio.Video.Media.VideoTrackDisabledEventArgs' 
+		already contains a definition for 
+			`P0'
+
+	-->
+	<attr
+		path="/api/package[@name='com.twilio.video']/interface[@name='Media.Listener']/method[@name='onVideoTrackDisabled' and count(parameter)=2 and parameter[1][@type='com.twilio.video.Media'] and parameter[2][@type='com.twilio.video.VideoTrack']]/parameter[@name='p0']"
+		name="managedName"
+		>
+		media
+	</attr>
+
+	<!--
+	obj/Debug/generated/src/Com.Twilio.Video.Media.cs(1416,35): error CS0102: The type `Com.Twilio.Video.Media.VideoTrackEnabledEventArgs' already contains a definition for `p0'
+	obj/Debug/generated/src/Com.Twilio.Video.Media.cs(1417,42): error CS0102: The type `Com.Twilio.Video.Media.VideoTrackEnabledEventArgs' already contains a definition for `P0'
+
+	-->
+	<attr
+		path="/api/package[@name='com.twilio.video']/interface[@name='Media.Listener']/method[@name='onVideoTrackEnabled' and count(parameter)=2 and parameter[1][@type='com.twilio.video.Media'] and parameter[2][@type='com.twilio.video.VideoTrack']]/parameter[@name='p0']"
+		name="managedName"
+		>
+		media
+	</attr>
+
+
+	<!--
+	obj/Debug/generated/src/Com.Twilio.Video.Media.cs(1435,35): error CS0102: The type `Com.Twilio.Video.Media.VideoTrackRemovedEventArgs' already contains a definition for `p0'
+	obj/Debug/generated/src/Com.Twilio.Video.Media.cs(1436,42): error CS0102: The type `Com.Twilio.Video.Media.VideoTrackRemovedEventArgs' already contains a definition for `P0'
+
+	-->
+	<attr
+		path="/api/package[@name='com.twilio.video']/interface[@name='Media.Listener']/method[@name='onVideoTrackRemoved' and count(parameter)=2 and parameter[1][@type='com.twilio.video.Media'] and parameter[2][@type='com.twilio.video.VideoTrack']]/parameter[@name='p0']"
+		name="managedName"
+		>
+		media
+	</attr>
+
+	<!--
+	obj/Debug/generated/src/Com.Twilio.Video.Room.cs(953,34): error CS0102: The type `Com.Twilio.Video.Room.ConnectFailureEventArgs' already contains a definition for `p0'
+	obj/Debug/generated/src/Com.Twilio.Video.Room.cs(954,41): error CS0102: The type `Com.Twilio.Video.Room.ConnectFailureEventArgs' already contains a definition for `P0'
+
+	-->
+	<attr
+		path="/api/package[@name='com.twilio.video']/interface[@name='Room.InternalRoomListener']/method[@name='onConnectFailure' and count(parameter)=1 and parameter[1][@type='int']]"
+		name="managedName"
+		>
+		failure_id
+	</attr>
+
+	<!--
+	obj/Debug/generated/src/Com.Twilio.Video.Room.cs(971,34): error CS0102: The type `Com.Twilio.Video.Room.ConnectedEventArgs' already contains a definition for `p0'
+	obj/Debug/generated/src/Com.Twilio.Video.Room.cs(972,41): error CS0102: The type `Com.Twilio.Video.Room.ConnectedEventArgs' already contains a definition for `P0'
+
+	-->
+	<attr
+		path="/api/package[@name='com.twilio.video']/interface[@name='Room.InternalRoomListener']/method[@name='onConnected' and count(parameter)=4 and parameter[1][@type='java.lang.String'] and parameter[2][@type='java.lang.String'] and parameter[3][@type='java.lang.String'] and parameter[4][@type='java.util.List&lt;com.twilio.video.Participant&gt;']]"
+		name="managedName"
+		>
+		conected_room_id
+	</attr>
+	
+	<!--
+	obj/Debug/generated/src/Com.Twilio.Video.Room.cs(985,34): error CS0102: The type `Com.Twilio.Video.Room.DisconnectedEventArgs' already contains a definition for `p0'
+	obj/Debug/generated/src/Com.Twilio.Video.Room.cs(986,41): error CS0102: The type `Com.Twilio.Video.Room.DisconnectedEventArgs' already contains a definition for `P0'
+
+	-->
+	<attr
+		path="/api/package[@name='com.twilio.video']/interface[@name='Room.InternalRoomListener']/method[@name='onDisconnected' and count(parameter)=1 and parameter[1][@type='int']]"
+		name="managedName"
+		>
+		disconected_room_id
+	</attr>
+
+	<!--
+	obj/Debug/generated/src/Com.Twilio.Video.Room.cs(1004,34): error CS0102: The type `Com.Twilio.Video.Room.ParticipantConnectedEventArgs' already contains a definition for `p0'
+	obj/Debug/generated/src/Com.Twilio.Video.Room.cs(1005,41): error CS0102: The type `Com.Twilio.Video.Room.ParticipantConnectedEventArgs' already contains a definition for `P0'
+
+	-->
+	<attr
+		path="/api/package[@name='com.twilio.video']/interface[@name='Room.InternalRoomListener']/method[@name='onParticipantConnected' and count(parameter)=1 and parameter[1][@type='com.twilio.video.Participant']]"
+		name="managedName"
+		>
+		participant_conected
+	</attr>
+
+	<!--
+	obj/Debug/generated/src/Com.Twilio.Video.Room.cs(1023,34): error CS0102: The type `Com.Twilio.Video.Room.ParticipantDisconnectedEventArgs' already contains a definition for `p0'
+	obj/Debug/generated/src/Com.Twilio.Video.Room.cs(1024,41): error CS0102: The type `Com.Twilio.Video.Room.ParticipantDisconnectedEventArgs' already contains a definition for `P0'
+	
+	-->
+	<attr
+		path="/api/package[@name='com.twilio.video']/interface[@name='Room.InternalRoomListener']/method[@name='onParticipantDisconnected' and count(parameter)=1 and parameter[1][@type='java.lang.String']]"
+		name="managedName"
+		>
+		participant_disconected
+	</attr>
+
+
+	<!--
+	obj/Debug/generated/src/Org.Webrtc.StatsReport.cs(131,18): error CS0542: `Org.Webrtc.StatsReport.Value.Value': member names cannot be the same as their enclosing type
+
+	-->
+	<attr
+		path="/api/package[@name='org.webrtc']/class[@name='StatsReport.Value']/field[@name='value']"
+		name="managedName"
+		>
+		ValueData
+	</attr>
+
+	<!--
+	====================================================================================================================
+	2nd run
+	-->
+	<attr
+		path="/api/package[@name='com.twilio.video']/interface[@name='Track']"
+		name="visibility"
+		>
+		public
+	</attr>
+	<attr
+		path="/api/package[@name='com.twilio.video']/class[@name='NativeHandle']"
+		name="visibility"
+		>
+		public
+	</attr>
+
+
+
+	<attr
+		path="/api/package[@name='org.webrtc']/class[@name='EglBase14']/method[@name='getEglBaseContext' and count(parameter)=0]"
+		name="managedReturn"
+		>
+		Org.Webrtc.EglBase.Context
+	</attr>
+
+
+
+
+	<!--
+	obj/Debug/generated/src/Com.Twilio.Video.Media.cs(658,24): error CS0535: `Com.Twilio.Video.Media.InternalMediaListenerImpl' does not implement interface member `Com.Twilio.Video.Media.IInternalMediaListener.track(string)'
+	obj/Debug/generated/src/Com.Twilio.Video.Room.cs(516,24): error CS0535: `Com.Twilio.Video.Room.InternalRoomListenerImpl' does not implement interface member `Com.Twilio.Video.Room.IInternalRoomListener.failure_id(int)'
+	obj/Debug/generated/src/Com.Twilio.Video.Room.cs(516,24): error CS0535: `Com.Twilio.Video.Room.InternalRoomListenerImpl' does not implement interface member `Com.Twilio.Video.Room.IInternalRoomListener.conected_room_id(string, string, string, System.Collections.Generic.IList<Com.Twilio.Video.Participant>)'
+	obj/Debug/generated/src/Com.Twilio.Video.Room.cs(516,24): error CS0535: `Com.Twilio.Video.Room.InternalRoomListenerImpl' does not implement interface member `Com.Twilio.Video.Room.IInternalRoomListener.disconected_room_id(int)'
+	obj/Debug/generated/src/Com.Twilio.Video.Room.cs(516,24): error CS0535: `Com.Twilio.Video.Room.InternalRoomListenerImpl' does not implement interface member `Com.Twilio.Video.Room.IInternalRoomListener.participant_conected(Com.Twilio.Video.Participant)'
+	obj/Debug/generated/src/Com.Twilio.Video.Room.cs(516,24): error CS0535: `Com.Twilio.Video.Room.InternalRoomListenerImpl' does not implement interface member `Com.Twilio.Video.Room.IInternalRoomListener.participant_disconected(string)'
+	-->
+	<remove-node
+		path="/api/package[@name='com.twilio.video']/class[@name='Media.InternalMediaListenerImpl']"
+		>
+	</remove-node>
+	<remove-node
+		path="/api/package[@name='com.twilio.video']/class[@name='Room.InternalRoomListenerImpl']"
+		>
+	</remove-node>
+
+</metadata>

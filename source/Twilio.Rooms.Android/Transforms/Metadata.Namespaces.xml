@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<metadata>
+	<attr 
+		path="/api/package[@name='com.twilio.video']" 
+		name="managedName"
+		>
+		Twilio.Video
+	</attr>
+	
+	<!--
+		mc++ not available
+ 	
+	 <attr path="/api/package[@name='com.twilio.ipmessaging.impl']" name="managedName">Twilio.IPMessaging.Impl</attr>
+	 -->
+	
+</metadata>
