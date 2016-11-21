@@ -8,26 +8,48 @@
   -->
 
 	
-  <!--
+	<!--
 		mc++ not available
- 	
-  <attr path="/api/package[@name='com.twilio.ipmessaging']/interface[@name='IPMessagingClientListener']/method[@name='onAttributesChange']"
-        name="argsType">MessagingClientAttributesChangeEventArgs
-  </attr>
-  <attr path="/api/package[@name='com.twilio.ipmessaging']/interface[@name='IPMessagingClientListener']/method[@name='onChannelHistoryLoaded']"
-        name="argsType">MessagingClientChannelHistoryLoadedEventArgs
-  </attr>
-  -->
-  <attr path="/api/package[@name='com.twilio.ipmessaging']/interface[@name='IPMessagingClientListener']/method[@name='onError']"
-        name="argsType">MessagingClientErrorEventArgs
-  </attr>
+
+	<attr path="/api/package[@name='com.twilio.ipmessaging']/interface[@name='IPMessagingClientListener']/method[@name='onAttributesChange']"
+	    name="argsType">MessagingClientAttributesChangeEventArgs
+	</attr>
+	<attr path="/api/package[@name='com.twilio.ipmessaging']/interface[@name='IPMessagingClientListener']/method[@name='onChannelHistoryLoaded']"
+	    name="argsType">MessagingClientChannelHistoryLoadedEventArgs
+	</attr>
+	-->
+	<attr 
+		path="/api/package[@name='com.twilio.ipmessaging']/interface[@name='IPMessagingClientListener']/method[@name='onError']"
+	    name="argsType">MessagingClientErrorEventArgs
+	</attr>
 
 
-  <!--
+	<!--
 		mc++ not available
-  <attr
-path="/api/package[@name='com.twilio.ipmessaging.impl']/class[@name='ChannelImpl']/method[@name='setListener']"
-     name="eventName"
-   >Channel</attr>
-  -->
+	<attr
+		path="/api/package[@name='com.twilio.ipmessaging.impl']/class[@name='ChannelImpl']/method[@name='setListener']"
+		name="eventName"
+		>
+		Channel
+	</attr>
+	-->
+
+	<!--
+	<remove-node
+		path="/api/package[@name='com.twilio.ipmessaging']/class[@name='Channel']/implements[@name='android.os.Parcelable']"
+		>
+	</remove-node>
+	<attr
+		path="/api/package[@name='com.twilio.ipmessaging']/class[@name='Channel']"
+		name="final"
+		>
+		true
+	</attr>
+	-->
+	<attr
+		path="/api/package[@name='com.twilio.ipmessaging']/class[@name='NotificationPayload']/method[@name='getType' and count(parameter)=0]"
+		name="propertyName"
+		>
+		PayloadType
+	</attr>
 </metadata>

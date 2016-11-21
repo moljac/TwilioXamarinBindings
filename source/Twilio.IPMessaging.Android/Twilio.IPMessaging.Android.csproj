@@ -12,9 +12,10 @@
     <AndroidUseLatestPlatformSdk>True</AndroidUseLatestPlatformSdk>
     <AssemblyName>Twilio.IPMessaging.Android</AssemblyName>
     <TargetFrameworkVersion>v7.0</TargetFrameworkVersion>
-    <!--	
 	<AndroidClassParser>class-parse</AndroidClassParser>
+    <!--	
 	-->
+	<AndroidTlsProvider></AndroidTlsProvider>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -26,8 +27,8 @@
     <WarningLevel>4</WarningLevel>
     <AndroidLinkMode>None</AndroidLinkMode>
     <ConsolePause>false</ConsolePause>
-    <!--	
 	<AndroidClassParser>class-parse</AndroidClassParser>
+    <!--	
 	-->
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
@@ -38,8 +39,8 @@
     <WarningLevel>4</WarningLevel>
     <AndroidUseSharedRuntime>false</AndroidUseSharedRuntime>
     <ConsolePause>false</ConsolePause>
-    <!--	
 	<AndroidClassParser>class-parse</AndroidClassParser>
+    <!--	
 	-->
   </PropertyGroup>
   <ItemGroup>
@@ -52,6 +53,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Additions\EventDispatchers.cs" />
     <Compile Include="Additions\ManifestAdditions.cs" />
+    <Compile Include="Additions\IDisposable.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Additions\AboutAdditions.txt" />
