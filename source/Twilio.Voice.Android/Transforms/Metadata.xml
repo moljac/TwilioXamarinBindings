@@ -1,0 +1,119 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<metadata>
+
+	<!--
+	====================================================================================================================
+	1st run
+
+	obj/Debug/generated/src/Com.Twilio.Voice.IUnregistrationListener.cs(143,50): error CS0102: The type `Com.Twilio.Voice.ErrorEventArgs' already contains a definition for `p0'
+	obj/Debug/generated/src/Com.Twilio.Voice.IUnregistrationListener.cs(144,57): error CS0102: The type `Com.Twilio.Voice.ErrorEventArgs' already contains a definition for `P0'
+	obj/Debug/generated/src/Com.Twilio.Voice.IUnregistrationListener.cs(148,10): error CS0102: The type `Com.Twilio.Voice.ErrorEventArgs' already contains a definition for `p1'
+	obj/Debug/generated/src/Com.Twilio.Voice.IUnregistrationListener.cs(149,17): error CS0102: The type `Com.Twilio.Voice.ErrorEventArgs' already contains a definition for `P1'
+	obj/Debug/generated/src/Com.Twilio.Voice.IUnregistrationListener.cs(153,10): error CS0102: The type `Com.Twilio.Voice.ErrorEventArgs' already contains a definition for `p2'
+	obj/Debug/generated/src/Com.Twilio.Voice.IUnregistrationListener.cs(154,17): error CS0102: The type `Com.Twilio.Voice.ErrorEventArgs' already contains a definition for `P2'
+	obj/Debug/generated/src/Com.Twilio.Voice.IncomingCall.cs(191,42): error CS0102: The type `Com.Twilio.Voice.IncomingCall.DisconnectedEventArgs' already contains a definition for `p0'
+	obj/Debug/generated/src/Com.Twilio.Voice.IncomingCall.cs(192,49): error CS0102: The type `Com.Twilio.Voice.IncomingCall.DisconnectedEventArgs' already contains a definition for `P0'
+	obj/Debug/generated/src/Com.Twilio.Voice.IncomingCall.cs(237,47): error CS0102: The type `Com.Twilio.Voice.IncomingCall.IListenerImplementor' already contains a definition for `OnDisconnectedHandler'
+	obj/Debug/generated/src/Com.Twilio.Voice.OutgoingCall.cs(191,42): error CS0102: The type `Com.Twilio.Voice.OutgoingCall.DisconnectedEventArgs' already contains a definition for `p0'
+	obj/Debug/generated/src/Com.Twilio.Voice.OutgoingCall.cs(192,49): error CS0102: The type `Com.Twilio.Voice.OutgoingCall.DisconnectedEventArgs' already contains a definition for `P0'
+	obj/Debug/generated/src/Com.Twilio.Voice.OutgoingCall.cs(237,47): error CS0102: The type `Com.Twilio.Voice.OutgoingCall.IListenerImplementor' already contains a definition for `OnDisconnectedHandler'
+
+	
+	{
+		"Problem" 
+			:
+			"
+			"
+		,
+		"Search" 
+			:
+			"
+			"
+		,
+		"ProblemData" 
+			:
+			{
+				"ErrorId" : "CS0102"
+				,
+				"ErrorDescription"
+					:
+					"
+					"
+					,
+			}
+		,
+		"Analysis"
+			:
+			{
+				"1" 
+					: 
+					"
+					"
+			}
+		,
+		"[Re]Solution/Workaround"
+			:
+			{
+				"1"
+					:
+					"
+					"
+			}
+		,
+	}       
+	-->
+	<attr
+		path="/api/package[@name='com.twilio.voice']/interface[@name='UnregistrationListener']/method[@name='onError' and count(parameter)=3 and parameter[1][@type='com.twilio.voice.RegistrationException'] and parameter[2][@type='java.lang.String'] and parameter[3][@type='java.lang.String']]"
+		name="managedName"
+		>
+		registrationException
+	</attr>
+
+	<attr
+		path="/api/package[@name='com.twilio.voice']/interface[@name='IncomingCall.Listener']/method[@name='onDisconnected' and count(parameter)=1 and parameter[1][@type='com.twilio.voice.IncomingCall']]"
+		name="managedName"
+		>
+		incomingCall
+	</attr>
+
+	<attr
+		path="/api/package[@name='com.twilio.voice']/interface[@name='OutgoingCall.Listener']/method[@name='onDisconnected' and count(parameter)=1 and parameter[1][@type='com.twilio.voice.OutgoingCall']]"
+		name="managedName"
+		>
+		outgoingCall
+	</attr>
+
+	<!--
+	====================================================================================================================
+	2nd run
+	
+	obj/Debug/generated/src/Com.Twilio.Voice.IncomingCall.cs(9,63): error CS0234: The type or namespace name `InternalCall' does not exist in the namespace `Com.Twilio.Voice'. Are you missing an assembly reference?
+	obj/Debug/generated/src/Com.Twilio.Voice.OutgoingCall.cs(9,63): error CS0234: The type or namespace name `InternalCall' does not exist in the namespace `Com.Twilio.Voice'. Are you missing an assembly reference?
+	obj/Debug/generated/src/Com.Twilio.Voice.IncomingCall.cs(261,29): error CS0115: `Com.Twilio.Voice.IncomingCall.ThresholdClass' is marked as an override but no suitable property found to override
+	obj/Debug/generated/src/Com.Twilio.Voice.IncomingCall.cs(265,42): error CS0115: `Com.Twilio.Voice.IncomingCall.ThresholdType' is marked as an override but no suitable property found to override
+	obj/Debug/generated/src/Com.Twilio.Voice.IncomingCall.cs(288,33): error CS0115: `Com.Twilio.Voice.IncomingCall.CallSid' is marked as an override but no suitable property found to override
+	obj/Debug/generated/src/Com.Twilio.Voice.IncomingCall.cs(356,31): error CS0115: `Com.Twilio.Voice.IncomingCall.IsMuted' is marked as an override but no suitable property found to override
+	obj/Debug/generated/src/Com.Twilio.Voice.IncomingCall.cs(390,61): error CS0115: `Com.Twilio.Voice.IncomingCall.State' is marked as an override but no suitable property found to override
+	obj/Debug/generated/src/Com.Twilio.Voice.IncomingCall.cs(496,31): error CS0115: `Com.Twilio.Voice.IncomingCall.Disconnect()' is marked as an override but no suitable method found to override
+	obj/Debug/generated/src/Com.Twilio.Voice.IncomingCall.cs(562,31): error CS0115: `Com.Twilio.Voice.IncomingCall.Mute(bool)' is marked as an override but no suitable method found to override
+	obj/Debug/generated/src/Com.Twilio.Voice.IncomingCall.cs(631,31): error CS0115: `Com.Twilio.Voice.IncomingCall.SendDigits(string)' is marked as an override but no suitable method found to override
+	obj/Debug/generated/src/Com.Twilio.Voice.OutgoingCall.cs(261,29): error CS0115: `Com.Twilio.Voice.OutgoingCall.ThresholdClass' is marked as an override but no suitable property found to override
+	obj/Debug/generated/src/Com.Twilio.Voice.OutgoingCall.cs(265,42): error CS0115: `Com.Twilio.Voice.OutgoingCall.ThresholdType' is marked as an override but no suitable property found to override
+	obj/Debug/generated/src/Com.Twilio.Voice.OutgoingCall.cs(288,33): error CS0115: `Com.Twilio.Voice.OutgoingCall.CallSid' is marked as an override but no suitable property found to override
+	obj/Debug/generated/src/Com.Twilio.Voice.OutgoingCall.cs(322,31): error CS0115: `Com.Twilio.Voice.OutgoingCall.IsMuted' is marked as an override but no suitable property found to override
+	obj/Debug/generated/src/Com.Twilio.Voice.OutgoingCall.cs(356,61): error CS0115: `Com.Twilio.Voice.OutgoingCall.State' is marked as an override but no suitable property found to override
+	obj/Debug/generated/src/Com.Twilio.Voice.OutgoingCall.cs(392,31): error CS0115: `Com.Twilio.Voice.OutgoingCall.Disconnect()' is marked as an override but no suitable method found to override
+	obj/Debug/generated/src/Com.Twilio.Voice.OutgoingCall.cs(425,31): error CS0115: `Com.Twilio.Voice.OutgoingCall.Mute(bool)' is marked as an override but no suitable method found to override
+	obj/Debug/generated/src/Com.Twilio.Voice.OutgoingCall.cs(461,31): error CS0115: `Com.Twilio.Voice.OutgoingCall.SendDigits(string)' is marked as an override but no suitable method found to override
+	-->
+
+	<!--
+	-->
+	<attr
+		path="/api/package[@name='com.twilio.voice']/class[@name='InternalCall']"
+		name="visibility"
+		>
+		public
+	</attr>
+	
+</metadata>
