@@ -2,6 +2,28 @@
 #addin nuget:?package=Cake.Xamarin
 #addin nuget:?package=Cake.FileHelpers
 
+// Video - Rooms
+// https://www.twilio.com/docs/api/video/download-video-sdks
+// https://bintray.com/twilio/releases/download_file?file_path=com%2Ftwilio%2Fvideo-android%2F1.0.0-beta3%2Fvideo-android-1.0.0-beta3.aar
+// https://media.twiliocdn.com/sdk/ios/video/latest/twilio-video-ios.tar.bz2
+// https://www.twilio.com/docs/api/video/quickstart-sample-apps
+
+// https://github.com/twilio/video-quickstart-android/tree/conversations
+
+// Voice
+// https://www.twilio.com/docs/api/voice-sdk
+//
+// iOS: 
+//		https://www.twilio.com/docs/api/voice-sdk/ios/getting-started#download-the-application-components
+//		https://github.com/twilio/voice-quickstart-objc/archive/master.zip
+//		https://github.com/twilio/voice-quickstart-swift/archive/master.zip
+//		https://github.com/twilio/voice-callkit-quickstart-swift/archive/master.zip
+//		https://github.com/twilio/voice-callkit-quickstart-objc/archive/master.zip
+// Android:s
+//		https://www.twilio.com/docs/api/voice-sdk/android/getting-started#download-the-application-components
+
+//Voice
+
 var TWILIO_COMMON_ANDROID_VERSION = "0.6";
 var TWILIO_COMMON_ANDROID = string.Format ("https://media.twiliocdn.com/sdk/android/common/v{0}/twilio-common-android.aar", TWILIO_COMMON_ANDROID_VERSION);
 
@@ -33,7 +55,9 @@ var TWILIO_PODSPEC = new [] {
 
 var TARGET = Argument ("target", Argument ("t", "lib"));
 
-Task ("libs").IsDependentOn ("externals").Does (() =>
+Task ("libs")
+	//.IsDependentOn ("externals")
+	.Does (() =>
 {
 	NuGetRestore ("./Twilio.sln");
 	DotNetBuild ("./Twilio.sln", c => c.Configuration = "Release");
@@ -88,7 +112,7 @@ Task ("externals-ios")
 Task ("externals").IsDependentOn ("externals-android").IsDependentOn ("externals-ios");
 
 Task ("nuget")
-	.IsDependentOn ("libs")
+	//.IsDependentOn ("libs")
 	.Does (() =>
 {
 	// NuGet messes up path on mac, so let's add ./ in front twice
