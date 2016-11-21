@@ -4,7 +4,7 @@ using ObjCRuntime;
 namespace Twilio.Voice
 {
 	[Native]
-	public enum TVOLogLevel : nuint
+	public enum /*mc++ TVO*/LogLevel : ulong //mc++ nuint
 	{
 		Off = 0,
 		Error,
@@ -15,14 +15,14 @@ namespace Twilio.Voice
 	}
 
 	[Native]
-	public enum TVOLogModule : nuint
+	public enum /*mc++ TVO*/LogModule : ulong //mc++ nuint
 	{
 		Pjsip = 0,
 		Notify
 	}
 
 	[Native]
-	public enum TVOIncomingCallState : nuint
+	public enum /*mc++ TVO*/IncomingCallState : ulong //mc++ nuint
 	{
 		Pending = 0,
 		Connecting,
@@ -32,7 +32,7 @@ namespace Twilio.Voice
 	}
 
 	[Native]
-	public enum TVOOutgoingCallState : nuint
+	public enum /*mc++ TVO*/OutgoingCallState : ulong //mc++ nuint
 	{
 		Connecting = 0,
 		Connected,
