@@ -112,16 +112,19 @@ Task ("externals-ios")
 Task ("externals").IsDependentOn ("externals-android").IsDependentOn ("externals-ios");
 
 Task ("nuget")
-	//.IsDependentOn ("libs")
+	.IsDependentOn ("libs")
 	.Does (() =>
 {
 	// NuGet messes up path on mac, so let's add ./ in front twice
 	var basePath = IsRunningOnUnix () ? "././" : "./";
 
-	var nuspecs = new FilePath [] {
+	var nuspecs = new FilePath [] 
+	{
 		"./nuget/Twilio.Common.Xamarin.nuspec",
 		"./nuget/Twilio.IPMessaging.Xamarin.nuspec",
 		"./nuget/Twilio.Conversations.Xamarin.nuspec",
+		"./nuget/Twilio.Voice.Xamarin.nuspec",
+		"./nuget/Twilio.Rooms.Xamarin.nuspec",
 	};
 
 	foreach (var n in nuspecs) {
