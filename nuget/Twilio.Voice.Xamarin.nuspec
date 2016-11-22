@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<package>
+  <metadata>
+    <id>Twilio.Voice.Xamarin</id>
+    <title>Twilio Voice Library for Xamarin</title>
+    <version>2.0.0-beta4</version>
+    <authors>Twilio</authors>
+    <owners>twilio</owners>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <summary>Twilio Voice Library for Xamarin.</summary>
+    <description>
+      Twilio Voice Library for Xamarin
+    </description>
+    <copyright>Copyright © Twilio</copyright>
+    <!-- <iconUrl></iconUrl> -->
+  </metadata>
+  <files>
+
+    <!-- Android -->
+    <file 
+        src="source/Twilio.Voice.Android/bin/Release/Twilio.Voice.Android.dll" 
+        target="lib\MonoAndroid403" 
+        />
+    
+    <!-- iOS -->
+    <file 
+      src="source/Twilio.Voice.iOS/bin/Release/Twilio.Voice.iOS.dll" 
+      target="lib\Xamarin.iOS10" 
+      />    
+
+  </files>
+</package>

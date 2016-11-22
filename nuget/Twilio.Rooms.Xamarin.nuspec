@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<package>
+  <metadata>
+    <id>Twilio.Rooms.Xamarin</id>
+    <title>Twilio Rooms (Video) Library for Xamarin</title>
+    <version>1.0.0-beta3</version>
+    <authors>Twilio</authors>
+    <owners>twilio</owners>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <summary>Twilio Rooms (Video) Library for Xamarin.</summary>
+    <description>
+      Twilio Rooms (Video) Library for Xamarin
+    </description>
+    <copyright>Copyright © Twilio</copyright>
+    <!-- <iconUrl></iconUrl> -->
+  </metadata>
+  <files>
+
+    <!-- Android -->
+    <file 
+        src="source/Twilio.Rooms.Android/bin/Release/Twilio.Rooms.Android.dll" 
+        target="lib\MonoAndroid403" 
+        />
+    
+    <!-- iOS -->
+    <file 
+      src="source/Twilio.Rooms.iOS/bin/Release/Twilio.Rooms.iOS.dll" 
+      target="lib\Xamarin.iOS10" 
+      />    
+
+  </files>
+</package>
