@@ -57,7 +57,7 @@
     <TransformFile Include="Transforms\Metadata.Namespaces.xml" />
   </ItemGroup>
   <ItemGroup>
-    <LibraryProjectZip Include="..\externals\android\video-android.aar">
+    <LibraryProjectZip Include="..\..\externals\android\video-android.aar">
       <Link>Jars\video-android.aar</Link>
     </LibraryProjectZip>
   </ItemGroup>

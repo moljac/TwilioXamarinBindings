@@ -54,11 +54,6 @@
     <TransformFile Include="Transforms\EnumMethods.xml" />
     <TransformFile Include="Transforms\Metadata.xml" />
   </ItemGroup>
-  <ItemGroup>
-    <LibraryProjectZip Include="..\externals\android\voice-android.aar">
-      <Link>Jars\voice-android.aar</Link>
-    </LibraryProjectZip>
-  </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.Bindings.targets" />
 	<ItemGroup>
 	    <!--
@@ -71,4 +66,9 @@
 		-->
 	</ItemGroup>
 	
+	<ItemGroup>
+	  <LibraryProjectZip Include="..\..\externals\android\voice-android.aar">
+	    <Link>Jars\voice-android.aar</Link>
+	  </LibraryProjectZip>
+	</ItemGroup>
 </Project>
