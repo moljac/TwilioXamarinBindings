@@ -40,13 +40,13 @@ namespace TwilioRoomsSampleiOS
 		UIKit.UITextField roomTextField { get; set; }
 
 		[Action ("connectButtonPressed:")]
-		partial void connectButtonPressed (Foundation.NSObject sender);
+		partial void ConnectButtonPressed (Foundation.NSObject sender);
 
 		[Action ("disconnectButtonPressed:")]
-		partial void disconnectButtonPressed (Foundation.NSObject sender);
+		partial void DisconnectButtonPressed (Foundation.NSObject sender);
 
 		[Action ("micButtonPressed:")]
-		partial void micButtonPressed (Foundation.NSObject sender);
+		partial void MicButtonPressed (Foundation.NSObject sender);
 		
 		void ReleaseDesignerOutlets ()
 		{

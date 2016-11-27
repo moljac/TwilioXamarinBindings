@@ -26,7 +26,7 @@
     <MtouchUseRefCounting>true</MtouchUseRefCounting>
     <IOSDebuggerPort>61566</IOSDebuggerPort>
     <MtouchLink>None</MtouchLink>
-    <MtouchArch>x86_64</MtouchArch>
+    <MtouchArch>i386, x86_64</MtouchArch>
     <MtouchHttpClientHandler>HttpClientHandler</MtouchHttpClientHandler>
     <MtouchTlsProvider>Default</MtouchTlsProvider>
     <PlatformTarget>x86</PlatformTarget>
@@ -80,7 +80,7 @@
     <MtouchUseRefCounting>true</MtouchUseRefCounting>
     <MtouchFloat32>true</MtouchFloat32>
     <CodesignEntitlements>Entitlements.plist</CodesignEntitlements>
-    <MtouchLink>None</MtouchLink>
+    <MtouchLink>SdkOnly</MtouchLink>
     <MtouchArch>ARMv7, ARM64</MtouchArch>
     <MtouchHttpClientHandler>HttpClientHandler</MtouchHttpClientHandler>
     <MtouchTlsProvider>Default</MtouchTlsProvider>
@@ -91,6 +91,10 @@
     <Reference Include="System.Xml" />
     <Reference Include="System.Core" />
     <Reference Include="Xamarin.iOS" />
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\portable-net45+wp80+win8+wpa81\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http" />
   </ItemGroup>
   <ItemGroup>
     <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Contents.json" />
@@ -106,6 +110,7 @@
   <ItemGroup>
     <None Include="Info.plist" />
     <None Include="Entitlements.plist" />
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Main.cs" />
@@ -114,12 +119,10 @@
     <Compile Include="ViewController.designer.cs">
       <DependentUpon>ViewController.cs</DependentUpon>
     </Compile>
+    <Compile Include="Utils.cs" />
+    <Compile Include="VideoToken.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\source\Twilio.Common.iOS\Twilio.Common.iOS.csproj">
-      <Project>{B87C8255-A818-4E20-9940-81BFEF9C5137}</Project>
-      <Name>Twilio.Common.iOS</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\..\source\Twilio.Rooms.iOS\Twilio.Rooms.iOS.csproj">
       <Project>{0465CFC9-B153-40E5-A5CA-67E56B04A0F6}</Project>
       <Name>Twilio.Rooms.iOS</Name>

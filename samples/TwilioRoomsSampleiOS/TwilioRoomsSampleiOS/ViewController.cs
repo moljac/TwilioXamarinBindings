@@ -7,12 +7,18 @@ namespace TwilioRoomsSampleiOS
 {
 	public partial class ViewController : UIViewController
 	{
-		// Configure access token manually for testing in `ViewDidLoad`, if desired! Create one manually in the console.
-		private string accessToken;
-		private string tokenUrl;
+		// Token coming from sample PHP token generator.
+#if DEBUG
+		private const string TokenUrl = @"http://localhost:8000/token.php";
+#else
+        private const string TokenUrl = @"http://localhost:8000/token.php";
+#endif
+		// Configure access token manually for testing in `ViewDidLoad` if desired! 
+		// You can create one manually in the Twilio Console.
+		private VideoToken accessToken;
 
 		// Video SDK components
-		private VideoClient client;
+		
 
 		public ViewController(IntPtr handle) 
 			: base(handle)
@@ -25,19 +31,77 @@ namespace TwilioRoomsSampleiOS
 			// Perform any additional setup after loading the view, typically from a nib.
 		}
 
-		partial void connectButtonPressed(NSObject sender)
+		async partial void ConnectButtonPressed(NSObject sender)
+		{
+			ShowRoomUI(true);
+			DissmissKeyboard();
+
+			if (accessToken == null)
+			{
+				LogMessage("Fetching an access token.");
+
+				try
+				{
+					var token = await Utils.GetTokenAsync(TokenUrl);
+					if (token != null)
+					{
+						accessToken = token;
+						DoConnect();
+					}
+					else
+					{
+						LogMessage("Error retrieving the access token.");
+						ShowRoomUI(false);
+					}
+				}
+				catch (Exception e)
+				{
+					LogMessage($"Exception thrown when fetching access token: {e}");
+				}
+			}
+			else
+			{
+				DoConnect();
+			}
+		}
+
+		partial void DisconnectButtonPressed(NSObject sender)
+		{
+			
+		}
+
+		partial void MicButtonPressed(NSObject sender)
 		{
 
 		}
 
-		partial void disconnectButtonPressed(NSObject sender)
+		private void DoConnect()
 		{
-
 		}
 
-		partial void micButtonPressed(NSObject sender)
+		// Set the client UI status
+		private void ShowRoomUI(bool inRoom)
 		{
+			roomTextField.Hidden = inRoom;
+			connectButton.Hidden = inRoom;
+			roomLine.Hidden = inRoom;
+			roomLabel.Hidden = inRoom;
+			micButton.Hidden = !inRoom;
+			disconnectButton.Hidden = !inRoom;
+			UIApplication.SharedApplication.IdleTimerDisabled = inRoom;
+		}
 
+		private void DissmissKeyboard()
+		{
+			if (roomTextField.IsFirstResponder)
+			{
+				roomTextField.ResignFirstResponder();
+			}
+		}
+
+		private void LogMessage(string message)
+		{
+			messageLabel.Text = message;
 		}
 
 		public override void DidReceiveMemoryWarning()
