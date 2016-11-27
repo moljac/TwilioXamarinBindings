@@ -1,20 +1,43 @@
 ﻿using System;
-
+using Foundation;
 using UIKit;
+using Twilio.Video;
 
 namespace TwilioRoomsSampleiOS
 {
 	public partial class ViewController : UIViewController
 	{
-		protected ViewController(IntPtr handle) : base(handle)
+		// Configure access token manually for testing in `ViewDidLoad`, if desired! Create one manually in the console.
+		private string accessToken;
+		private string tokenUrl;
+
+		// Video SDK components
+		private VideoClient client;
+
+		public ViewController(IntPtr handle) 
+			: base(handle)
 		{
-			// Note: this .ctor should not contain any initialization logic.
 		}
 
 		public override void ViewDidLoad()
 		{
 			base.ViewDidLoad();
 			// Perform any additional setup after loading the view, typically from a nib.
+		}
+
+		partial void connectButtonPressed(NSObject sender)
+		{
+
+		}
+
+		partial void disconnectButtonPressed(NSObject sender)
+		{
+
+		}
+
+		partial void micButtonPressed(NSObject sender)
+		{
+
 		}
 
 		public override void DidReceiveMemoryWarning()
