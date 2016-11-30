@@ -47,7 +47,7 @@ namespace TwilioIPMessagingSample
 
 			//-------------------------------------------------------------------------
 			// mc++ tests
-			IPMessagingClient.Create(this, null, null, null);
+			global::Twilio.IPMessaging.IPMessagingClient.Create(this, null, null, null);
 			//-------------------------------------------------------------------------
 
 			if (!TwilioIPMessagingSDK.IsInitialized)

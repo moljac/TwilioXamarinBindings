@@ -16,6 +16,7 @@
     <AndroidUseLatestPlatformSdk>True</AndroidUseLatestPlatformSdk>
     <AssemblyName>TwilioIPMessagingSample</AssemblyName>
     <TargetFrameworkVersion>v7.0</TargetFrameworkVersion>
+    <AndroidTlsProvider></AndroidTlsProvider>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -71,6 +72,16 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Resources\drawable\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\source\Twilio.Common.Android\Twilio.Common.Android.csproj">
+      <Project>{F78E29B1-08F2-479B-88F0-2A9AEF0F79A4}</Project>
+      <Name>Twilio.Common.Android</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\source\Twilio.IPMessaging.Android\Twilio.IPMessaging.Android.csproj">
+      <Project>{113D21B8-63D9-4310-943F-CCF274EC2E1E}</Project>
+      <Name>Twilio.IPMessaging.Android</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
 </Project>

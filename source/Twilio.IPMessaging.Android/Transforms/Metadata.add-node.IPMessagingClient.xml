@@ -82,8 +82,12 @@
 					name="context" 
 					>
 				</parameter>
-				<parameter 
+				<!--
+					Code for method generation fails with following type:
 					type="com.twilio.common.AccessManager"
+				-->
+				<parameter 
+					type="java.lang.Object"
 					name="acess_manager" 
 					>
 				</parameter>
@@ -119,8 +123,12 @@
 				visibility="public" abstract="false" static="false" return="void" name="setListener"
 				deprecated="not deprecated" final="false" native="false" synchronized="false" 
 				>
-				<parameter 
+				<!--
+					Code for method generation fails with following type:
 					type="com.twilio.ipmessaging.IPMessagingClientListener"
+				-->
+				<parameter 
+					type="java.lang.Object"
 					name="listener" 
 					>
 				</parameter>
@@ -146,6 +154,7 @@
 					>
 				</parameter>
 				<!--
+					Code for method generation fails with following type:
 					type="com.twilio.ipmessaging.Constants$StatusListener"
 				-->
 				<parameter 
@@ -188,6 +197,7 @@
 					>
 				</parameter>
 				<!--
+					Code for method generation fails with following type:
 					type="com.twilio.ipmessaging.Constants$StatusListener"
 				-->
 				<parameter 
@@ -249,8 +259,12 @@
 			<!--
 			public com.twilio.ipmessaging.UserInfo getMyUserInfo();
 			-->
+			<!--
+			Code for method generation fails with following type:			
+			return="com.twilio.ipmessaging.UserInfo"
+			-->
 			<method 
-				visibility="public" abstract="false" static="false" return="com.twilio.ipmessaging.UserInfo" name="getMyUserInfo"
+				visibility="public" abstract="false" static="false" return="java.lang.Object" name="getMyUserInfo"
 				deprecated="not deprecated" final="false" native="false" synchronized="false" 
 				>
 			</method>
@@ -259,7 +273,7 @@
 			-->
 			<method 
 				visibility="public" abstract="false" static="false" return="boolean" name="isReachabilityEnabled"
-				deprecated="not deprecated" final="false" native="false" synchronized="false" 
+				deprecated="not deprecated" final="false" native="true" synchronized="false" 
 				>
 			</method>
 			<!--

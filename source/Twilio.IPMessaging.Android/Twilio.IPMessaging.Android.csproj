@@ -75,14 +75,13 @@
     <LibraryProjectZip Include="..\..\externals\android\twilio-ip-messaging-android.aar">
       <Link>Jars\twilio-ip-messaging-android.aar</Link>
     </LibraryProjectZip>
-    <!--
-    <None Include="obj\Debug\api.xml" />
-    <None Include="obj\Release\api.xml" />
-    <Compile Include="obj\Debug\generated\src\*.cs" />
-    <Compile Include="obj\Release\generated\src\*.cs" />
-			TODO: check why necodings>!!
-    <Compile Include="obj\%27%24%28Configuration%29%27\generated\src\*.cs" />
-	-->
   </ItemGroup>
-  <ItemGroup />
+	<!--
+	C# Managed Callable Wrappers in obj\$(Configuration)\generated\src\*.cs
+	Browsing and Intellisense trick
+	<ItemGroup>
+		<None Include="obj\$(Configuration)\api.xml"></None>    
+		<Compile Include="obj\$(Configuration)\generated\src\*.cs"></Compile>
+	</ItemGroup>
+	-->
 </Project>
