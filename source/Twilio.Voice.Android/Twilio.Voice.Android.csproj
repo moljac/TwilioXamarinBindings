@@ -54,21 +54,18 @@
     <TransformFile Include="Transforms\EnumMethods.xml" />
     <TransformFile Include="Transforms\Metadata.xml" />
   </ItemGroup>
-  <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.Bindings.targets" />
-	<ItemGroup>
-	    <!--
-		TODO: check why recodings>!!
-	    <None Include="obj\Debug\api.xml" />
-	    <None Include="obj\Release\api.xml" />
-	    <Compile Include="obj\Debug\generated\src\*.cs" />
-	    <Compile Include="obj\Release\generated\src\*.cs" />
-	    <Compile Include="obj\%27%24%28Configuration%29%27\generated\src\*.cs" />
-		-->
-	</ItemGroup>
-	
+  <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.Bindings.targets" />	
 	<ItemGroup>
 	  <LibraryProjectZip Include="..\..\externals\android\voice-android.aar">
 	    <Link>Jars\voice-android.aar</Link>
 	  </LibraryProjectZip>
+	</ItemGroup>
+	<!--
+	C# Managed Callable Wrappers in obj\$(Configuration)\generated\src\*.cs
+	Browsing and Intellisense trick
+	-->
+	<ItemGroup>
+		<None Include="obj\$(Configuration)\api.xml"></None>    
+		<Compile Include="obj\$(Configuration)\generated\src\*.cs"></Compile>
 	</ItemGroup>
 </Project>

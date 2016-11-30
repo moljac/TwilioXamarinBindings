@@ -115,5 +115,35 @@
 		>
 		public
 	</attr>
+
+	<!--
+	obj/Debug/generated/src/Com.Twilio.Voice.Impl.Session.Event.cs(185,9): error CS0019: Operator `!=' cannot be applied to operands of type `Com.Twilio.Voice.Impl.Session.Event.Type' and `System.Type'
+	obj/Debug/generated/src/Com.Twilio.Voice.Impl.Session.Event.cs(187,39): error CS1502: The best overloaded method match for `Android.Runtime.JNIEnv.StartCreateInstance(System.IntPtr, System.IntPtr, Android.Runtime.JValue*)' has some invalid arguments
+	obj/Debug/generated/src/Com.Twilio.Voice.Impl.Session.Event.cs(187,60): error CS1503: Argument `#1' cannot convert `Com.Twilio.Voice.Impl.Session.Event.Type' expression to type `System.IntPtr'
+	obj/Debug/generated/src/Com.Twilio.Voice.Impl.Session.Event.cs(228,9): error CS0019: Operator `==' cannot be applied to operands of type `Com.Twilio.Voice.Impl.Session.Event.Type' and `System.Type'
+	obj/Debug/generated/src/Com.Twilio.Voice.Impl.Session.Events.RxMessageEvent.cs(110,9): error CS0019: Operator `==' cannot be applied to operands of type `Com.Twilio.Voice.Impl.Session.Event.Type' and `System.Type'
+	obj/Debug/generated/src/Com.Twilio.Voice.Impl.Session.Events.TsxStateEvent.cs(53,10): error CS0019: Operator `==' cannot be applied to operands of type `Com.Twilio.Voice.Impl.Session.Event.Type' and `System.Type'
+	obj/Debug/generated/src/Com.Twilio.Voice.Impl.Session.Events.TsxStateEvent.cs(87,10): error CS0019: Operator `==' cannot be applied to operands of type `Com.Twilio.Voice.Impl.Session.Event.Type' and `System.Type'
+	obj/Debug/generated/src/Com.Twilio.Voice.Impl.Session.Events.UnknownEvent.cs(38,9): error CS0019: Operator `!=' cannot be applied to operands of type `Com.Twilio.Voice.Impl.Session.Event.Type' and `System.Type'
+	obj/Debug/generated/src/Com.Twilio.Voice.Impl.Session.Events.UnknownEvent.cs(40,39): error CS1502: The best overloaded method match for `Android.Runtime.JNIEnv.StartCreateInstance(System.IntPtr, System.IntPtr, params Android.Runtime.JValue[])' has some invalid arguments
+	obj/Debug/generated/src/Com.Twilio.Voice.Impl.Session.Events.UnknownEvent.cs(40,60): error CS1503: Argument `#1' cannot convert `Com.Twilio.Voice.Impl.Session.Event.Type' expression to type `System.IntPtr'
+	obj/Debug/generated/src/Com.Twilio.Voice.Impl.Session.Transport.cs(486,10): error CS0019: Operator `==' cannot be applied to operands of type `Com.Twilio.Voice.Impl.Session.Transport.Type' and `System.Type'
+	obj/Debug/generated/src/Com.Twilio.Voice.Impl.Session.Transport.cs(520,9): error CS0019: Operator `==' cannot be applied to operands of type `Com.Twilio.Voice.Impl.Session.Transport.Type' and `System.Type'
+	obj/Debug/generated/src/Com.Twilio.Voice.Impl.Session.Transport.cs(555,9): error CS0019: Operator `==' cannot be applied to operands of type `Com.Twilio.Voice.Impl.Session.Transport.Type' and `System.Type'
+	obj/Debug/generated/src/Com.Twilio.Voice.Impl.Session.Transport.cs(588,9): error CS0019: Operator `==' cannot be applied to operands of type `Com.Twilio.Voice.Impl.Session.Transport.Type' and `System.Type'
+	obj/Debug/generated/src/Com.Twilio.Voice.Impl.Session.Transport.cs(621,9): error CS0019: Operator `==' cannot be applied to operands of type `Com.Twilio.Voice.Impl.Session.Transport.Type' and `System.Type'
+	-->
+	<attr
+		path="/api/package[@name='com.twilio.voice.impl.session']/class[@name='Event.Type']"
+		name="managedName"
+		>
+		EventType
+	</attr>
 	
+	<attr
+		path="/api/package[@name='com.twilio.voice.impl.session']/class[@name='Transport.Type']"
+		name="managedName"
+		>
+		TransportType
+	</attr>
 </metadata>
