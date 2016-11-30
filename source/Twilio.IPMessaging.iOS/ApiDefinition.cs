@@ -71,7 +71,7 @@ namespace Twilio.IPMessaging
 	}
 
 	// @interface TWMChannels : NSObject
-	[BaseType (typeof(NSObject))]
+	[BaseType (typeof(NSObject), Name = "TWMChannels")]
 	interface /*mc++TWM*/Channels
 	{
 		// -(NSArray<TWMChannel *> *)allObjects;
@@ -447,7 +447,7 @@ namespace Twilio.IPMessaging
 	}
 
 	// @interface TwilioIPMessagingClient : NSObject
-	[BaseType (typeof(NSObject))]
+	[BaseType (typeof(NSObject), Name="TwilioIPMessagingClient")]
 	interface TwilioIPMessagingClient
 	{
 		// @property (nonatomic, strong) int * accessManager;

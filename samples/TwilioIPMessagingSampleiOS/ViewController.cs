@@ -14,62 +14,58 @@ using CoreGraphics;
 
 namespace TwilioIPMessagingSampleiOS
 {
-	public partial class ViewController : UIViewController, ITwilioIPMessagingClientDelegate, IUITextFieldDelegate, 
-		Twilio.IPMessaging.ITwilioAccessManagerDelegate
+	public partial class ViewController : UIViewController, IUITextFieldDelegate
 	{
-		public ViewController(IntPtr handle) : base(handle)
-		{
-		}
+		// Token coming from sample PHP token generator.
+#if DEBUG
+		private const string TokenUrl = @"http://localhost:8000/token.php?device={0}";
+#else
+        private const string TokenUrl = @"http://localhost:8000/token.php?device={0}";
+#endif
+		// Configure access token manually for testing in `ViewDidLoad` if desired! 
+		// You can create one manually in the Twilio Console.
+		private IPMToken accessToken;
 
+		// Twilio Common Access Manager Delegate
+		AccessManagerDelegate accessManagerDelegate;
+		// IPMessaging Delegate
+		IPMessagingDelegate ipmMessaginingDelegate;
+		// Channel Delegate
+		IPMChannelDelegate ipmChannelDelegate;
 		MessagesDataSource dataSource;
 		TwilioIPMessagingClient client;
 		Channel generalChannel;
-		string identity;
+
+		public ViewController(IntPtr handle) 
+			: base(handle)
+		{
+		}
 
 		public async override void ViewDidLoad()
 		{
 			base.ViewDidLoad();
+
 			// Perform any additional setup after loading the view, typically from a nib.
+			accessManagerDelegate = new AccessManagerDelegate();
+			ipmMessaginingDelegate = new IPMessagingDelegate();
+			ipmChannelDelegate = new IPMChannelDelegate();
+
+			// Should dispose of these.
+			ipmMessaginingDelegate.OnMessageAdded += HandleOnMessageAdded;
+			ipmMessaginingDelegate.OnChannelExist += HandleOnChannelExist;
+			ipmMessaginingDelegate.OnChannelDoesNotExist += HandleOnChannelDoesNotExist;
 
 			dataSource = new MessagesDataSource();
 			tableView.Source = dataSource;
 			tableView.RowHeight = UITableView.AutomaticDimension;
 			tableView.EstimatedRowHeight = 70;
 
-			var token = await GetToken();
-			this.NavigationItem.Prompt = $"Logged in as {identity}";
-			var accessManager = Twilio.IPMessaging.TwilioAccessManager.Create(token, this);
-			client = TwilioIPMessagingClient.Create(accessManager, this);
+			var ipmToken = await GetToken();
+			this.NavigationItem.Prompt = $"Logged in as {ipmToken.identity}";
+			var accessManager = TwilioAccessManager.AccessManagerWithToken(ipmToken.token, accessManagerDelegate);
+			client = TwilioIPMessagingClient.IpMessagingClientWithAccessManager(accessManager, new TwilioIPMessagingClientProperties(), ipmMessaginingDelegate);
 
-			client.GetChannelsList((result, channels) =>
-			{
-				generalChannel = channels.GetChannelWithUniqueName("general");
-
-				if (generalChannel != null)
-				{
-					generalChannel.Join(r =>
-					{
-						Console.WriteLine("successfully joined general channel!");
-					});
-				}
-				else
-				{
-					var options = new NSDictionary("TWMChannelOptionFriendlyName", "General Chat Channel", "TWMChannelOptionType", 0);
-
-					channels.CreateChannel(options, (creationResult, channel) =>
-					{
-						if (creationResult.IsSuccessful())
-						{
-							generalChannel = channel;
-							generalChannel.Join(r =>
-							{
-								generalChannel.SetUniqueName("general", res => { });
-							});
-						}
-					});
-				}
-
-			});
+			// Look at IPMessaginingDelegate 
 
 			NSNotificationCenter.DefaultCenter.AddObserver(UIKeyboard.WillShowNotification, KeyboardWillShow);
 			NSNotificationCenter.DefaultCenter.AddObserver(UIKeyboard.DidShowNotification, KeyboardDidShow);
@@ -83,52 +79,16 @@ namespace TwilioIPMessagingSampleiOS
 			this.messageTextField.Delegate = this;
 		}
 
-		async Task<string> GetToken()
+		private async Task<IPMToken> GetToken()
 		{
 			var deviceId = UIDevice.CurrentDevice.IdentifierForVendor.AsString();
-
-			var tokenEndpoint = $"https://{{your token URL}}/token.php?device={deviceId}";
-
-			var http = new HttpClient();
-			var data = await http.GetStringAsync(tokenEndpoint);
-
-			var json = JsonObject.Parse(data);
-			identity = json["identity"]?.ToString()?.Trim('"');
-
-			return json["token"]?.ToString()?.Trim('"');
-		}
-
-		[Foundation.Export("ipMessagingClient:channelHistoryLoaded:")]
-		public void ChannelHistoryLoaded(TwilioIPMessagingClient client, Channels channel)
-		{
-			var msgs = channel.Messages.AllMessages.OrderBy(m => m.Timestamp);
-
-			dataSource.UpdateMessages(msgs);
-
-			tableView.ReloadData();
-			this.ScrollToBottomMessage();
-		}
-
-		[Foundation.Export("ipMessagingClient:errorReceived:")]
-		public void ErrorReceived(TwilioIPMessagingClient client, /*mc++ Twilio*/Error error)
-		{
-			Console.WriteLine("Error: " + error.Description);
-		}
-
-		[Foundation.Export("ipMessagingClient:channel:messageAdded:")]
-		public void MessageAdded(TwilioIPMessagingClient client, Channel channel, Message message)
-		{
-			dataSource.AddMessage(message);
-			tableView.ReloadData();
-			if (dataSource.Messages.Count > 0)
-			{
-				ScrollToBottomMessage();
-			}
+			var token = await Utils.GetTokenAsync(TokenUrl, deviceId);
+			return token;
 		}
 
 		partial void ButtonSend_TouchUpInside(UIButton sender)
 		{
-			var msg = generalChannel.Messages.CreateMessage(messageTextField.Text);
+			var msg = generalChannel.Messages.CreateMessageWithBody(messageTextField.Text);
 			sendButton.Enabled = false;
 			generalChannel.Messages.SendMessage(msg, r =>
 			{
@@ -153,10 +113,10 @@ namespace TwilioIPMessagingSampleiOS
 			this.tableView.ScrollToRow(bottomIndexPath, UITableViewScrollPosition.Bottom, true);
 		}
 
-		[Foundation.Export("textFieldShouldReturn:")]
-		public bool ShouldReturn(UIKit.UITextField textField)
+		[Export("textFieldShouldReturn:")]
+		public bool ShouldReturn(UITextField textField)
 		{
-			var message = generalChannel.Messages.CreateMessage(textField.Text);
+			var message = generalChannel.Messages.CreateMessageWithBody(textField.Text);
 			generalChannel.Messages.SendMessage(message, (r) =>
 			{
 				textField.Text = "";
@@ -165,17 +125,55 @@ namespace TwilioIPMessagingSampleiOS
 			return true;
 		}
 
-		[Foundation.Export("accessManagerTokenExpired:")]
-		public void TokenExpired(Twilio.Common.TwilioAccessManager accessManager)
+		#region IP Messagining Delegate Handlers
+		private void HandleOnMessageAdded(Message message)
 		{
-			Console.WriteLine("token expired");
+			dataSource.AddMessage(message);
+			tableView.ReloadData();
+
+			if (dataSource.Messages.Count > 0)
+			{
+				ScrollToBottomMessage();
+			}
 		}
 
-		[Foundation.Export("accessManager:error:")]
-		public void Error(Twilio.Common.TwilioAccessManager accessManager, Foundation.NSError error)
+		private void LoadChannelHistory()
 		{
-			Console.WriteLine("access manager error");
+			var msgs = generalChannel.Messages?.AllObjects?.OrderBy(m => m.Timestamp);
+			if (msgs != null)
+			{
+				dataSource.UpdateMessages(msgs);
+				tableView.ReloadData();
+				ScrollToBottomMessage();
+			}
 		}
+
+		private void HandleOnChannelExist(Channel channel)
+		{
+			generalChannel = channel;
+			generalChannel.JoinWithCompletion(c =>
+			{
+				Console.WriteLine("Successfully joined general channel!");
+				LoadChannelHistory();
+			});
+		}
+
+		private void HandleOnChannelDoesNotExist(Channels channels)
+		{
+			var options = new NSDictionary("TWMChannelOptionFriendlyName", "General Chat Channel", "TWMChannelOptionType", 0, "TWMChannelOptionUniqueName", "general");
+			channels.CreateChannelWithOptions(options, (result, channel) =>
+			{
+				if (result.IsSuccessful)
+				{
+					generalChannel = channel;
+					generalChannel.JoinWithCompletion(c =>
+					{
+						Console.WriteLine("Created and Joined General Channel!");
+					});
+				}
+			});
+		}
+		#endregion
 
 		#region Keyboard Management
 		private void KeyboardWillShow(NSNotification notification)
