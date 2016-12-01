@@ -9,7 +9,7 @@ namespace TwilioRoomsSampleiOS
 	{
 		// Token coming from sample PHP token generator.
 #if DEBUG
-		private const string TokenUrl = @"http://localhost:8000/token.php";
+		private const string TokenUrl = @"http://ddbcf9c8.ngrok.io/token.php";
 #else
         private const string TokenUrl = @"http://localhost:8000/token.php";
 #endif
@@ -95,7 +95,8 @@ namespace TwilioRoomsSampleiOS
 
 		partial void DisconnectButtonPressed(NSObject sender)
 		{
-			room.Disconnect();
+			room?.Disconnect();
+			ShowRoomUI(true);
 		}
 
 		partial void MicButtonPressed(NSObject sender)
@@ -124,7 +125,7 @@ namespace TwilioRoomsSampleiOS
 			if (IsSimulator) return;
 
 			camera = new CameraCapturer();
-			//localVideoTrack = localMedia.AddVideoTrack(true, camera);
+			localVideoTrack = localMedia.AddVideoTrack(true, camera);
 
 			if (localVideoTrack != null)
 			{
@@ -221,11 +222,6 @@ namespace TwilioRoomsSampleiOS
 			UIApplication.SharedApplication.IdleTimerDisabled = inRoom;
 		}
 
-		private void LogMessage(string message)
-		{
-			messageLabel.Text = message;
-		}
-
 		private void DissmissKeyboard()
 		{
 			if (roomTextField.IsFirstResponder)
@@ -244,6 +240,11 @@ namespace TwilioRoomsSampleiOS
 				}
 				participant = null;
 			}
+		}
+
+		private void LogMessage(string message)
+		{
+			messageLabel.Text = message;
 		}
 
 		public override void DidReceiveMemoryWarning()

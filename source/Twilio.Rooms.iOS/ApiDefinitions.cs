@@ -201,6 +201,8 @@ namespace Twilio.Video
 		void CaptureDidStart (bool success);
 	}
 
+	interface IVideoCapturer { }
+
 	// @protocol TVIVideoCapturer <NSObject>
 	[Protocol, Model]
 	[BaseType (typeof(NSObject), Name = "TVIVideoCapturer")]
@@ -577,12 +579,12 @@ namespace Twilio.Video
 		// -(TVILocalVideoTrack * _Nullable)addVideoTrack:(BOOL)enabled capturer:(id<TVIVideoCapturer> _Nonnull)capturer;
 		[Export ("addVideoTrack:capturer:")]
 		[return: NullAllowed]
-		/*mc++TVI*/LocalVideoTrack AddVideoTrack (bool enabled, /*mc++TVI*/VideoCapturer capturer);
+		/*mc++TVI*/LocalVideoTrack AddVideoTrack (bool enabled, /*mc++TVI*/IVideoCapturer capturer);
 
 		// -(TVILocalVideoTrack * _Nullable)addVideoTrack:(BOOL)enabled capturer:(id<TVIVideoCapturer> _Nonnull)capturer constraints:(TVIVideoConstraints * _Nullable)constraints error:(NSError * _Nullable * _Nullable)error;
 		[Export ("addVideoTrack:capturer:constraints:error:")]
 		[return: NullAllowed]
-		/*mc++TVI*/LocalVideoTrack AddVideoTrack (bool enabled, /*mc++TVI*/VideoCapturer capturer, [NullAllowed] /*mc++TVI*/VideoConstraints constraints, [NullAllowed] out NSError error);
+		/*mc++TVI*/LocalVideoTrack AddVideoTrack (bool enabled, /*mc++TVI*/IVideoCapturer capturer, [NullAllowed] /*mc++TVI*/VideoConstraints constraints, [NullAllowed] out NSError error);
 
 		// -(BOOL)removeVideoTrack:(TVILocalVideoTrack * _Nonnull)track;
 		[Export ("removeVideoTrack:")]
