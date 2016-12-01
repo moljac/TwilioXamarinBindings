@@ -767,19 +767,19 @@ namespace Twilio.Video
 
 		// @optional -(void)room:(TVIRoom * _Nonnull)room didFailToConnectWithError:(NSError * _Nonnull)error;
 		[Export ("room:didFailToConnectWithError:")]
-		void RoomFailedToConnect (/*mc++TVI*/Room room, NSError error);
+		void FailedToConnect (/*mc++TVI*/Room room, NSError error);
 
 		// @optional -(void)room:(TVIRoom * _Nonnull)room didDisconnectWithError:(NSError * _Nullable)error;
 		[Export ("room:didDisconnectWithError:")]
-		void RoomDisconnected (/*mc++TVI*/Room room, [NullAllowed] NSError error);
+		void DisconnectedWithError (/*mc++TVI*/Room room, [NullAllowed] NSError error);
 
 		// @optional -(void)room:(TVIRoom * _Nonnull)room participantDidConnect:(TVIParticipant * _Nonnull)participant;
 		[Export ("room:participantDidConnect:")]
-		void Room (/*mc++TVI*/Room room, /*mc++TVI*/Participant participant);
+		void ParticipantDidConnect (/*mc++TVI*/Room room, /*mc++TVI*/Participant participant);
 
 		// @optional -(void)room:(TVIRoom * _Nonnull)room participantDidDisconnect:(TVIParticipant * _Nonnull)participant;
 		[Export ("room:participantDidDisconnect:")]
-		void RoomparticipantDisconnected (/*mc++TVI*/Room room, /*mc++TVI*/Participant participant);
+		void ParticipantDisconnected (/*mc++TVI*/Room room, /*mc++TVI*/Participant participant);
 	}
 
 	// @interface TVIScreenCapturer : NSObject <TVIVideoCapturer>
