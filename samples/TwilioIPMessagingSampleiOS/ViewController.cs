@@ -1,16 +1,12 @@
 ﻿using System;
 using System.Linq;
-using MonoTouch.Dialog;
 using Foundation;
 using UIKit;
 using System.Threading.Tasks;
-using System.Net.Http;
-using System.Json;
 
 using Twilio.Common;
 using Twilio.IPMessaging;
 using System.Collections.Generic;
-using CoreGraphics;
 
 namespace TwilioIPMessagingSampleiOS
 {
