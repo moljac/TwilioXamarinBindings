@@ -1,12 +1,11 @@
 ﻿using System;
 using System.Linq;
+using System.Threading.Tasks;
+using System.Collections.Generic;
 using Foundation;
 using UIKit;
-using System.Threading.Tasks;
-
 using Twilio.Common;
 using Twilio.IPMessaging;
-using System.Collections.Generic;
 
 namespace TwilioIPMessagingSampleiOS
 {
