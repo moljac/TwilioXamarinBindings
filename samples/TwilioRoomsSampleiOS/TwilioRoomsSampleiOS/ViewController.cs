@@ -9,9 +9,9 @@ namespace TwilioRoomsSampleiOS
 	{
 		// Token coming from sample PHP token generator.
 #if DEBUG
-		private const string TokenUrl = @"http://ddbcf9c8.ngrok.io/token.php";
+		private const string TokenUrl = @"http://jonedavis.ngrok.io/token.php";
 #else
-        private const string TokenUrl = @"http://localhost:8000/token.php";
+        private const string TokenUrl = @"http://jonedavis.ngrok.io/token.php";
 #endif
 		// Configure access token manually for testing in `ViewDidLoad` if desired! 
 		// You can create one manually in the Twilio Console.
