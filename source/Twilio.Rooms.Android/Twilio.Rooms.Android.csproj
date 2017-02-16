@@ -62,14 +62,12 @@
     </LibraryProjectZip>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.Bindings.targets" />
+	<!--
+	C# Managed Callable Wrappers in obj\$(Configuration)\generated\src\*.cs
+	Browsing and Intellisense trick
 	<ItemGroup>
-	    <!--
-		TODO: check why recodings>!!
-	    <None Include="obj\Debug\api.xml" />
-	    <None Include="obj\Release\api.xml" />
-	    <Compile Include="obj\Debug\generated\src\*.cs" />
-	    <Compile Include="obj\Release\generated\src\*.cs" />
-	    <Compile Include="obj\%27%24%28Configuration%29%27\generated\src\*.cs" />
-		-->
+		<None Include="obj\$(Configuration)\api.xml"></None>    
+		<Compile Include="obj\$(Configuration)\generated\src\*.cs"></Compile>
 	</ItemGroup>
+	-->
 </Project>

@@ -7,7 +7,7 @@ using ObjCRuntime;
 using Foundation;
 using CoreMedia;
 
-namespace Twilio.Conversations
+namespace Twilio.Rooms
 {
 	public partial class VideoConstraintsFields : NSObject, IDisposable
 	{

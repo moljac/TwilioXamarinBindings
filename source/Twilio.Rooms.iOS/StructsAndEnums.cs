@@ -3,9 +3,8 @@ using System.Runtime.InteropServices;
 using CoreGraphics;
 using CoreVideo;
 using ObjCRuntime;
-using Twilio.Video;
 
-namespace Twilio.Video
+namespace Twilio.Rooms
 {
 	[Native]
 	public enum /*mc++TVI*/VideoOrientation : long //mc++ nuint

@@ -1,0 +1,34 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<metadata>
+	<attr
+		path="/api/package[@name='com.twilio.voice']"
+		name="managedName"
+		>
+		Twilio.Voice
+	</attr>
+	<attr
+		path="/api/package[@name='com.twilio.voice.impl.session']"
+		name="managedName"
+		>
+		Twilio.Voice.Impl.Session
+	</attr>
+	<attr
+		path="/api/package[@name='com.twilio.voice.impl.session.events']"
+		name="managedName"
+		>
+		Twilio.Voice.Impl.Session.Events
+	</attr>
+	<attr
+		path="/api/package[@name='com.twilio.voice.impl.useragent']"
+		name="managedName"
+		>
+		Twilio.Voice.Impl.Useragent
+	</attr>
+	<attr
+		path="/api/package[@name='com.twilio.voice.impl.useragent.config']"
+		name="managedName"
+		>
+		Twilio.Voice.Impl.Useragent.Config
+	</attr>
+
+</metadata>

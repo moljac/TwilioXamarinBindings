@@ -3,10 +3,9 @@ using CoreFoundation;
 using CoreMedia;
 using Foundation;
 using ObjCRuntime;
-using Twilio.Video;
 using UIKit;
 
-namespace Twilio.Video
+namespace Twilio.Rooms
 {
 	// @interface TVII420Frame : NSObject
 	[BaseType (typeof(NSObject), Name = "TVII420Frame")]

@@ -1,9 +1,9 @@
 ﻿using System;
-using Twilio.Video;
+using Twilio.Rooms;
 
 namespace Twilio.Rooms
 {
-	public partial class InternalMediaListenerImpl : global::Twilio.Video.Media.IInternalMediaListener
+	public partial class InternalMediaListenerImpl : global::Twilio.Rooms.Media.IInternalMediaListener
 	{
 		public IntPtr Handle
 		{

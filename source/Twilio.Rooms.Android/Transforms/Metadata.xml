@@ -388,4 +388,31 @@
 		>
 	</remove-node>
 
+	<!--
+	3rd run
+		obj/Debug/generated/src/WebRTC.EglBase14.cs(38,38): 
+		Error CS0234: 
+		The type or namespace name 
+			`Webrtc' 
+		does not exist in the namespace 
+			`Org'
+	
+
+		<remove-node
+			path="/api/package[@name='org.webrtc']/class[@name='EglBase14']/method[@name='getEglBaseContext' and count(parameter)=0]"
+			>
+		</remove-node>
+
+		obj/Debug/generated/src/WebRTC.EglBase14.cs(30,30): 
+		Error CS0534: 
+			`WebRTC.EglBase14' 
+		does not implement inherited abstract member `WebRTC.EglBase.EglBaseContext.get' (CS0534) (Twilio.Rooms.Android)
+	-->
+	<attr
+		path="/api/package[@name='org.webrtc']/class[@name='EglBase14']/method[@name='getEglBaseContext' and count(parameter)=0]"
+		name="managedReturn"
+		>
+		WebRTC.EglBase.Context
+	</attr>
+
 </metadata>

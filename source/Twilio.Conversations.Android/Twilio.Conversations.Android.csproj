@@ -11,7 +11,7 @@
     <MonoAndroidAssetsPrefix>Assets</MonoAndroidAssetsPrefix>
     <AndroidUseLatestPlatformSdk>True</AndroidUseLatestPlatformSdk>
     <AssemblyName>Twilio.Conversations.Android</AssemblyName>
-    <TargetFrameworkVersion>v6.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v7.0</TargetFrameworkVersion>
 	<!--
 	<AndroidClassParser>class-parse</AndroidClassParser>
 	-->
@@ -73,12 +73,6 @@
     <TransformFile Include="Transforms\Metadata.Namespaces.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.Bindings.targets" />
-  <ItemGroup>
-    <ProjectReference Include="..\Twilio.Common.Android\Twilio.Common.Android.csproj">
-      <Project>{F78E29B1-08F2-479B-88F0-2A9AEF0F79A4}</Project>
-      <Name>Twilio.Common.Android</Name>
-    </ProjectReference>
-  </ItemGroup>
   <ItemGroup>
     <LibraryProjectZip Include="..\..\externals\android\twilio-conversations-android.aar">
       <Link>Jars\twilio-conversations-android.aar</Link>

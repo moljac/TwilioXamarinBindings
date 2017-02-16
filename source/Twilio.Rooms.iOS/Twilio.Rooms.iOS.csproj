@@ -6,7 +6,7 @@
     <ProjectGuid>{0465CFC9-B153-40E5-A5CA-67E56B04A0F6}</ProjectGuid>
     <ProjectTypeGuids>{8FFB629D-F513-41CE-95D2-7ECE97B6EEEC};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
-    <RootNamespace>Twilio.Video</RootNamespace>
+    <RootNamespace>Twilio.Rooms</RootNamespace>
     <AssemblyName>Twilio.Rooms.iOS</AssemblyName>
     <IPhoneResourcePrefix>Resources</IPhoneResourcePrefix>
   </PropertyGroup>

@@ -3,7 +3,7 @@
   <metadata>
     <id>Twilio.Common.Xamarin</id>
     <title>Twilio Common Library for Xamarin</title>
-    <version>0.3.4</version>
+    <version>0.3.4.2</version>
     <authors>Twilio</authors>
     <owners>twilio</owners>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
@@ -19,13 +19,13 @@
     <!-- Android -->
     <file 
         src="source/Twilio.Common.Android/bin/Release/Twilio.Common.Android.dll" 
-        target="lib\MonoAndroid403" 
+        target="lib/MonoAndroid403" 
         />
     
     <!-- iOS -->
     <file 
       src="source/Twilio.Common.iOS/bin/Release/Twilio.Common.iOS.dll" 
-      target="lib\Xamarin.iOS10" 
+      target="lib/Xamarin.iOS10" 
       />    
 
   </files>

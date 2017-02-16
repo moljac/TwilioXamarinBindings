@@ -4,13 +4,22 @@
 		path="/api/package[@name='com.twilio.video']" 
 		name="managedName"
 		>
-		Twilio.Video
+		Twilio.Rooms
+	</attr>
+	<attr 
+		path="/api/package[@name='org.webrtc']" 
+		name="managedName"
+		>
+		WebRTC
+	</attr>
+	<attr 
+		path="/api/package[@name='org.webrtc.voiceengine']" 
+		name="managedName"
+		>
+		WebRTC.VoiceEngine
 	</attr>
 	
-	<!--
-		mc++ not available
- 	
-	 <attr path="/api/package[@name='com.twilio.ipmessaging.impl']" name="managedName">Twilio.IPMessaging.Impl</attr>
-	 -->
+
+
 	
 </metadata>
