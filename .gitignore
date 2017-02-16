@@ -247,3 +247,4 @@ externals/
 #----------------------------------------------
 
 *.DS_Store
+/samples/Components
