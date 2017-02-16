@@ -4,8 +4,6 @@
 <dict>
 	<key>CFBundleName</key>
 	<string>TwilioRoomsSampleiOS</string>
-	<key>CFBundleIdentifier</key>
-	<string>com.twilio.twilioroomssampleios</string>
 	<key>CFBundleShortVersionString</key>
 	<string>1.0</string>
 	<key>CFBundleVersion</key>
@@ -35,6 +33,13 @@
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>audio</string>
+		<string>voip</string>
 	</array>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>Resolves TCC Error.</string>
+	<key>NSCameraUsageDescription</key>
+	<string>Resolves TCC Error.</string>
+	<key>CFBundleIdentifier</key>
+	<string>com.littlerocketship.video</string>
 </dict>
 </plist>

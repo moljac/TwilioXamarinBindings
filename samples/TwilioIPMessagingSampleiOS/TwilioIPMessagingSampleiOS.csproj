@@ -73,6 +73,7 @@
     <MtouchUseSGen>true</MtouchUseSGen>
     <MtouchUseRefCounting>true</MtouchUseRefCounting>
     <MtouchProfiling>true</MtouchProfiling>
+    <CodesignProvision>59159e95-4d94-4d09-a4dd-23cd05be63bb</CodesignProvision>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />

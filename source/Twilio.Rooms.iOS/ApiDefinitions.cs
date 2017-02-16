@@ -200,6 +200,8 @@ namespace Twilio.Rooms
 		void CaptureDidStart (bool success);
 	}
 
+	interface IVideoCapturer { }
+
 	// @protocol TVIVideoCapturer <NSObject>
 	[Protocol, Model]
 	[BaseType (typeof(NSObject), Name = "TVIVideoCapturer")]
@@ -576,12 +578,12 @@ namespace Twilio.Rooms
 		// -(TVILocalVideoTrack * _Nullable)addVideoTrack:(BOOL)enabled capturer:(id<TVIVideoCapturer> _Nonnull)capturer;
 		[Export ("addVideoTrack:capturer:")]
 		[return: NullAllowed]
-		/*mc++TVI*/LocalVideoTrack AddVideoTrack (bool enabled, /*mc++TVI*/VideoCapturer capturer);
+		/*mc++TVI*/LocalVideoTrack AddVideoTrack (bool enabled, /*mc++TVI*/IVideoCapturer capturer);
 
 		// -(TVILocalVideoTrack * _Nullable)addVideoTrack:(BOOL)enabled capturer:(id<TVIVideoCapturer> _Nonnull)capturer constraints:(TVIVideoConstraints * _Nullable)constraints error:(NSError * _Nullable * _Nullable)error;
 		[Export ("addVideoTrack:capturer:constraints:error:")]
 		[return: NullAllowed]
-		/*mc++TVI*/LocalVideoTrack AddVideoTrack (bool enabled, /*mc++TVI*/VideoCapturer capturer, [NullAllowed] /*mc++TVI*/VideoConstraints constraints, [NullAllowed] out NSError error);
+		/*mc++TVI*/LocalVideoTrack AddVideoTrack (bool enabled, /*mc++TVI*/IVideoCapturer capturer, [NullAllowed] /*mc++TVI*/VideoConstraints constraints, [NullAllowed] out NSError error);
 
 		// -(BOOL)removeVideoTrack:(TVILocalVideoTrack * _Nonnull)track;
 		[Export ("removeVideoTrack:")]
@@ -764,19 +766,19 @@ namespace Twilio.Rooms
 
 		// @optional -(void)room:(TVIRoom * _Nonnull)room didFailToConnectWithError:(NSError * _Nonnull)error;
 		[Export ("room:didFailToConnectWithError:")]
-		void RoomFailedToConnect (/*mc++TVI*/Room room, NSError error);
+		void FailedToConnect (/*mc++TVI*/Room room, NSError error);
 
 		// @optional -(void)room:(TVIRoom * _Nonnull)room didDisconnectWithError:(NSError * _Nullable)error;
 		[Export ("room:didDisconnectWithError:")]
-		void RoomDisconnected (/*mc++TVI*/Room room, [NullAllowed] NSError error);
+		void DisconnectedWithError (/*mc++TVI*/Room room, [NullAllowed] NSError error);
 
 		// @optional -(void)room:(TVIRoom * _Nonnull)room participantDidConnect:(TVIParticipant * _Nonnull)participant;
 		[Export ("room:participantDidConnect:")]
-		void Room (/*mc++TVI*/Room room, /*mc++TVI*/Participant participant);
+		void ParticipantDidConnect (/*mc++TVI*/Room room, /*mc++TVI*/Participant participant);
 
 		// @optional -(void)room:(TVIRoom * _Nonnull)room participantDidDisconnect:(TVIParticipant * _Nonnull)participant;
 		[Export ("room:participantDidDisconnect:")]
-		void RoomparticipantDisconnected (/*mc++TVI*/Room room, /*mc++TVI*/Participant participant);
+		void ParticipantDisconnected (/*mc++TVI*/Room room, /*mc++TVI*/Participant participant);
 	}
 
 	// @interface TVIScreenCapturer : NSObject <TVIVideoCapturer>

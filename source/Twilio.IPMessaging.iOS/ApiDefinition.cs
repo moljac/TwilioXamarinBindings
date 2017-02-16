@@ -493,11 +493,11 @@ namespace Twilio.IPMessaging
 
 		// -(void)registerWithToken:(NSData *)token;
 		[Export ("registerWithToken:")]
-		void RegisterWithToken (NSData token);
+		void RegisterWithToken ([NullAllowed] NSData token);
 
 		// -(void)deregisterWithToken:(NSData *)token;
 		[Export ("deregisterWithToken:")]
-		void DeregisterWithToken (NSData token);
+		void DeregisterWithToken ([NullAllowed] NSData token);
 
 		// -(void)handleNotification:(NSDictionary *)notification;
 		[Export ("handleNotification:")]

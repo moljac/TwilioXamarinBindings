@@ -9,9 +9,9 @@ namespace TwilioRoomsSampleiOS
 	{
 		// Token coming from sample PHP token generator.
 #if DEBUG
-		private const string TokenUrl = @"http://localhost:8000/token.php";
+		private const string TokenUrl = @"http://jonedavis.ngrok.io/token.php";
 #else
-        private const string TokenUrl = @"http://localhost:8000/token.php";
+        private const string TokenUrl = @"http://jonedavis.ngrok.io/token.php";
 #endif
 		// Configure access token manually for testing in `ViewDidLoad` if desired! 
 		// You can create one manually in the Twilio Console.
@@ -26,6 +26,8 @@ namespace TwilioRoomsSampleiOS
 		LocalAudioTrack localAudioTrack;
 		Participant participant;
 		VideoRoomDelegate roomDelegate;
+		VideoParticipantDelegate participantDelegate;
+
 
 		// Utilities
 		public bool IsSimulator => ObjCRuntime.Runtime.Arch == ObjCRuntime.Arch.SIMULATOR;
@@ -40,6 +42,27 @@ namespace TwilioRoomsSampleiOS
 			base.ViewDidLoad();
 			// LocalMedia represents the collection of tracks that we are sending to other Participants from our VideoClient.
 			localMedia = new LocalMedia();
+
+			// Wire up event handlers for VideoRoomDelegate
+			// Purposefully wiring up every event.
+			// Should Dispose of these.
+			roomDelegate = new VideoRoomDelegate();
+			roomDelegate.OnDidConnectToRoom += HandleOnDidConnectToRoom;
+			roomDelegate.OnDisconnectedWithError += HandleOnDisconnectedWithError;
+			roomDelegate.OnRoomFailedToConnect += HandleOnRoomFailedToConnect;
+			roomDelegate.OnParticipantDidConnect += HandleOnParticipantDidConnect;
+			roomDelegate.OnParticipantDisconnected += HandleOnParticipantDidConnect;
+
+			// Wire up event handlers for VideoParticipantDelegate
+			// Purposefully wiring up every event.
+			// Should Dispose of these.
+			participantDelegate = new VideoParticipantDelegate();
+			participantDelegate.OnAddedVideoTrack += HandleOnAddedVideoTrack;
+			participantDelegate.OnRemovedVideoTrack += HandleOnRemovedVideoTrack;
+			participantDelegate.OnAddedAudioTrack += HandleOnAddedAudioTrack;
+			participantDelegate.OnRemovedAudioTrack += HandleOnRemovedAudioTrack;
+			participantDelegate.OnEnabledTrack += HandleOnEnabledTrack;
+			participantDelegate.OnDisabledTrack += HandleOnDisabledTrack;
 
 			if (IsSimulator)
 			{
@@ -95,7 +118,7 @@ namespace TwilioRoomsSampleiOS
 
 		partial void DisconnectButtonPressed(NSObject sender)
 		{
-			room.Disconnect();
+			room?.Disconnect();
 		}
 
 		partial void MicButtonPressed(NSObject sender)
@@ -124,7 +147,7 @@ namespace TwilioRoomsSampleiOS
 			if (IsSimulator) return;
 
 			camera = new CameraCapturer();
-			//localVideoTrack = localMedia.AddVideoTrack(true, camera);
+			localVideoTrack = localMedia.AddVideoTrack(true, camera);
 
 			if (localVideoTrack != null)
 			{
@@ -193,6 +216,7 @@ namespace TwilioRoomsSampleiOS
 
 			// Prepare local media which we will share with Room Participants.
 			PrepareLocalMedia();
+
 			ConnectOptions connectOptions = ConnectOptions.OptionsWithBlock(builder =>
 			{
 				// Use the local media that we prepared earlier.
@@ -203,7 +227,6 @@ namespace TwilioRoomsSampleiOS
 			});
 
 			// Connect to the Room using the options we provided.
-			roomDelegate = new VideoRoomDelegate();
 			room = client.ConnectWithOptions(connectOptions, roomDelegate);
 
 			LogMessage($"Attempting to connect to room {roomTextField.Text}");
@@ -219,11 +242,6 @@ namespace TwilioRoomsSampleiOS
 			micButton.Hidden = !inRoom;
 			disconnectButton.Hidden = !inRoom;
 			UIApplication.SharedApplication.IdleTimerDisabled = inRoom;
-		}
-
-		private void LogMessage(string message)
-		{
-			messageLabel.Text = message;
 		}
 
 		private void DissmissKeyboard()
@@ -245,6 +263,102 @@ namespace TwilioRoomsSampleiOS
 				participant = null;
 			}
 		}
+
+		private void LogMessage(string message)
+		{
+			messageLabel.Text = message;
+		}
+
+		#region Room Delegate Handlers
+		private void HandleOnDidConnectToRoom(string message, Room remoteRoom)
+		{
+			LogMessage(message);
+
+			if (remoteRoom.Participants.Length > 0)
+			{
+				participant = remoteRoom.Participants[0];
+				participant.Delegate = participantDelegate;
+			}
+		}
+
+		private void HandleOnDisconnectedWithError(string message)
+		{
+			LogMessage(message);
+			CleanupRemoteParticipant();
+			room = null;
+			ShowRoomUI(false);
+		}
+
+		private void HandleOnRoomFailedToConnect(string message)
+		{
+			LogMessage(message);
+			room = null;
+			ShowRoomUI(false);
+		}
+
+		private void HandleOnParticipantDidConnect(string message, Participant remoteParticipant)
+		{
+			LogMessage(message);
+			
+			if (participant == null)
+			{
+				participant = remoteParticipant;
+				participant.Delegate = participantDelegate;
+			}
+		}
+
+		private void HandleOnParticipantDisconnected(string message, Participant remoteParticipant)
+		{
+			LogMessage(message);
+
+			if (participant == remoteParticipant)
+			{
+				CleanupRemoteParticipant();
+			}
+		}
+		#endregion
+
+		#region Participant Handlers
+		private void HandleOnAddedVideoTrack(string message, Participant remoteParticpant, VideoTrack videoTrack)
+		{
+			LogMessage(message);
+
+			if (participant == remoteParticpant)
+			{
+				videoTrack.Attach(remoteView);
+			}
+		}
+
+		private void HandleOnRemovedVideoTrack(string message, Participant remoteParticpant, VideoTrack videoTrack)
+		{
+			LogMessage(message);
+
+			if (participant == remoteParticpant)
+			{
+				videoTrack.Detach(remoteView);
+			}
+		}
+
+		private void HandleOnAddedAudioTrack(string message)
+		{
+			LogMessage(message);
+		}
+
+		private void HandleOnRemovedAudioTrack(string message)
+		{
+			LogMessage(message);
+		}
+
+		private void HandleOnEnabledTrack(string message)
+		{
+			LogMessage(message);
+		}
+
+		private void HandleOnDisabledTrack(string message)
+		{
+			LogMessage(message);
+		}
+		#endregion
 
 		public override void DidReceiveMemoryWarning()
 		{
